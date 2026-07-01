@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ES Λογιστική — Αξιόπιστες Λογιστικές Υπηρεσίες, Θεσσαλονίκη</title>
+<meta name="description" content="Λογιστικό γραφείο στη Θεσσαλονίκη. Τήρηση βιβλίων, μισθοδοσία, φορολογικός σχεδιασμός και συμβουλευτικές υπηρεσίες για εταιρείες, ατομικές επιχειρήσεις και ιδιώτες.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Domine:wght@400;500;600;700&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.7.0/dist/tabler-icons.min.css">
+<style>
+  :root{
+    --sand:#F6EFE2;
+    --sand-alt:#F0E6D2;
+    --ink:#241F1A;
+    --ink-soft:#5C5346;
+    --brown:#A9754A;
+    --indigo:#3A4A78;
+    --terracotta:#C1633D;
+    --hairline:#E7DCC5;
+    --max:1320px;
+    --gutter:clamp(22px,5vw,72px);
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--sand);
+    color:var(--ink);
+    font-family:'Work Sans',sans-serif;
+    font-weight:400;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{margin:0;padding:0;list-style:none;}
+  h1,h2,h3,h4{
+    font-family:'Domine',serif;
+    font-weight:600;
+    margin:0;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+  ::selection{background:var(--terracotta);color:var(--sand);}
+
+  .container{
+    max-width:var(--max);
+    margin:0 auto;
+    padding-left:var(--gutter);
+    padding-right:var(--gutter);
+    position:relative;
+  }
+
+  /* ---------- grain texture ---------- */
+  .grain{
+    pointer-events:none;
+    position:absolute;
+    inset:0;
+    z-index:2;
+    opacity:0.05;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* ---------- organic blobs ---------- */
+  .blob{position:absolute;border-radius:50%;filter:blur(2px);pointer-events:none;z-index:0;}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.16,.8,.24,1),transform .9s cubic-bezier(.16,.8,.24,1);}
+  .reveal.is-visible{opacity:1;transform:translateY(0);}
+
+  .kicker{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:'Work Sans',sans-serif;
+    font-size:12.5px;letter-spacing:0.32em;text-transform:uppercase;
+    color:var(--brown);font-weight:600;
+  }
+  .kicker::before{content:"";width:26px;height:1px;background:var(--brown);display:inline-block;}
+
+  .section-head{text-align:center;max-width:680px;margin:0 auto 56px;}
+  .section-head .kicker{justify-content:center;}
+  .section-head h2{font-size:clamp(30px,4vw,46px);margin-top:14px;}
+  .section-head p{margin-top:16px;color:var(--ink-soft);font-size:16.5px;}
+
+  section{position:relative;padding:96px 0;overflow:hidden;}
+  .alt-surface{background:var(--sand-alt);}
+
+  /* ---------- wavy divider ---------- */
+  .wave-divider{display:block;width:100%;height:64px;margin-top:-1px;}
+
+  /* ---------- header ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    background:rgba(246,239,226,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--hairline);
+  }
+  .nav-row{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px var(--gutter);max-width:var(--max);margin:0 auto;
+  }
+  .logo-mark{display:flex;align-items:center;gap:10px;}
+  .logo-mark img{height:34px;width:auto;}
+  .logo-mark span{font-family:'Domine',serif;font-weight:600;font-size:19px;color:var(--ink);}
+  nav.primary-nav{display:flex;align-items:center;gap:38px;}
+  nav.primary-nav a{
+    font-size:14.5px;font-weight:500;color:var(--ink);position:relative;padding:4px 0;
+  }
+  nav.primary-nav a:not(.btn)::after{
+    content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--terracotta);
+    transition:width .3s ease;
+  }
+  nav.primary-nav a:not(.btn):hover::after{width:100%;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:13px 28px;border-radius:100px;font-weight:600;font-size:14.5px;
+    transition:transform .25s ease,box-shadow .25s ease,background .25s ease;
+    cursor:pointer;border:none;white-space:nowrap;
+  }
+  .btn-primary{background:var(--terracotta);color:var(--sand);box-shadow:0 8px 22px rgba(193,99,61,0.32);}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(193,99,61,0.4);}
+  .btn-outline{background:transparent;color:var(--ink);border:1.5px solid var(--ink);}
+  .btn-outline:hover{background:var(--ink);color:var(--sand);transform:translateY(-3px);}
+  .btn-small{padding:10px 22px;font-size:13.5px;}
+
+  .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
+  .hamburger span{width:24px;height:2px;background:var(--ink);border-radius:2px;transition:.3s;}
+
+  /* ---------- hero ---------- */
+  .hero{padding:168px 0 110px;position:relative;}
+  .hero-grid{
+    display:grid;grid-template-columns:1.05fr 0.95fr;align-items:center;gap:40px;
+  }
+  .hero-copy{position:relative;z-index:3;}
+  .eyebrow-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--sand-alt);border:1px solid var(--hairline);
+    padding:8px 18px;border-radius:100px;font-size:13px;font-weight:600;
+    color:var(--indigo);margin-bottom:28px;
+  }
+  .eyebrow-badge i{font-size:15px;}
+  .hero h1{font-size:clamp(38px,5.6vw,68px);line-height:1.08;}
+  .hero h1 .accent{
+    color:var(--brown);position:relative;display:inline-block;
+  }
+  .hero h1 .accent::after{
+    content:"";position:absolute;left:-2px;right:-2px;bottom:2px;height:0.32em;
+    background:rgba(169,117,74,0.28);z-index:-1;border-radius:3px;
+    transform:scaleX(0);transform-origin:left;
+    animation:underline-grow 1.1s 0.6s cubic-bezier(.16,.8,.24,1) forwards;
+  }
+  @keyframes underline-grow{to{transform:scaleX(1);}}
+  .hero p.lede{margin-top:26px;font-size:18px;color:var(--ink-soft);max-width:480px;}
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:16px;margin-top:38px;}
+
+  .hero-visual{position:relative;z-index:1;height:560px;}
+  .hero-photo-wrap{
+    position:absolute;top:0;bottom:0;right:calc(-1 * var(--gutter));left:6%;
+    border-radius:28px 0 0 28px;overflow:hidden;
+    box-shadow:-20px 30px 60px rgba(36,31,26,0.18);
+  }
+  .hero-photo-wrap img{width:100%;height:100%;object-fit:cover;}
+  .hero-photo-tag{
+    position:absolute;left:-24px;bottom:34px;z-index:4;
+    background:var(--sand);border:1px solid var(--hairline);
+    padding:16px 22px;border-radius:16px;box-shadow:0 18px 40px rgba(36,31,26,0.14);
+    max-width:230px;
+  }
+  .hero-photo-tag p{margin:0;font-size:13px;color:var(--ink-soft);}
+  .hero-photo-tag strong{display:block;font-family:'Domine',serif;font-size:15.5px;margin-bottom:4px;}
+
+  .stat-strip{
+    display:flex;gap:56px;margin-top:64px;flex-wrap:wrap;position:relative;z-index:3;
+  }
+  .stat-strip .stat b{font-family:'Domine',serif;font-size:34px;color:var(--indigo);display:block;}
+  .stat-strip .stat span{font-size:13.5px;color:var(--ink-soft);}
+
+  /* ---------- diafora / numbered items ---------- */
+  .diafora-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:2px;
+    background:var(--hairline);border:1px solid var(--hairline);border-radius:20px;overflow:hidden;
+  }
+  .diafora-item{
+    background:var(--sand);padding:48px 44px;position:relative;overflow:hidden;min-height:220px;
+  }
+  .diafora-item .big-num{
+    position:absolute;top:-18px;right:14px;font-family:'Domine',serif;font-weight:700;
+    font-size:130px;color:rgba(169,117,74,0.11);line-height:1;z-index:0;user-select:none;
+  }
+  .diafora-item:nth-child(2) .big-num,.diafora-item:nth-child(4) .big-num{color:rgba(58,74,120,0.09);}
+  .diafora-item h3{position:relative;z-index:1;font-size:22px;margin-bottom:14px;}
+  .diafora-item p{position:relative;z-index:1;color:var(--ink-soft);font-size:15.5px;max-width:360px;}
+
+  /* ---------- services ---------- */
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+  .service-card{
+    background:var(--sand);border:1px solid var(--hairline);border-radius:18px;
+    padding:38px 32px;border-top:5px solid var(--brown);
+    transition:transform .35s cubic-bezier(.16,.8,.24,1),box-shadow .35s ease;
+  }
+  .service-card:nth-child(2){border-top-color:var(--indigo);}
+  .service-card:nth-child(3){border-top-color:var(--terracotta);}
+  .service-card:hover{transform:translateY(-8px);box-shadow:0 24px 48px rgba(36,31,26,0.12);}
+  .service-icon{
+    width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+    background:var(--sand-alt);color:var(--brown);font-size:24px;margin-bottom:22px;
+  }
+  .service-card:nth-child(2) .service-icon{color:var(--indigo);}
+  .service-card:nth-child(3) .service-icon{color:var(--terracotta);}
+  .service-card h3{font-size:21px;margin-bottom:18px;}
+  .service-card ul li{
+    display:flex;gap:10px;font-size:14.5px;color:var(--ink-soft);padding:8px 0;
+    border-top:1px solid var(--hairline);
+  }
+  .service-card ul li:first-child{border-top:none;}
+  .service-card ul li i{color:var(--brown);font-size:15px;margin-top:3px;flex-shrink:0;}
+  .service-card:nth-child(2) ul li i{color:var(--indigo);}
+  .service-card:nth-child(3) ul li i{color:var(--terracotta);}
+
+  /* ---------- TEAM — strict equal 3-col grid, NOT staggered ---------- */
+  .team-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+  }
+  @media(min-width:640px){
+    .team-grid{gap:24px;}
+  }
+  .team-card{
+    background:var(--sand);border:1px solid var(--hairline);border-radius:16px;
+    overflow:hidden;transition:transform .35s cubic-bezier(.16,.8,.24,1),box-shadow .35s ease;
+  }
+  .team-card:hover{transform:translateY(-6px);box-shadow:0 22px 44px rgba(36,31,26,0.14);}
+  .team-photo{position:relative;aspect-ratio:2/3;width:100%;overflow:hidden;background:var(--sand-alt);}
+  .team-photo img{object-fit:cover;width:100%;height:100%;display:block;transition:transform .5s ease;}
+  .team-card:hover .team-photo img{transform:scale(1.04);}
+  .team-body{padding:10px 6px;text-align:center;}
+  .team-body p.name{font-weight:600;font-size:15px;font-family:'Work Sans',sans-serif;}
+  .team-body p.role{margin-top:4px;font-size:12.5px;color:var(--ink-soft);line-height:1.4;}
+  @media(min-width:640px){
+    .team-body{padding:20px;}
+    .team-body p.name{font-size:17px;}
+    .team-body p.role{font-size:13.5px;margin-top:6px;}
+  }
+
+  /* ---------- blog ---------- */
+  .blog-head-row{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px;flex-wrap:wrap;gap:18px;}
+  .blog-head-row .left .kicker{margin-bottom:14px;}
+  .blog-head-row h2{font-size:clamp(28px,3.6vw,42px);}
+  .blog-link{font-size:14.5px;font-weight:600;color:var(--indigo);display:inline-flex;align-items:center;gap:6px;}
+  .blog-link i{transition:transform .25s ease;}
+  .blog-link:hover i{transform:translateX(4px);}
+  .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+  .blog-card{
+    background:var(--sand-alt);border:1px solid var(--hairline);border-radius:18px;padding:30px;
+    transition:transform .35s cubic-bezier(.16,.8,.24,1),box-shadow .35s ease;
+  }
+  .blog-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(36,31,26,0.1);}
+  .blog-date{font-size:12.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--brown);font-weight:600;}
+  .blog-card h3{font-size:19.5px;margin-top:14px;line-height:1.35;}
+  .blog-card p{margin-top:12px;font-size:14.5px;color:var(--ink-soft);}
+  .blog-card .read-more{margin-top:18px;display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;color:var(--indigo);}
+
+  /* ---------- contact ---------- */
+  .contact-grid{display:grid;grid-template-columns:0.92fr 1.08fr;gap:56px;align-items:start;}
+  .contact-info-card{
+    background:var(--ink);color:var(--sand);border-radius:22px;padding:44px 38px;position:relative;overflow:hidden;
+  }
+  .contact-info-card h3{color:var(--sand);font-size:24px;margin-bottom:10px;}
+  .contact-info-card>p{color:#C9BFA9;font-size:15px;margin-bottom:32px;}
+  .contact-row{display:flex;gap:16px;padding:16px 0;border-top:1px solid rgba(246,239,226,0.14);}
+  .contact-row:first-of-type{border-top:none;}
+  .contact-row i{font-size:19px;color:var(--brown);margin-top:2px;}
+  .contact-row .label{font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:#9B917D;margin-bottom:3px;}
+  .contact-row .value{font-size:15px;color:var(--sand);}
+  .map-placeholder{
+    margin-top:30px;border-radius:16px;height:150px;position:relative;overflow:hidden;
+    background:linear-gradient(135deg,rgba(169,117,74,0.35),rgba(58,74,120,0.5));
+    display:flex;align-items:center;justify-content:center;border:1px solid rgba(246,239,226,0.15);
+  }
+  .map-placeholder i{font-size:30px;color:var(--sand);opacity:0.85;}
+
+  .contact-form-card{
+    background:var(--sand-alt);border:1px solid var(--hairline);border-radius:22px;padding:44px 38px;
+  }
+  .form-row{margin-bottom:20px;}
+  .form-row label{display:block;font-size:13.5px;font-weight:600;margin-bottom:8px;color:var(--ink);}
+  .form-row input,.form-row textarea{
+    width:100%;padding:14px 16px;border-radius:12px;border:1.5px solid var(--hairline);
+    background:var(--sand);font-family:'Work Sans',sans-serif;font-size:15px;color:var(--ink);
+    transition:border-color .25s ease,box-shadow .25s ease;
+  }
+  .form-row input:focus,.form-row textarea:focus{
+    outline:none;border-color:var(--brown);box-shadow:0 0 0 4px rgba(169,117,74,0.14);
+  }
+  .form-row textarea{resize:vertical;min-height:120px;}
+  .form-success{
+    display:none;background:rgba(58,74,120,0.1);border:1px solid rgba(58,74,120,0.3);
+    color:var(--indigo);padding:16px 18px;border-radius:12px;font-size:14.5px;font-weight:500;
+    margin-top:18px;align-items:center;gap:10px;
+  }
+  .form-success.show{display:flex;}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--ink);color:var(--sand);padding:70px 0 30px;position:relative;overflow:hidden;}
+  .footer-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:40px;padding-bottom:44px;border-bottom:1px solid rgba(246,239,226,0.14);}
+  .footer-brand .logo-mark span{color:var(--sand);}
+  .footer-brand p{margin-top:16px;max-width:320px;color:#B5AB96;font-size:14.5px;}
+  .footer-nav{display:flex;gap:48px;flex-wrap:wrap;}
+  .footer-nav .col h4{color:var(--sand);font-size:13px;text-transform:uppercase;letter-spacing:0.12em;font-family:'Work Sans',sans-serif;font-weight:600;margin-bottom:16px;}
+  .footer-nav .col a{display:block;color:#B5AB96;font-size:14.5px;margin-bottom:12px;transition:color .2s ease;}
+  .footer-nav .col a:hover{color:var(--brown);}
+  .footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:26px;font-size:13px;color:#8A806D;}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:1080px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-visual{height:420px;margin-top:20px;}
+    .hero-photo-wrap{left:0;right:0;border-radius:24px;}
+    .hero-photo-tag{left:20px;}
+    .diafora-grid{grid-template-columns:1fr;}
+    .services-grid,.blog-grid{grid-template-columns:1fr 1fr;}
+    .contact-grid{grid-template-columns:1fr;}
+  }
+  @media(max-width:860px){
+    nav.primary-nav{
+      position:fixed;top:70px;left:0;right:0;bottom:0;background:var(--sand);
+      flex-direction:column;align-items:flex-start;padding:36px var(--gutter);gap:26px;
+      transform:translateX(100%);transition:transform .35s ease;overflow-y:auto;
+    }
+    nav.primary-nav.open{transform:translateX(0);}
+    nav.primary-nav a{font-size:19px;}
+    .hamburger{display:flex;}
+    .stat-strip{gap:36px;}
+  }
+  @media(max-width:640px){
+    section{padding:70px 0;}
+    .hero{padding:150px 0 70px;}
+    .services-grid,.blog-grid{grid-template-columns:1fr;}
+    .diafora-item{padding:36px 26px;}
+    .contact-info-card,.contact-form-card{padding:32px 24px;}
+    .footer-top{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="nav-row">
+    <a href="#top" class="logo-mark">
+      <img src="assets/logo.png" alt="ES Λογιστική">
+      <span>ES Λογιστική</span>
+    </a>
+    <nav class="primary-nav" id="primaryNav">
+      <a href="#about">Σχετικά</a>
+      <a href="#services">Υπηρεσίες</a>
+      <a href="#team">Ομάδα</a>
+      <a href="#contact">Επικοινωνία</a>
+      <a href="#contact" class="btn btn-primary btn-small">Ραντεβού</a>
+    </nav>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Μενού">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="blob" style="width:520px;height:520px;background:rgba(169,117,74,0.16);top:-160px;left:-180px;"></div>
+  <div class="blob" style="width:380px;height:420px;background:rgba(58,74,120,0.12);bottom:-120px;left:38%;"></div>
+  <div class="grain"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-copy reveal">
+        <div class="eyebrow-badge"><i class="ti ti-map-pin"></i> Θεσσαλονίκη, Ελλάδα</div>
+        <h1>Αξιόπιστες <span class="accent">Λογιστικές</span> Υπηρεσίες</h1>
+        <p class="lede">Επιχειρηματικές Συμβουλές &amp; Φοροτεχνική Υποστήριξη. Εμπιστευτείτε την επιχείρησή σας σε έμπειρους επαγγελματίες.</p>
+        <div class="hero-ctas">
+          <a href="#contact" class="btn btn-primary">Κλείστε μια δωρεάν συνεδρία</a>
+          <a href="#services" class="btn btn-outline">Δείτε τις Υπηρεσίες</a>
+        </div>
+        <div class="stat-strip">
+          <div class="stat"><b>15+</b><span>Χρόνια εμπειρίας</span></div>
+          <div class="stat"><b>300+</b><span>Ενεργοί πελάτες</span></div>
+          <div class="stat"><b>3</b><span>Έμπειροι επαγγελματίες</span></div>
+        </div>
+      </div>
+      <div class="hero-visual reveal" style="transition-delay:.15s;">
+        <div class="hero-photo-wrap">
+          <img src="assets/team-1.jpg" alt="Ελευθεριάδης Κωνσταντίνος — ES Λογιστική">
+        </div>
+        <div class="hero-photo-tag">
+          <strong>Κωνσταντίνος Ελευθεριάδης</strong>
+          <p>Λογιστής φοροτεχνικός Ά τάξης</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <svg class="wave-divider" viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,32 C240,80 480,0 720,24 C960,48 1200,88 1440,40 L1440,80 L0,80 Z" fill="var(--sand-alt)"></path>
+  </svg>
+</section>
+
+<!-- ================= Η ΔΙΑΦΟΡΑ ΜΑΣ ================= -->
+<section class="alt-surface" id="about">
+  <div class="blob" style="width:340px;height:340px;background:rgba(193,99,61,0.1);top:20%;right:-120px;"></div>
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">Γιατί εμάς</span>
+      <h2>Η Διαφορά μας</h2>
+      <p>Συνδυάζουμε εμπειρία, τεχνογνωσία και σύγχρονη τεχνολογία για να προσφέρουμε κορυφαίες λογιστικές υπηρεσίες.</p>
+    </div>
+    <div class="diafora-grid">
+      <div class="diafora-item reveal">
+        <span class="big-num">01</span>
+        <h3>Εμπειρία &amp; Τεχνογνωσία</h3>
+        <p>Έμπειροι λογιστές και φοροτεχνικοί, ενήμεροι για τις τελευταίες νομοθετικές εξελίξεις.</p>
+      </div>
+      <div class="diafora-item reveal" style="transition-delay:.08s;">
+        <span class="big-num">02</span>
+        <h3>Εξατομικευμένη Εξυπηρέτηση</h3>
+        <p>Προσωποποιημένες λύσεις που ανταποκρίνονται στις μοναδικές ανάγκες σας.</p>
+      </div>
+      <div class="diafora-item reveal" style="transition-delay:.16s;">
+        <span class="big-num">03</span>
+        <h3>Ολοκληρωμένες Υπηρεσίες</h3>
+        <p>Από τήρηση βιβλίων έως φορολογικό σχεδιασμό και επιχειρηματικές συμβουλές.</p>
+      </div>
+      <div class="diafora-item reveal" style="transition-delay:.24s;">
+        <span class="big-num">04</span>
+        <h3>Σύγχρονη Τεχνολογία</h3>
+        <p>Ακρίβεια και ασφάλεια με τα πιο σύγχρονα λογιστικά εργαλεία.</p>
+      </div>
+    </div>
+  </div>
+  <svg class="wave-divider" viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,40 C240,0 480,80 720,48 C960,16 1200,64 1440,24 L1440,80 L0,80 Z" fill="var(--sand)"></path>
+  </svg>
+</section>
+
+<!-- ================= ΥΠΗΡΕΣΙΕΣ ================= -->
+<section id="services">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">Υπηρεσίες</span>
+      <h2>Τι Προσφέρουμε</h2>
+      <p>Ολοκληρωμένες λογιστικές και φοροτεχνικές υπηρεσίες για κάθε ανάγκη.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="ti ti-building-skyscraper"></i></div>
+        <h3>Εταιρείες</h3>
+        <ul>
+          <li><i class="ti ti-check"></i> Τήρηση βιβλίων (απλογραφικά, διπλογραφικά)</li>
+          <li><i class="ti ti-check"></i> Μισθοδοσία και εργατικά θέματα</li>
+          <li><i class="ti ti-check"></i> Συμβουλευτικές υπηρεσίες</li>
+          <li><i class="ti ti-check"></i> Σύνταξη χρηματοοικονομικών καταστάσεων</li>
+          <li><i class="ti ti-check"></i> Υποστήριξη σε φορολογικούς ελέγχους</li>
+          <li><i class="ti ti-check"></i> Διαχείριση επιδοτήσεων</li>
+          <li><i class="ti ti-check"></i> Εσωτερικός έλεγχος</li>
+        </ul>
+      </div>
+      <div class="service-card reveal" style="transition-delay:.08s;">
+        <div class="service-icon"><i class="ti ti-briefcase"></i></div>
+        <h3>Ατομικές Επιχειρήσεις</h3>
+        <ul>
+          <li><i class="ti ti-check"></i> Τήρηση βιβλίων</li>
+          <li><i class="ti ti-check"></i> Σύνταξη και υποβολή φορολογικών δηλώσεων</li>
+          <li><i class="ti ti-check"></i> Φορολογικός σχεδιασμός και βελτιστοποίηση</li>
+          <li><i class="ti ti-check"></i> Συμβουλευτικές υπηρεσίες</li>
+          <li><i class="ti ti-check"></i> Υποστήριξη σε φορολογικούς ελέγχους</li>
+          <li><i class="ti ti-check"></i> Έναρξη, μεταβολή, διακοπή δραστηριότητας</li>
+          <li><i class="ti ti-check"></i> Διαχείριση ηλεκτρονικών βιβλίων myDATA</li>
+        </ul>
+      </div>
+      <div class="service-card reveal" style="transition-delay:.16s;">
+        <div class="service-icon"><i class="ti ti-users"></i></div>
+        <h3>Ιδιώτες</h3>
+        <ul>
+          <li><i class="ti ti-check"></i> Σύνταξη και υποβολή φορολογικών δηλώσεων</li>
+          <li><i class="ti ti-check"></i> Υπολογισμός φόρου εισοδήματος</li>
+          <li><i class="ti ti-check"></i> Φορολογικές συμβουλές και ενημέρωση</li>
+          <li><i class="ti ti-check"></i> Ρυθμίσεις οφειλών προς το δημόσιο</li>
+          <li><i class="ti ti-check"></i> Διαχείριση ακίνητης περιουσίας</li>
+          <li><i class="ti ti-check"></i> Υποβολή αιτήσεων για επιδόματα</li>
+          <li><i class="ti ti-check"></i> Δηλώσεις τεκμηρίων και ανάλωση κεφαλαίου</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TEAM — strict equal 3-col grid ================= -->
+<section class="alt-surface" id="team">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">Γνωρίστε μας</span>
+      <h2>Η Ομάδα Μας</h2>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-photo">
+          <img src="assets/team-1.jpg" alt="Ελευθεριάδης Κωνσταντίνος">
+        </div>
+        <div class="team-body">
+          <p class="name">Ελευθεριάδης Κωνσταντίνος</p>
+          <p class="role">Λογιστής φοροτεχνικός Ά τάξης</p>
+        </div>
+      </div>
+      <div class="team-card reveal" style="transition-delay:.08s;">
+        <div class="team-photo">
+          <img src="assets/team-2.jpg" alt="Σκέμπη Ευθυμία">
+        </div>
+        <div class="team-body">
+          <p class="name">Σκέμπη Ευθυμία</p>
+          <p class="role">Founder / Λογίστρια φοροτεχνικός Ά τάξης</p>
+        </div>
+      </div>
+      <div class="team-card reveal" style="transition-delay:.16s;">
+        <div class="team-photo">
+          <img src="assets/team-3.jpg" alt="Παρχαρίδου Παναγιώτα">
+        </div>
+        <div class="team-body">
+          <p class="name">Παρχαρίδου Παναγιώτα</p>
+          <p class="role">Expert Εργατικής Νομοθεσίας &amp; Μισθοδοσίας</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <svg class="wave-divider" viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,48 C240,8 480,72 720,40 C960,8 1200,72 1440,32 L1440,80 L0,80 Z" fill="var(--sand)"></path>
+  </svg>
+</section>
+
+<!-- ================= BLOG ================= -->
+<section id="blog">
+  <div class="container">
+    <div class="blog-head-row">
+      <div class="left reveal">
+        <span class="kicker">Blog</span>
+        <h2>Ανακοινώσεις</h2>
+      </div>
+      <a href="#" class="blog-link reveal">Δες όλα τα άρθρα <i class="ti ti-arrow-right"></i></a>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card reveal">
+        <span class="blog-date">18 Ιουνίου 2026</span>
+        <h3>ΕΝΦΙΑ 2026: Ημερομηνίες πληρωμής και νέες μειώσεις</h3>
+        <p>Τι αλλάζει φέτος στον υπολογισμό και πώς να προγραμματίσετε τις δόσεις σας έγκαιρα.</p>
+        <a href="#" class="read-more">Διαβάστε περισσότερα <i class="ti ti-arrow-right"></i></a>
+      </div>
+      <div class="blog-card reveal" style="transition-delay:.08s;">
+        <span class="blog-date">5 Ιουνίου 2026</span>
+        <h3>myDATA: Νέες υποχρεώσεις ηλεκτρονικής τιμολόγησης</h3>
+        <p>Οι αλλαγές που αφορούν επιχειρήσεις και τι πρέπει να προσέξετε πριν την προθεσμία.</p>
+        <a href="#" class="read-more">Διαβάστε περισσότερα <i class="ti ti-arrow-right"></i></a>
+      </div>
+      <div class="blog-card reveal" style="transition-delay:.16s;">
+        <span class="blog-date">22 Μαΐου 2026</span>
+        <h3>Φορολογικές δηλώσεις 2026: Ο πλήρης οδηγός</h3>
+        <p>Προθεσμίες, τεκμήρια διαβίωσης και πρακτικές συμβουλές για μια σωστή υποβολή.</p>
+        <a href="#" class="read-more">Διαβάστε περισσότερα <i class="ti ti-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="alt-surface" id="contact">
+  <div class="blob" style="width:400px;height:400px;background:rgba(58,74,120,0.1);top:-100px;right:-140px;"></div>
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">Επικοινωνία</span>
+      <h2>Επικοινωνήστε μαζί μας</h2>
+      <p>Είμαστε εδώ για να απαντήσουμε σε κάθε ερώτησή σας και να σας βοηθήσουμε με τις λογιστικές σας ανάγκες.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info-card reveal">
+        <h3>Στοιχεία Επικοινωνίας</h3>
+        <p>Μιλήστε μαζί μας μέσω τηλεφώνου, email ή περάστε από το γραφείο μας.</p>
+        <div class="contact-row">
+          <i class="ti ti-map-pin"></i>
+          <div>
+            <div class="label">Διεύθυνση</div>
+            <div class="value">Άρη Βελουχιώτη 17, Τ.Κ 56121, Αμπελόκηποι, Θεσσαλονίκη</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <i class="ti ti-phone"></i>
+          <div>
+            <div class="label">Τηλέφωνο</div>
+            <div class="value">2310 720756</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <i class="ti ti-mail"></i>
+          <div>
+            <div class="label">Email</div>
+            <div class="value">Eleftheriades.kon@gmail.com</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <i class="ti ti-mail"></i>
+          <div>
+            <div class="label">Email</div>
+            <div class="value">Skembi.efi@gmail.com</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <i class="ti ti-clock"></i>
+          <div>
+            <div class="label">Ωράριο Λειτουργίας</div>
+            <div class="value">Δευτέρα – Παρασκευή, 08:30 – 17:30</div>
+          </div>
+        </div>
+        <div class="map-placeholder">
+          <i class="ti ti-map-2"></i>
+        </div>
+      </div>
+
+      <div class="contact-form-card reveal" style="transition-delay:.1s;">
+        <form id="contactForm" novalidate>
+          <div class="form-row">
+            <label for="cf-name">Όνομα</label>
+            <input type="text" id="cf-name" name="name" placeholder="Το ονοματεπώνυμό σας" required>
+          </div>
+          <div class="form-row">
+            <label for="cf-email">Email</label>
+            <input type="email" id="cf-email" name="email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-row">
+            <label for="cf-message">Μήνυμα</label>
+            <textarea id="cf-message" name="message" placeholder="Πείτε μας πώς μπορούμε να βοηθήσουμε…" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;">Αποστολή Μηνύματος</button>
+          <div class="form-success" id="formSuccess">
+            <i class="ti ti-circle-check"></i> Ευχαριστούμε! Το μήνυμά σας εστάλη — θα επικοινωνήσουμε σύντομα μαζί σας.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#top" class="logo-mark">
+          <img src="assets/logo.png" alt="ES Λογιστική" style="filter:invert(1) brightness(1.6);">
+          <span>ES Λογιστική</span>
+        </a>
+        <p>Αξιόπιστες λογιστικές και φοροτεχνικές υπηρεσίες στη Θεσσαλονίκη, με εμπειρία και προσωπική φροντίδα σε κάθε πελάτη.</p>
+      </div>
+      <div class="footer-nav">
+        <div class="col">
+          <h4>Πλοήγηση</h4>
+          <a href="#about">Σχετικά</a>
+          <a href="#services">Υπηρεσίες</a>
+          <a href="#team">Ομάδα</a>
+          <a href="#contact">Επικοινωνία</a>
+        </div>
+        <div class="col">
+          <h4>Επικοινωνία</h4>
+          <a href="tel:2310720756">2310 720756</a>
+          <a href="mailto:Eleftheriades.kon@gmail.com">Eleftheriades.kon@gmail.com</a>
+          <a href="mailto:Skembi.efi@gmail.com">Skembi.efi@gmail.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 ES Λογιστική. Με επιφύλαξη παντός δικαιώματος.</span>
+      <span>Άρη Βελουχιώτη 17, Αμπελόκηποι, Θεσσαλονίκη</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu toggle
+  (function(){
+    var btn = document.getElementById('hamburgerBtn');
+    var nav = document.getElementById('primaryNav');
+    btn.addEventListener('click', function(){
+      nav.classList.toggle('open');
+    });
+    nav.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ nav.classList.remove('open'); });
+    });
+  })();
+
+  // Scroll reveal
+  (function(){
+    var items = document.querySelectorAll('.reveal');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    items.forEach(function(el){ io.observe(el); });
+  })();
+
+  // Fake contact form submit
+  (function(){
+    var form = document.getElementById('contactForm');
+    var success = document.getElementById('formSuccess');
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      success.classList.add('show');
+      form.reset();
+      success.scrollIntoView({ behavior:'smooth', block:'nearest' });
+    });
+  })();
+</script>
+</body>
+</html>
