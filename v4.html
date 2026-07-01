@@ -289,29 +289,85 @@
     flex-wrap:wrap;
   }
 
-  .hero-photo-wrap{
+  .hero-visual-wrap{
     position:relative;
     justify-self:end;
     width:100%;
     max-width:460px;
   }
-  .hero-photo-frame{
+  .hero-visual-frame{
     position:relative;
     margin-right:-90px;
     border-radius:14px 120px 14px 14px;
     overflow:hidden;
     box-shadow:0 30px 60px -20px rgba(42,35,28,.35);
     aspect-ratio:3/4;
+    background:
+      radial-gradient(circle at 25% 20%, rgba(201,138,46,.25), transparent 55%),
+      radial-gradient(circle at 80% 75%, rgba(47,110,107,.28), transparent 60%),
+      linear-gradient(150deg, var(--surface) 0%, var(--bg) 60%, var(--surface) 100%);
   }
-  .hero-photo-frame img{
+  .hero-visual-blob{
+    position:absolute;
+    border-radius:48% 52% 60% 40% / 55% 45% 55% 45%;
+    filter:blur(1px);
+    z-index:0;
+  }
+  .hv-blob-a{
+    width:70%; height:42%;
+    top:-8%; right:-14%;
+    background:var(--ochre);
+    opacity:.4;
+    animation:blob-float-a 9s ease-in-out infinite;
+  }
+  .hv-blob-b{
+    width:60%; height:38%;
+    bottom:6%; left:-16%;
+    background:var(--teal);
+    opacity:.38;
+    border-radius:60% 40% 45% 55% / 45% 55% 45% 55%;
+    animation:blob-float-b 11s ease-in-out infinite;
+  }
+  .hv-blob-c{
+    width:40%; height:26%;
+    bottom:-6%; right:8%;
+    background:var(--rust);
+    opacity:.3;
+    border-radius:55% 45% 50% 50% / 50% 50% 60% 40%;
+    animation:blob-float-a 13s ease-in-out infinite reverse;
+  }
+  @keyframes blob-float-a{
+    0%, 100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(-4%, 4%) scale(1.05); }
+  }
+  @keyframes blob-float-b{
+    0%, 100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(4%, -3%) scale(1.04); }
+  }
+  .hero-visual-waves{
+    position:absolute;
+    inset:0;
     width:100%; height:100%;
-    object-fit:cover;
-    object-position:top center;
+    z-index:1;
   }
-  .hero-photo-frame::after{
+  .hero-visual-num{
+    position:absolute;
+    left:50%; top:50%;
+    transform:translate(-50%,-50%);
+    font-family:var(--font-display);
+    font-style:italic;
+    font-size:11rem;
+    line-height:1;
+    color:var(--ink);
+    opacity:.08;
+    z-index:0;
+    user-select:none;
+  }
+  .hero-visual-frame::after{
     content:"";
     position:absolute; inset:0;
-    background:linear-gradient(180deg, rgba(201,138,46,0) 55%, rgba(42,35,28,.35) 100%);
+    z-index:2;
+    background:linear-gradient(180deg, rgba(201,138,46,0) 55%, rgba(42,35,28,.22) 100%);
   }
   .hero-photo-card{
     position:absolute;
@@ -327,7 +383,7 @@
   }
   .hero-photo-card p.name{ font-weight:600; font-size:.95rem; }
   .hero-photo-card p.role{ font-size:.78rem; color:var(--ink-faint); margin-top:2px; }
-  .hero-photo-card .stars{ color:var(--ochre); font-size:.8rem; margin-bottom:6px; letter-spacing:2px; }
+  .hero-photo-card .stars{ color:var(--ochre); font-size:1.1rem; margin-bottom:6px; }
 
   .hero-scribble{
     position:absolute;
@@ -736,8 +792,8 @@
   /* ================= RESPONSIVE ================= */
   @media(max-width:1024px){
     .hero-grid{ grid-template-columns:1fr; gap:70px; }
-    .hero-photo-wrap{ justify-self:center; margin:0 auto; }
-    .hero-photo-frame{ margin-right:0; }
+    .hero-visual-wrap{ justify-self:center; margin:0 auto; }
+    .hero-visual-frame{ margin-right:0; }
     .hero p.lead{ max-width:100%; }
     .hero h1{ max-width:100%; }
     .diff-grid{ grid-template-columns:1fr; }
@@ -811,17 +867,26 @@
             <a href="#services" class="btn btn-outline">Δείτε τις Υπηρεσίες</a>
           </div>
         </div>
-        <div class="hero-photo-wrap reveal is-visible" style="transition-delay:.15s;">
+        <div class="hero-visual-wrap reveal is-visible" style="transition-delay:.15s;">
           <svg class="hero-scribble" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M4 40C20 8 45 4 55 22C63 36 80 14 96 6" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
           </svg>
-          <div class="hero-photo-frame">
-            <img src="assets/team-2.jpg" alt="Σκέμπη Ευθυμία, Founder της ES Λογιστική">
+          <div class="hero-visual-frame">
+            <div class="hero-visual-blob hv-blob-a"></div>
+            <div class="hero-visual-blob hv-blob-b"></div>
+            <div class="hero-visual-blob hv-blob-c"></div>
+            <div class="grain" style="opacity:.3;"></div>
+            <svg class="hero-visual-waves" viewBox="0 0 400 500" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 180 C 60 140, 120 140, 180 175 S 300 220, 400 170" stroke="var(--teal)" stroke-width="3" fill="none" opacity=".55" stroke-linecap="round"/>
+              <path d="M0 250 C 70 210, 140 300, 210 255 S 330 190, 400 245" stroke="var(--ochre-dark)" stroke-width="2.5" fill="none" opacity=".4" stroke-linecap="round"/>
+              <path d="M0 330 C 80 290, 150 370, 220 335 S 340 290, 400 330" stroke="var(--rust)" stroke-width="2.5" fill="none" opacity=".35" stroke-linecap="round"/>
+            </svg>
+            <span class="hero-visual-num">Λ</span>
           </div>
           <div class="hero-photo-card">
-            <div class="stars">★★★★★</div>
-            <p class="name">Σκέμπη Ευθυμία</p>
-            <p class="role">Founder / Λογίστρια φοροτεχνικός Ά τάξης</p>
+            <div class="stars"><i class="ti ti-award-filled"></i></div>
+            <p class="name">15+ χρόνια εμπειρίας</p>
+            <p class="role">Λογιστικές &amp; φοροτεχνικές υπηρεσίες στη Θεσσαλονίκη</p>
           </div>
         </div>
       </div>

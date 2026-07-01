@@ -159,20 +159,27 @@
   .hero-ctas{display:flex;flex-wrap:wrap;gap:16px;margin-top:38px;}
 
   .hero-visual{position:relative;z-index:1;height:560px;}
-  .hero-photo-wrap{
+  .hero-abstract-wrap{
     position:absolute;top:0;bottom:0;right:calc(-1 * var(--gutter));left:6%;
     border-radius:28px 0 0 28px;overflow:hidden;
     box-shadow:-20px 30px 60px rgba(36,31,26,0.18);
+    background:linear-gradient(180deg,var(--sand-alt) 0%,var(--sand-alt) 52%,rgba(58,74,120,0.14) 52%,rgba(58,74,120,0.22) 100%);
   }
-  .hero-photo-wrap img{width:100%;height:100%;object-fit:cover;}
-  .hero-photo-tag{
+  .hero-abstract-wrap .grain{opacity:0.07;}
+  .hero-abstract-wrap .horizon-svg{position:absolute;inset:0;width:100%;height:100%;}
+  .hero-abstract-wrap .sun-glow{
+    position:absolute;left:50%;top:46%;width:220px;height:220px;border-radius:50%;
+    background:radial-gradient(circle,rgba(193,99,61,0.55) 0%,rgba(193,99,61,0.18) 55%,rgba(193,99,61,0) 75%);
+    transform:translate(-50%,-50%);filter:blur(2px);
+  }
+  .hero-float-card{
     position:absolute;left:-24px;bottom:34px;z-index:4;
     background:var(--sand);border:1px solid var(--hairline);
     padding:16px 22px;border-radius:16px;box-shadow:0 18px 40px rgba(36,31,26,0.14);
     max-width:230px;
   }
-  .hero-photo-tag p{margin:0;font-size:13px;color:var(--ink-soft);}
-  .hero-photo-tag strong{display:block;font-family:'Domine',serif;font-size:15.5px;margin-bottom:4px;}
+  .hero-float-card p{margin:0;font-size:13px;color:var(--ink-soft);}
+  .hero-float-card strong{display:block;font-family:'Domine',serif;font-size:15.5px;margin-bottom:4px;color:var(--indigo);}
 
   .stat-strip{
     display:flex;gap:56px;margin-top:64px;flex-wrap:wrap;position:relative;z-index:3;
@@ -321,8 +328,8 @@
   @media(max-width:1080px){
     .hero-grid{grid-template-columns:1fr;}
     .hero-visual{height:420px;margin-top:20px;}
-    .hero-photo-wrap{left:0;right:0;border-radius:24px;}
-    .hero-photo-tag{left:20px;}
+    .hero-abstract-wrap{left:0;right:0;border-radius:24px;}
+    .hero-float-card{left:20px;}
     .diafora-grid{grid-template-columns:1fr;}
     .services-grid,.blog-grid{grid-template-columns:1fr 1fr;}
     .contact-grid{grid-template-columns:1fr;}
@@ -392,12 +399,18 @@
         </div>
       </div>
       <div class="hero-visual reveal" style="transition-delay:.15s;">
-        <div class="hero-photo-wrap">
-          <img src="assets/team-1.jpg" alt="Ελευθεριάδης Κωνσταντίνος — ES Λογιστική">
+        <div class="hero-abstract-wrap">
+          <div class="grain"></div>
+          <div class="sun-glow"></div>
+          <svg class="horizon-svg" viewBox="0 0 600 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,368 C90,336 150,392 240,364 C330,336 380,388 470,356 C520,340 560,352 600,340 L600,700 L0,700 Z" fill="rgba(58,74,120,0.5)"></path>
+            <path d="M0,404 C100,380 190,420 280,398 C370,376 430,412 520,392 C550,386 580,392 600,384 L600,700 L0,700 Z" fill="rgba(58,74,120,0.72)"></path>
+            <path d="M0,440 C110,420 220,452 320,432 C420,412 480,444 600,424 L600,700 L0,700 Z" fill="rgba(36,31,26,0.55)"></path>
+          </svg>
         </div>
-        <div class="hero-photo-tag">
-          <strong>Κωνσταντίνος Ελευθεριάδης</strong>
-          <p>Λογιστής φοροτεχνικός Ά τάξης</p>
+        <div class="hero-float-card">
+          <strong>15+ χρόνια εμπειρίας</strong>
+          <p>Άρη Βελουχιώτη 17, Αμπελόκηποι, Θεσσαλονίκη</p>
         </div>
       </div>
     </div>

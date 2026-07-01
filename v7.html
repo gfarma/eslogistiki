@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ES Λογιστική — Θησαυροφυλάκιο Εμπιστοσύνης | Θεσσαλονίκη</title>
+<meta name="description" content="ES Λογιστική — Αξιόπιστες λογιστικές υπηρεσίες στη Θεσσαλονίκη. Τήρηση βιβλίων, μισθοδοσία, φοροτεχνικός σχεδιασμός, συμβουλευτική για επιχειρήσεις και ιδιώτες.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     ES ΛΟΓΙΣΤΙΚΗ — "ΜΑΡΜΑΡΟ & ΧΡΥΣΟΣ"
+     Hellenic Classical × Art Deco luxury
+     ============================================================ */
+
+  :root{
+    --marble: #0D0D0F;
+    --marble-2: #17161A;
+    --marble-3: #1E1C20;
+    --gold: #C9A227;
+    --gold-bright: #E8C766;
+    --parchment: #F3ECDA;
+    --oxblood: #6E2430;
+    --line: #3A362C;
+    --muted: #A99C7E;
+
+    --font-display: 'Cinzel', 'Times New Roman', serif;
+    --font-body: 'EB Garamond', 'Georgia', serif;
+
+    --space-1: 0.5rem;
+    --space-2: 1rem;
+    --space-3: 1.5rem;
+    --space-4: 2.5rem;
+    --space-5: 4rem;
+    --space-6: 6rem;
+    --space-7: 9rem;
+
+    --container: 1240px;
+    --ease-lux: cubic-bezier(.16,.8,.24,1);
+  }
+
+  *, *::before, *::after{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--marble);
+    color: var(--parchment);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  img{ max-width:100%; display:block; }
+  a{ color: inherit; text-decoration: none; }
+  ul{ margin:0; padding:0; list-style:none; }
+  button{ font-family: inherit; }
+
+  ::selection{ background: var(--gold); color: var(--marble); }
+
+  /* Scrollbar — thin gold */
+  ::-webkit-scrollbar{ width:10px; }
+  ::-webkit-scrollbar-track{ background: var(--marble); }
+  ::-webkit-scrollbar-thumb{ background: var(--line); border-radius: 0; }
+  ::-webkit-scrollbar-thumb:hover{ background: var(--gold); }
+
+  .container{
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+  }
+
+  /* ============================================================
+     MARBLE TEXTURE — layered radial gradients + fine vein lines
+     ============================================================ */
+  .marble-bg{
+    position: relative;
+    background-color: var(--marble);
+    background-image:
+      radial-gradient(ellipse 80% 50% at 15% 0%, rgba(201,162,39,0.08), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 85% 100%, rgba(110,36,48,0.10), transparent 60%),
+      linear-gradient(115deg, transparent 38%, rgba(201,162,39,0.035) 39%, transparent 41%),
+      linear-gradient(105deg, transparent 60%, rgba(243,236,218,0.02) 61%, transparent 63%),
+      linear-gradient(160deg, transparent 20%, rgba(201,162,39,0.02) 21%, transparent 23%);
+    background-size: 100% 100%, 100% 100%, 140% 140%, 160% 160%, 130% 130%;
+    background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
+  }
+  .marble-bg-alt{
+    background-color: var(--marble-2);
+    background-image:
+      radial-gradient(ellipse 70% 60% at 90% 10%, rgba(201,162,39,0.07), transparent 65%),
+      radial-gradient(ellipse 50% 50% at 5% 90%, rgba(110,36,48,0.09), transparent 60%),
+      linear-gradient(125deg, transparent 42%, rgba(201,162,39,0.03) 43%, transparent 45%),
+      linear-gradient(95deg, transparent 55%, rgba(243,236,218,0.018) 56%, transparent 58%);
+    background-size: 100% 100%, 100% 100%, 150% 150%, 170% 170%;
+  }
+
+  /* fine noise overlay for depth */
+  .noise-overlay{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ============================================================
+     TYPOGRAPHY
+     ============================================================ */
+  h1, h2, h3, h4{
+    font-family: var(--font-display);
+    font-weight: 600;
+    margin: 0;
+    color: var(--parchment);
+  }
+
+  .eyebrow{
+    font-family: var(--font-body);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 0.82rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9em;
+  }
+  .eyebrow .flourish{ display:inline-block; width: 14px; height: 8px; opacity:.85; }
+
+  .section-label{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-5);
+  }
+  .section-label h2{
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: 0.05em;
+  }
+  .section-label p.section-sub{
+    max-width: 620px;
+    color: var(--muted);
+    font-size: 1.15rem;
+    font-style: italic;
+    margin: 0;
+  }
+
+  .gold-text{ color: var(--gold); }
+
+  /* ============================================================
+     MEANDER / GREEK KEY PATTERN — reusable SVG strip
+     ============================================================ */
+  .meander{
+    width: 100%;
+    height: 22px;
+    display: block;
+    overflow: hidden;
+  }
+  .meander svg{
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .meander-wrap{
+    position: relative;
+    padding: var(--space-2) 0;
+  }
+  .meander-reveal{
+    overflow: hidden;
+  }
+  .meander-reveal svg{
+    transform-origin: center;
+  }
+
+  /* ============================================================
+     NAV
+     ============================================================ */
+  header.site-header{
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(13,13,15,0.82);
+    backdrop-filter: blur(14px) saturate(1.1);
+    border-bottom: 1px solid var(--line);
+    transition: background .4s var(--ease-lux);
+  }
+  .nav-inner{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 0;
+  }
+  .brand{
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+  .brand img{
+    height: 40px;
+    width: auto;
+    filter: invert(1) sepia(0.35) saturate(3) hue-rotate(-10deg) brightness(1.15) contrast(1.05);
+  }
+  .brand-name{
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    letter-spacing: 0.14em;
+    color: var(--parchment);
+  }
+  nav.primary-nav{
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  nav.primary-nav ul{
+    display: flex;
+    gap: var(--space-3);
+  }
+  nav.primary-nav a.nav-link{
+    font-size: 0.92rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    position: relative;
+    padding: 0.3rem 0.1rem;
+    transition: color .3s var(--ease-lux);
+  }
+  nav.primary-nav a.nav-link::after{
+    content:'';
+    position: absolute;
+    left: 0; bottom: -2px;
+    width: 0%;
+    height: 1px;
+    background: var(--gold);
+    transition: width .35s var(--ease-lux);
+  }
+  nav.primary-nav a.nav-link:hover{ color: var(--gold-bright); }
+  nav.primary-nav a.nav-link:hover::after{ width: 100%; }
+
+  .btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6em;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.9rem 1.9rem;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all .35s var(--ease-lux);
+    white-space: nowrap;
+    border: 1px solid transparent;
+  }
+  .btn-gold{
+    background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+    color: var(--marble);
+    box-shadow: 0 2px 0 rgba(0,0,0,.25), 0 8px 24px rgba(201,162,39,0.0);
+  }
+  .btn-gold:hover{
+    box-shadow: 0 2px 0 rgba(0,0,0,.25), 0 10px 30px rgba(201,162,39,0.35);
+    transform: translateY(-2px);
+  }
+  .btn-ghost{
+    background: transparent;
+    color: var(--gold-bright);
+    border-color: var(--gold);
+  }
+  .btn-ghost:hover{
+    background: rgba(201,162,39,0.08);
+    box-shadow: 0 0 0 1px var(--gold), 0 8px 24px rgba(201,162,39,0.15);
+    transform: translateY(-2px);
+  }
+  .btn-small{ padding: 0.65rem 1.3rem; font-size: 0.72rem; }
+
+  .nav-cta{ display:flex; align-items:center; gap: var(--space-3); }
+
+  .hamburger{
+    display:none;
+    flex-direction: column;
+    gap: 5px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding: 8px;
+    z-index: 200;
+  }
+  .hamburger span{
+    display:block;
+    width: 26px;
+    height: 1px;
+    background: var(--gold);
+    transition: transform .3s var(--ease-lux), opacity .3s var(--ease-lux);
+  }
+  .hamburger.active span:nth-child(1){ transform: translateY(6px) rotate(45deg); }
+  .hamburger.active span:nth-child(2){ opacity: 0; }
+  .hamburger.active span:nth-child(3){ transform: translateY(-6px) rotate(-45deg); }
+
+  .mobile-panel{
+    position: fixed;
+    top: 0; right: 0;
+    width: 100%;
+    max-width: 380px;
+    height: 100vh;
+    background: var(--marble-2);
+    border-left: 1px solid var(--line);
+    z-index: 150;
+    transform: translateX(100%);
+    transition: transform .45s var(--ease-lux);
+    padding: 6rem 2.5rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .mobile-panel.open{ transform: translateX(0); }
+  .mobile-panel .meander{ position:absolute; top:0; left:0; right:0; }
+  .mobile-panel ul{ display:flex; flex-direction: column; gap: var(--space-3); }
+  .mobile-panel a{
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    letter-spacing: 0.06em;
+    color: var(--parchment);
+  }
+  .mobile-panel a:hover{ color: var(--gold-bright); }
+  .scrim{
+    position: fixed; inset:0; background: rgba(0,0,0,0.6);
+    z-index: 140; opacity:0; pointer-events:none;
+    transition: opacity .4s var(--ease-lux);
+  }
+  .scrim.open{ opacity: 1; pointer-events:auto; }
+
+  /* ============================================================
+     HERO — ceremonial, centered, monumental
+     ============================================================ */
+  .hero{
+    position: relative;
+    padding: 11rem 0 var(--space-6);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .hero-inner{
+    max-width: 880px;
+    margin: 0 auto;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+  }
+  .hero .eyebrow{ margin-bottom: var(--space-3); }
+  .hero h1{
+    font-size: clamp(2.6rem, 6.4vw, 5.4rem);
+    line-height: 1.12;
+    letter-spacing: 0.02em;
+    margin-bottom: var(--space-3);
+  }
+  .hero h1 .shimmer{
+    display: inline-block;
+    background: linear-gradient(
+      100deg,
+      var(--gold) 20%,
+      var(--gold-bright) 35%,
+      #fff6d8 45%,
+      var(--gold-bright) 55%,
+      var(--gold) 70%
+    );
+    background-size: 260% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--gold);
+    animation: shimmer-sweep 5.5s ease-in-out 1.2s infinite;
+  }
+  @keyframes shimmer-sweep{
+    0%{ background-position: 130% 0; }
+    35%{ background-position: -30% 0; }
+    100%{ background-position: -30% 0; }
+  }
+  .hero .subtitle{
+    font-size: 1.28rem;
+    color: var(--muted);
+    max-width: 640px;
+    margin: 0 auto var(--space-4);
+    font-style: italic;
+  }
+  .hero-ctas{
+    display:flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: var(--space-2);
+  }
+  .hero-meander-top, .hero-meander-bottom{
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .hero-meander-top{ margin-bottom: var(--space-5); }
+  .hero-meander-bottom{ margin-top: var(--space-6); }
+
+  /* ============================================================
+     SECTION SPACING
+     ============================================================ */
+  section{ position: relative; padding: var(--space-6) 0; }
+  .divider-strip{ max-width: 1000px; margin: 0 auto; padding: 0 var(--space-4); }
+
+  /* ============================================================
+     SCROLL REVEAL
+     ============================================================ */
+  .reveal{
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .7s var(--ease-lux), transform .7s var(--ease-lux);
+  }
+  .reveal.in-view{ opacity: 1; transform: translateY(0); }
+
+  /* ============================================================
+     TEAM SECTION — strict equal 3-col grid
+     ============================================================ */
+  .team-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .team-card{
+    position: relative;
+    background: var(--marble-2);
+    border: 1px solid var(--line);
+    padding: 10px;
+    transition: transform .5s var(--ease-lux), border-color .4s var(--ease-lux), box-shadow .5s var(--ease-lux);
+  }
+  .team-card::before{
+    content:'';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(201,162,39,0.35);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .team-card:hover{
+    transform: translateY(-6px);
+    border-color: var(--gold);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(201,162,39,0.25);
+  }
+  .team-card .corner{
+    position: absolute;
+    width: 22px; height: 22px;
+    z-index: 3;
+    opacity: 0.9;
+  }
+  .team-card .corner.tl{ top: 6px; left: 6px; }
+  .team-card .corner.tr{ top: 6px; right: 6px; transform: scaleX(-1); }
+  .team-card .corner.bl{ bottom: 6px; left: 6px; transform: scaleY(-1); }
+  .team-card .corner.br{ bottom: 6px; right: 6px; transform: scale(-1,-1); }
+
+  .team-photo-wrap{
+    position: relative;
+    width: 100%;
+  }
+  .team-photo-frame{
+    position: relative;
+    aspect-ratio: 2 / 3;
+    width: 100%;
+    overflow: hidden;
+    background: var(--marble);
+  }
+  .team-photo-frame img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    filter: saturate(0.86) contrast(1.05) sepia(0.08);
+    transition: filter .5s var(--ease-lux), transform .6s var(--ease-lux);
+  }
+  .team-card:hover .team-photo-frame img{
+    filter: saturate(1) contrast(1.08) sepia(0.03);
+    transform: scale(1.035);
+  }
+  .team-photo-frame::after{
+    content:'';
+    position: absolute; inset:0;
+    background: linear-gradient(180deg, rgba(13,13,15,0) 60%, rgba(13,13,15,0.55) 100%);
+    pointer-events: none;
+  }
+  .team-laurel{
+    display:flex;
+    justify-content:center;
+    margin: 0.9rem 0 0.3rem;
+  }
+  .team-laurel svg{ width: 34px; height: auto; opacity: 0.9; }
+
+  .team-info{
+    padding: 0.5rem 1.1rem 1.3rem;
+    text-align: center;
+  }
+  .team-info .name{
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    letter-spacing: 0.03em;
+    color: var(--parchment);
+    margin: 0 0 0.4rem;
+  }
+  .team-info .role{
+    font-size: 0.92rem;
+    color: var(--gold);
+    font-style: italic;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  /* ============================================================
+     "Η ΔΙΑΦΟΡΑ ΜΑΣ" — huge translucent roman numerals
+     ============================================================ */
+  .difference-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .difference-item{
+    position: relative;
+    background: var(--marble);
+    padding: var(--space-5) var(--space-4);
+    overflow: hidden;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .difference-item .numeral{
+    position: absolute;
+    top: 50%; left: var(--space-4);
+    transform: translateY(-50%);
+    font-family: var(--font-display);
+    font-size: clamp(6rem, 12vw, 10rem);
+    font-weight: 900;
+    color: rgba(201,162,39,0.10);
+    line-height: 1;
+    pointer-events: none;
+    z-index: 0;
+    user-select: none;
+  }
+  .difference-item .content{ position: relative; z-index:1; max-width: 380px; }
+  .difference-item h3{
+    font-size: 1.4rem;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.7rem;
+    color: var(--gold-bright);
+  }
+  .difference-item p{
+    color: var(--muted);
+    margin: 0;
+    font-size: 1.05rem;
+  }
+
+  /* ============================================================
+     SERVICES — classical column motif
+     ============================================================ */
+  .services-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+  .service-col{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-3) var(--space-3) var(--space-4);
+    position: relative;
+  }
+  .service-col:not(:last-child)::after{
+    content:'';
+    position: absolute;
+    top: 6rem; right: calc(var(--space-4) / -2);
+    bottom: 1rem;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--line) 15%, var(--line) 85%, transparent);
+  }
+  .capital{
+    width: 84px;
+    height: auto;
+    margin-bottom: var(--space-2);
+  }
+  .service-col h3{
+    font-size: 1.5rem;
+    letter-spacing: 0.04em;
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    position: relative;
+  }
+  .service-col h3::after{
+    content:'';
+    position: absolute;
+    bottom:0; left:50%;
+    transform: translateX(-50%);
+    width: 46px; height: 1px;
+    background: var(--gold);
+  }
+  .service-list{
+    text-align: left;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .service-list li{
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7em;
+    color: var(--parchment);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .service-list li svg{
+    flex-shrink: 0;
+    width: 13px; height: 13px;
+    margin-top: 0.45em;
+    opacity: 0.9;
+  }
+
+  /* ============================================================
+     GOLD DOUBLE-LINE FRAME CARDS (blog + generic)
+     ============================================================ */
+  .frame-card{
+    position: relative;
+    padding: 3px;
+    background: linear-gradient(135deg, rgba(201,162,39,0.5), rgba(201,162,39,0.12) 40%, rgba(201,162,39,0.4));
+  }
+  .frame-card-inner{
+    position: relative;
+    background: var(--marble-2);
+    height: 100%;
+    padding: var(--space-3);
+    border: 1px solid rgba(201,162,39,0.25);
+    overflow: hidden;
+  }
+  .frame-card-inner::before{
+    content:'';
+    position:absolute;
+    top:-60%; left:-60%;
+    width: 60%; height: 220%;
+    background: linear-gradient(100deg, transparent, rgba(232,199,102,0.12), transparent);
+    transform: rotate(20deg);
+    transition: transform 1s var(--ease-lux), opacity .6s;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .frame-card:hover .frame-card-inner::before{
+    transform: rotate(20deg) translateX(220%);
+    opacity: 1;
+  }
+
+  .blog-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+  }
+  .blog-tag{
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--marble);
+    background: var(--oxblood);
+    background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+    padding: 0.35em 0.8em;
+    margin-bottom: 1rem;
+  }
+  .blog-date{
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-style: italic;
+    display:block;
+    margin-bottom: 0.6rem;
+  }
+  .blog-title{
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    line-height: 1.4;
+    color: var(--parchment);
+    margin: 0 0 0.8rem;
+  }
+  .blog-excerpt{
+    color: var(--muted);
+    font-size: 0.98rem;
+    margin: 0 0 1.2rem;
+  }
+  .blog-readmore{
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font-family: var(--font-display);
+  }
+  .blog-readmore svg{ width: 12px; transition: transform .3s var(--ease-lux); }
+  .frame-card:hover .blog-readmore svg{ transform: translateX(4px); }
+
+  .section-head-row{
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: var(--space-4);
+    gap: var(--space-3);
+  }
+  .section-head-row .section-label{ align-items: flex-start; text-align:left; margin-bottom:0; }
+
+  /* ============================================================
+     CONTACT
+     ============================================================ */
+  .contact-grid{
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: var(--space-4);
+    align-items: stretch;
+  }
+  .contact-info-panel{
+    padding: 2px;
+    background: linear-gradient(160deg, rgba(201,162,39,0.55), rgba(201,162,39,0.1) 45%, rgba(201,162,39,0.4));
+  }
+  .contact-info-inner{
+    background: var(--marble-2);
+    height: 100%;
+    padding: var(--space-4);
+    border: 1px solid rgba(201,162,39,0.2);
+  }
+  .contact-item{
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .contact-item:last-child{ border-bottom: none; }
+  .contact-item svg{ width: 20px; height: 20px; flex-shrink: 0; margin-top: 3px; }
+  .contact-item .label{
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 0.3rem;
+  }
+  .contact-item .value{ margin:0; color: var(--parchment); font-size: 1.02rem; }
+  .contact-item a.value:hover{ color: var(--gold-bright); }
+
+  .map-placeholder{
+    margin-top: var(--space-3);
+    aspect-ratio: 16/9;
+    position: relative;
+    border: 1px solid var(--line);
+    background:
+      radial-gradient(ellipse at 50% 50%, rgba(201,162,39,0.08), transparent 70%),
+      repeating-linear-gradient(45deg, rgba(201,162,39,0.05) 0 2px, transparent 2px 22px),
+      var(--marble);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow: hidden;
+  }
+  .map-placeholder svg{ width: 64px; opacity: 0.55; }
+  .map-placeholder .pin-label{
+    position:absolute;
+    bottom: 14px; left:0; right:0;
+    text-align:center;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-family: var(--font-display);
+  }
+
+  .contact-form-panel{
+    padding: 2px;
+    background: linear-gradient(160deg, rgba(201,162,39,0.55), rgba(201,162,39,0.1) 45%, rgba(201,162,39,0.4));
+  }
+  .contact-form-inner{
+    background: var(--marble-2);
+    height: 100%;
+    padding: var(--space-4);
+    border: 1px solid rgba(201,162,39,0.2);
+  }
+  .form-group{ margin-bottom: var(--space-3); }
+  .form-group label{
+    display:block;
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+  .form-group input, .form-group textarea{
+    width: 100%;
+    background: rgba(243,236,218,0.03);
+    border: 1px solid var(--line);
+    color: var(--parchment);
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    padding: 0.85rem 1rem;
+    transition: border-color .3s var(--ease-lux), background .3s var(--ease-lux);
+  }
+  .form-group input:focus, .form-group textarea:focus{
+    outline: none;
+    border-color: var(--gold);
+    background: rgba(201,162,39,0.05);
+  }
+  .form-group textarea{ resize: vertical; min-height: 130px; }
+  .form-submit-btn{ width: 100%; border: none; margin-top: 0.5rem; }
+  .form-success{
+    display: none;
+    text-align: center;
+    padding: var(--space-4) var(--space-2);
+  }
+  .form-success.show{ display:block; }
+  .form-success svg{ width: 46px; margin-bottom: 1rem; }
+  .form-success h4{ font-size: 1.3rem; color: var(--gold-bright); margin-bottom: 0.5rem; }
+  .form-success p{ color: var(--muted); margin:0; }
+  .contact-form.hide{ display:none; }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  footer{
+    padding-top: var(--space-5);
+    padding-bottom: var(--space-4);
+  }
+  .footer-top{
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    padding-bottom: var(--space-4);
+  }
+  .footer-brand{ max-width: 340px; }
+  .footer-brand .brand{ margin-bottom: 1rem; }
+  .footer-brand p{ color: var(--muted); font-size: 0.98rem; }
+  .footer-links{ display:flex; gap: var(--space-5); flex-wrap: wrap; }
+  .footer-col h5{
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 1rem;
+  }
+  .footer-col ul{ display:flex; flex-direction: column; gap: 0.7rem; }
+  .footer-col a{ color: var(--muted); font-size: 0.98rem; transition: color .3s; }
+  .footer-col a:hover{ color: var(--gold-bright); }
+  .footer-bottom{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    padding-top: var(--space-3);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-bottom p{ color: var(--muted); font-size: 0.85rem; margin:0; }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 1080px){
+    .contact-grid{ grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 900px){
+    nav.primary-nav > ul{ display:none; }
+    .nav-cta .btn-ghost{ display:none; }
+    .hamburger{ display:flex; }
+    .difference-grid{ grid-template-columns: 1fr; }
+    .services-grid{ grid-template-columns: 1fr; gap: var(--space-5); }
+    .service-col:not(:last-child)::after{ display:none; }
+    .blog-grid{ grid-template-columns: 1fr; }
+    .section-head-row{ flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (max-width: 640px){
+    body{ font-size: 16.5px; }
+    .container{ padding: 0 var(--space-3); }
+    .hero{ padding-top: 8.5rem; }
+    .hero h1{ letter-spacing: 0; }
+    .team-grid{ gap: 0.6rem; }
+    .team-card{ padding: 6px; }
+    .team-info{ padding: 0.4rem 0.4rem 1rem; }
+    .team-info .name{ font-size: 0.82rem; }
+    .team-info .role{ font-size: 0.72rem; }
+    .team-laurel svg{ width: 22px; }
+    .team-card .corner{ width: 14px; height: 14px; }
+    .difference-item{ padding: var(--space-4) var(--space-3); min-height: 200px; }
+    .difference-item .numeral{ left: var(--space-2); font-size: 5rem; }
+    .contact-grid{ gap: var(--space-3); }
+    section{ padding: var(--space-5) 0; }
+    .footer-links{ gap: var(--space-4); }
+  }
+
+  @media (max-width: 420px){
+    .hero-ctas{ flex-direction: column; width: 100%; }
+    .hero-ctas .btn{ width: 100%; }
+    .team-info .role{ font-size: 0.66rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="noise-overlay"></div>
+
+<!-- ============================================================
+     HEADER / NAV
+     ============================================================ -->
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="#" class="brand" aria-label="ES Λογιστική — Αρχική">
+      <img src="assets/logo.png" alt="ES Λογιστική λογότυπο">
+      <span class="brand-name">ES ΛΟΓΙΣΤΙΚΗ</span>
+    </a>
+    <nav class="primary-nav">
+      <ul>
+        <li><a href="#about" class="nav-link">Σχετικά</a></li>
+        <li><a href="#services" class="nav-link">Υπηρεσίες</a></li>
+        <li><a href="#team" class="nav-link">Ομάδα</a></li>
+        <li><a href="#contact" class="nav-link">Επικοινωνία</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="#contact" class="btn btn-ghost btn-small">Ραντεβού</a>
+      </div>
+    </nav>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Μενού" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="scrim" id="scrim"></div>
+<div class="mobile-panel" id="mobilePanel">
+  <div class="meander" aria-hidden="true">
+    <svg viewBox="0 0 400 22" preserveAspectRatio="none"><use href="#meanderPattern"></use></svg>
+  </div>
+  <ul>
+    <li><a href="#about" class="mobile-link">Σχετικά</a></li>
+    <li><a href="#services" class="mobile-link">Υπηρεσίες</a></li>
+    <li><a href="#team" class="mobile-link">Ομάδα</a></li>
+    <li><a href="#contact" class="mobile-link">Επικοινωνία</a></li>
+  </ul>
+  <a href="#contact" class="btn btn-gold mobile-link">Ραντεβού</a>
+</div>
+
+<!-- ============================================================
+     GLOBAL SVG DEFS — meander pattern, laurel, capitals, icons
+     ============================================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Greek key / meander repeating unit -->
+    <g id="meanderUnit">
+      <path d="M0,22 L0,0 L22,0 L22,8 L8,8 L8,14 L22,14 L22,22 Z" fill="none" stroke="var(--gold)" stroke-width="1.6"/>
+    </g>
+    <pattern id="meanderPattern" width="30" height="22" patternUnits="userSpaceOnUse">
+      <use href="#meanderUnit"/>
+    </pattern>
+
+    <!-- Laurel sprig -->
+    <g id="laurelIcon">
+      <path d="M17,2 C10,4 4,10 3,17" fill="none" stroke="var(--gold)" stroke-width="1.3"/>
+      <path d="M17,2 C24,4 30,10 31,17" fill="none" stroke="var(--gold)" stroke-width="1.3"/>
+      <path d="M6,8 C8,6 10,6 11,7" fill="none" stroke="var(--gold)" stroke-width="1.1"/>
+      <path d="M4,12 C6,10.5 8.5,10.5 9.5,11.5" fill="none" stroke="var(--gold)" stroke-width="1.1"/>
+      <path d="M3.4,16 C5.5,15 8,15.3 8.8,16.5" fill="none" stroke="var(--gold)" stroke-width="1.1"/>
+      <path d="M28,8 C26,6 24,6 23,7" fill="none" stroke="var(--gold)" stroke-width="1.1"/>
+      <path d="M30,12 C28,10.5 25.5,10.5 24.5,11.5" fill="none" stroke="var(--gold)" stroke-width="1.1"/>
+      <path d="M30.6,16 C28.5,15 26,15.3 25.2,16.5" fill="none" stroke="var(--gold)" stroke-width="1.1"/>
+      <circle cx="17" cy="18.5" r="1.6" fill="var(--gold)"/>
+    </g>
+
+    <!-- corner ornament -->
+    <g id="cornerOrnament">
+      <path d="M0,22 L0,4 Q0,0 4,0 L22,0" fill="none" stroke="var(--gold)" stroke-width="1.4"/>
+      <circle cx="4" cy="4" r="2" fill="var(--gold)"/>
+    </g>
+
+    <!-- checkmark bullet for service lists -->
+    <g id="bulletDiamond">
+      <path d="M6,0 L12,6 L6,12 L0,6 Z" fill="none" stroke="var(--gold)" stroke-width="1.3"/>
+    </g>
+
+    <!-- doric-ish capital -->
+    <g id="capitalDoric">
+      <rect x="30" y="0" width="24" height="6" fill="var(--gold)"/>
+      <rect x="22" y="6" width="40" height="5" fill="none" stroke="var(--gold)" stroke-width="1.4"/>
+      <path d="M28,11 L36,30 M42,11 L42,30 M56,11 L48,30" stroke="var(--gold)" stroke-width="1.2" fill="none"/>
+      <line x1="18" y1="11" x2="66" y2="11" stroke="var(--gold)" stroke-width="1.4"/>
+    </g>
+
+    <!-- ionic-ish capital (scroll volutes) -->
+    <g id="capitalIonic">
+      <rect x="30" y="0" width="24" height="5" fill="var(--gold)"/>
+      <circle cx="22" cy="14" r="7" fill="none" stroke="var(--gold)" stroke-width="1.4"/>
+      <circle cx="22" cy="14" r="2.4" fill="none" stroke="var(--gold)" stroke-width="1.1"/>
+      <circle cx="62" cy="14" r="7" fill="none" stroke="var(--gold)" stroke-width="1.4"/>
+      <circle cx="62" cy="14" r="2.4" fill="none" stroke="var(--gold)" stroke-width="1.1"/>
+      <path d="M29,14 L36,26 M42,14 L42,30 M55,14 L48,26" stroke="var(--gold)" stroke-width="1.2" fill="none"/>
+      <line x1="15" y1="24" x2="69" y2="24" stroke="var(--gold)" stroke-width="1.4"/>
+    </g>
+
+    <!-- corinthian-ish capital (acanthus suggestion) -->
+    <g id="capitalCorinthian">
+      <rect x="30" y="0" width="24" height="5" fill="var(--gold)"/>
+      <path d="M18,26 C18,14 26,9 30,9 C28,16 30,22 36,26" fill="none" stroke="var(--gold)" stroke-width="1.3"/>
+      <path d="M42,9 C46,9 48,16 42,26" fill="none" stroke="var(--gold)" stroke-width="1.3"/>
+      <path d="M66,26 C66,14 58,9 54,9 C56,16 54,22 48,26" fill="none" stroke="var(--gold)" stroke-width="1.3"/>
+      <line x1="15" y1="26" x2="69" y2="26" stroke="var(--gold)" stroke-width="1.4"/>
+    </g>
+
+    <!-- flourish (small tick marks flanking eyebrow) -->
+    <g id="flourishMark">
+      <path d="M0,4 L14,4 M4,0 L4,8 M10,0 L10,8" stroke="var(--gold)" stroke-width="1.2" fill="none"/>
+    </g>
+
+    <!-- pin / map marker for placeholder -->
+    <g id="pinMark">
+      <path d="M32,4 C20,4 12,13 12,25 C12,42 32,60 32,60 C32,60 52,42 52,25 C52,13 44,4 32,4 Z" fill="none" stroke="var(--gold)" stroke-width="2"/>
+      <circle cx="32" cy="25" r="8" fill="none" stroke="var(--gold)" stroke-width="2"/>
+    </g>
+
+    <!-- email / phone / clock / location mini icons -->
+    <g id="iconMail">
+      <rect x="1" y="4" width="22" height="16" rx="1" fill="none" stroke="var(--gold)" stroke-width="1.5"/>
+      <path d="M2,5 L12,14 L22,5" fill="none" stroke="var(--gold)" stroke-width="1.5"/>
+    </g>
+    <g id="iconPhone">
+      <path d="M4,2 C4,2 8,1 9,5 C9.6,7.5 7,8 7,9.5 C7,12 12,17 14.5,17 C16,17 16.5,14.5 19,15 C23,16 22,20 22,20 C22,20 20,23 16,22 C9,20.5 2,14 1,7 C0,3 4,2 4,2 Z" fill="none" stroke="var(--gold)" stroke-width="1.4"/>
+    </g>
+    <g id="iconClock">
+      <circle cx="12" cy="12" r="10" fill="none" stroke="var(--gold)" stroke-width="1.5"/>
+      <path d="M12,6 L12,12 L17,15" fill="none" stroke="var(--gold)" stroke-width="1.5"/>
+    </g>
+    <g id="iconPin">
+      <path d="M12,2 C7.5,2 4,5.5 4,10 C4,16 12,22 12,22 C12,22 20,16 20,10 C20,5.5 16.5,2 12,2 Z" fill="none" stroke="var(--gold)" stroke-width="1.5"/>
+      <circle cx="12" cy="10" r="3" fill="none" stroke="var(--gold)" stroke-width="1.5"/>
+    </g>
+    <g id="iconArrow">
+      <path d="M0,5 L18,5 M12,0 L18,5 L12,10" fill="none" stroke="var(--gold)" stroke-width="1.6"/>
+    </g>
+    <g id="iconCheck">
+      <path d="M20,30 L36,50 L64,14" fill="none" stroke="var(--gold-bright)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="40" cy="32" r="30" fill="none" stroke="var(--gold)" stroke-width="2.5"/>
+    </g>
+  </defs>
+</svg>
+
+<!-- Reusable meander divider (function-like via template) -->
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<main>
+<section class="hero marble-bg">
+  <div class="container hero-inner">
+    <div class="hero-meander-top meander-reveal reveal">
+      <svg viewBox="0 0 400 22" preserveAspectRatio="none" class="meander"><use href="#meanderPattern" width="400" height="22"/><rect width="400" height="22" fill="url(#meanderPattern)"/></svg>
+    </div>
+
+    <span class="eyebrow reveal">
+      <svg class="flourish" viewBox="0 0 14 8"><use href="#flourishMark"/></svg>
+      Θεσσαλονίκη, Ελλάδα
+      <svg class="flourish" viewBox="0 0 14 8" style="transform:scaleX(-1)"><use href="#flourishMark"/></svg>
+    </span>
+
+    <h1 class="reveal">Αξιόπιστες <span class="shimmer">Λογιστικές</span><br>Υπηρεσίες</h1>
+
+    <p class="subtitle reveal">Επιχειρηματικές Συμβουλές &amp; Φοροτεχνική Υποστήριξη. Εμπιστευτείτε την επιχείρησή σας σε έμπειρους επαγγελματίες.</p>
+
+    <div class="hero-ctas reveal">
+      <a href="#contact" class="btn btn-gold">Κλείστε μια δωρεάν συνεδρία</a>
+      <a href="#services" class="btn btn-ghost">Δείτε τις Υπηρεσίες</a>
+    </div>
+
+    <div class="hero-meander-bottom meander-reveal reveal">
+      <svg viewBox="0 0 400 22" preserveAspectRatio="none" class="meander"><rect width="400" height="22" fill="url(#meanderPattern)"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Η ΔΙΑΦΟΡΑ ΜΑΣ
+     ============================================================ -->
+<section id="about" class="marble-bg">
+  <div class="container">
+    <div class="section-label reveal">
+      <span class="eyebrow">
+        <svg class="flourish" viewBox="0 0 14 8"><use href="#flourishMark"/></svg>
+        Γιατί εμάς
+        <svg class="flourish" viewBox="0 0 14 8" style="transform:scaleX(-1)"><use href="#flourishMark"/></svg>
+      </span>
+      <h2>Η Διαφορά μας</h2>
+      <p class="section-sub">Συνδυάζουμε εμπειρία, τεχνογνωσία και σύγχρονη τεχνολογία για να προσφέρουμε κορυφαίες λογιστικές υπηρεσίες.</p>
+    </div>
+
+    <div class="difference-grid reveal">
+      <div class="difference-item">
+        <span class="numeral">Ι</span>
+        <div class="content">
+          <h3>Εμπειρία &amp; Τεχνογνωσία</h3>
+          <p>Έμπειροι λογιστές και φοροτεχνικοί, ενήμεροι για τις τελευταίες νομοθετικές εξελίξεις.</p>
+        </div>
+      </div>
+      <div class="difference-item">
+        <span class="numeral">ΙΙ</span>
+        <div class="content">
+          <h3>Εξατομικευμένη Εξυπηρέτηση</h3>
+          <p>Προσωποποιημένες λύσεις που ανταποκρίνονται στις μοναδικές ανάγκες σας.</p>
+        </div>
+      </div>
+      <div class="difference-item">
+        <span class="numeral">ΙΙΙ</span>
+        <div class="content">
+          <h3>Ολοκληρωμένες Υπηρεσίες</h3>
+          <p>Από τήρηση βιβλίων έως φορολογικό σχεδιασμό και επιχειρηματικές συμβουλές.</p>
+        </div>
+      </div>
+      <div class="difference-item">
+        <span class="numeral">ΙV</span>
+        <div class="content">
+          <h3>Σύγχρονη Τεχνολογία</h3>
+          <p>Ακρίβεια και ασφάλεια με τα πιο σύγχρονα λογιστικά εργαλεία.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-strip meander-reveal reveal" aria-hidden="true">
+  <svg viewBox="0 0 1000 22" preserveAspectRatio="none" class="meander"><rect width="1000" height="22" fill="url(#meanderPattern)"/></svg>
+</div>
+
+<!-- ============================================================
+     TEAM
+     ============================================================ -->
+<section id="team" class="marble-bg-alt">
+  <div class="container">
+    <div class="section-label reveal">
+      <span class="eyebrow">
+        <svg class="flourish" viewBox="0 0 14 8"><use href="#flourishMark"/></svg>
+        Γνωρίστε μας
+        <svg class="flourish" viewBox="0 0 14 8" style="transform:scaleX(-1)"><use href="#flourishMark"/></svg>
+      </span>
+      <h2>Η Ομάδα Μας</h2>
+    </div>
+
+    <div class="grid grid-cols-3 gap-3 sm:gap-6 team-grid reveal">
+      <div class="card team-card">
+        <svg class="corner tl" viewBox="0 0 22 22"><use href="#cornerOrnament"/></svg>
+        <svg class="corner tr" viewBox="0 0 22 22"><use href="#cornerOrnament"/></svg>
+        <svg class="corner bl" viewBox="0 0 22 22"><use href="#cornerOrnament"/></svg>
+        <svg class="corner br" viewBox="0 0 22 22"><use href="#cornerOrnament"/></svg>
+        <div class="team-photo-wrap">
+          <div class="relative aspect-[2/3] w-full team-photo-frame">
+            <img src="assets/team-1.jpg" class="object-cover w-full h-full" alt="Ελευθεριάδης Κωνσταντίνος">
+          </div>
+        </div>
+        <div class="team-laurel"><svg viewBox="0 0 34 20"><use href="#laurelIcon"/></svg></div>
+        <div class="p-2 text-center sm:p-5 team-info">
+          <p class="font-semibold name">Ελευθεριάδης Κωνσταντίνος</p>
+          <p class="mt-1 text-sm role">Λογιστής φοροτεχνικός Ά τάξης</p>
+        </div>
+      </div>
+
+      <div class="card team-card">
+        <svg class="corner tl" viewBox="0 0 22 22"><use href="#cornerOrnament"/></svg>
+        <svg class="corner tr" viewBox="0 0 22 22"><use href="#cornerOrnament"/></svg>
+        <svg class="corner bl" viewBox="0 0 22 22"><use href="#cornerOrnament"/></svg>
+        <svg class="corner br" viewBox="0 0 22 22"><use href="#cornerOrnament"/></svg>
+        <div class="team-photo-wrap">
+          <div class="relative aspect-[2/3] w-full team-photo-frame">
+            <img src="assets/team-2.jpg" class="object-cover w-full h-full" alt="Σκέμπη Ευθυμία">
+          </div>
+        </div>
+        <div class="team-laurel"><svg viewBox="0 0 34 20"><use href="#laurelIcon"/></svg></div>
+        <div class="p-2 text-center sm:p-5 team-info">
+          <p class="font-semibold name">Σκέμπη Ευθυμία</p>
+          <p class="mt-1 text-sm role">Founder / Λογίστρια φοροτεχνικός Ά τάξης</p>
+        </div>
+      </div>
+
+      <div class="card team-card">
+        <svg class="corner tl" viewBox="0 0 22 22"><use href="#cornerOrnament"/></svg>
+        <svg class="corner tr" viewBox="0 0 22 22"><use href="#cornerOrnament"/></svg>
+        <svg class="corner bl" viewBox="0 0 22 22"><use href="#cornerOrnament"/></svg>
+        <svg class="corner br" viewBox="0 0 22 22"><use href="#cornerOrnament"/></svg>
+        <div class="team-photo-wrap">
+          <div class="relative aspect-[2/3] w-full team-photo-frame">
+            <img src="assets/team-3.jpg" class="object-cover w-full h-full" alt="Παρχαρίδου Παναγιώτα">
+          </div>
+        </div>
+        <div class="team-laurel"><svg viewBox="0 0 34 20"><use href="#laurelIcon"/></svg></div>
+        <div class="p-2 text-center sm:p-5 team-info">
+          <p class="font-semibold name">Παρχαρίδου Παναγιώτα</p>
+          <p class="mt-1 text-sm role">Expert Εργατικής Νομοθεσίας &amp; Μισθοδοσίας</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-strip meander-reveal reveal" aria-hidden="true">
+  <svg viewBox="0 0 1000 22" preserveAspectRatio="none" class="meander"><rect width="1000" height="22" fill="url(#meanderPattern)"/></svg>
+</div>
+
+<!-- ============================================================
+     ΥΠΗΡΕΣΙΕΣ
+     ============================================================ -->
+<section id="services" class="marble-bg">
+  <div class="container">
+    <div class="section-label reveal">
+      <span class="eyebrow">
+        <svg class="flourish" viewBox="0 0 14 8"><use href="#flourishMark"/></svg>
+        Υπηρεσίες
+        <svg class="flourish" viewBox="0 0 14 8" style="transform:scaleX(-1)"><use href="#flourishMark"/></svg>
+      </span>
+      <h2>Τι Προσφέρουμε</h2>
+      <p class="section-sub">Ολοκληρωμένες λογιστικές και φοροτεχνικές υπηρεσίες για κάθε ανάγκη.</p>
+    </div>
+
+    <div class="services-grid reveal">
+      <div class="service-col">
+        <svg class="capital" viewBox="0 0 84 30"><use href="#capitalDoric"/></svg>
+        <h3>Εταιρείες</h3>
+        <ul class="service-list">
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Τήρηση βιβλίων (απλογραφικά, διπλογραφικά)</li>
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Μισθοδοσία και εργατικά θέματα</li>
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Συμβουλευτικές υπηρεσίες</li>
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Σύνταξη χρηματοοικονομικών καταστάσεων</li>
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Υποστήριξη σε φορολογικούς ελέγχους</li>
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Διαχείριση επιδοτήσεων</li>
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Εσωτερικός έλεγχος</li>
+        </ul>
+      </div>
+
+      <div class="service-col">
+        <svg class="capital" viewBox="0 0 84 30"><use href="#capitalIonic"/></svg>
+        <h3>Ατομικές Επιχειρήσεις</h3>
+        <ul class="service-list">
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Τήρηση βιβλίων</li>
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Σύνταξη και υποβολή φορολογικών δηλώσεων</li>
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Φορολογικός σχεδιασμός και βελτιστοποίηση</li>
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Συμβουλευτικές υπηρεσίες</li>
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Υποστήριξη σε φορολογικούς ελέγχους</li>
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Έναρξη, μεταβολή, διακοπή δραστηριότητας</li>
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Διαχείριση ηλεκτρονικών βιβλίων myDATA</li>
+        </ul>
+      </div>
+
+      <div class="service-col">
+        <svg class="capital" viewBox="0 0 84 30"><use href="#capitalCorinthian"/></svg>
+        <h3>Ιδιώτες</h3>
+        <ul class="service-list">
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Σύνταξη και υποβολή φορολογικών δηλώσεων</li>
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Υπολογισμός φόρου εισοδήματος</li>
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Φορολογικές συμβουλές και ενημέρωση</li>
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Ρυθμίσεις οφειλών προς το δημόσιο</li>
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Διαχείριση ακίνητης περιουσίας</li>
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Υποβολή αιτήσεων για επιδόματα</li>
+          <li><svg viewBox="0 0 12 12"><use href="#bulletDiamond"/></svg>Δηλώσεις τεκμηρίων και ανάλωση κεφαλαίου</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-strip meander-reveal reveal" aria-hidden="true">
+  <svg viewBox="0 0 1000 22" preserveAspectRatio="none" class="meander"><rect width="1000" height="22" fill="url(#meanderPattern)"/></svg>
+</div>
+
+<!-- ============================================================
+     ΑΝΑΚΟΙΝΩΣΕΙΣ / BLOG
+     ============================================================ -->
+<section id="blog" class="marble-bg-alt">
+  <div class="container">
+    <div class="section-head-row reveal">
+      <div class="section-label">
+        <span class="eyebrow">
+          <svg class="flourish" viewBox="0 0 14 8"><use href="#flourishMark"/></svg>
+          Blog
+        </span>
+        <h2>Ανακοινώσεις</h2>
+      </div>
+      <a href="#" class="btn btn-ghost btn-small">Δες όλα τα άρθρα</a>
+    </div>
+
+    <div class="blog-grid reveal">
+      <div class="frame-card">
+        <div class="frame-card-inner">
+          <span class="blog-tag">ΕΝΦΙΑ</span>
+          <span class="blog-date">18 Ιουνίου 2026</span>
+          <h3 class="blog-title">ΕΝΦΙΑ 2026: Ημερομηνίες Δόσεων &amp; Νέες Εκπτώσεις Συνέπειας</h3>
+          <p class="blog-excerpt">Αναλύουμε το πρόγραμμα δόσεων και τις προϋποθέσεις για έκπτωση εφάπαξ εξόφλησης, καθώς και τι αλλάζει φέτος για ιδιοκτήτες ακινήτων.</p>
+          <a href="#" class="blog-readmore">Περισσότερα <svg viewBox="0 0 18 10"><use href="#iconArrow"/></svg></a>
+        </div>
+      </div>
+      <div class="frame-card">
+        <div class="frame-card-inner">
+          <span class="blog-tag">myDATA</span>
+          <span class="blog-date">4 Ιουνίου 2026</span>
+          <h3 class="blog-title">myDATA: Υποχρεωτική Διαβίβαση Παραστατικών Λιανικής</h3>
+          <p class="blog-excerpt">Τι πρέπει να γνωρίζουν επιχειρήσεις και ελεύθεροι επαγγελματίες για τη νέα φάση διασύνδεσης ταμειακών με την ΑΑΔΕ και τις προθεσμίες συμμόρφωσης.</p>
+          <a href="#" class="blog-readmore">Περισσότερα <svg viewBox="0 0 18 10"><use href="#iconArrow"/></svg></a>
+        </div>
+      </div>
+      <div class="frame-card">
+        <div class="frame-card-inner">
+          <span class="blog-tag">Φορολογία</span>
+          <span class="blog-date">22 Μαΐου 2026</span>
+          <h3 class="blog-title">Φορολογικές Δηλώσεις 2026: Οδηγός Τεκμηρίων &amp; Εκπτώσεων</h3>
+          <p class="blog-excerpt">Πρακτικός οδηγός για την περίοδο υποβολής Ε1: τεκμήρια διαβίωσης, ανάλωση κεφαλαίου και οι εκπτώσεις που συχνά ξεχνούν οι φορολογούμενοι.</p>
+          <a href="#" class="blog-readmore">Περισσότερα <svg viewBox="0 0 18 10"><use href="#iconArrow"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-strip meander-reveal reveal" aria-hidden="true">
+  <svg viewBox="0 0 1000 22" preserveAspectRatio="none" class="meander"><rect width="1000" height="22" fill="url(#meanderPattern)"/></svg>
+</div>
+
+<!-- ============================================================
+     CONTACT
+     ============================================================ -->
+<section id="contact" class="marble-bg">
+  <div class="container">
+    <div class="section-label reveal">
+      <span class="eyebrow">
+        <svg class="flourish" viewBox="0 0 14 8"><use href="#flourishMark"/></svg>
+        Επικοινωνία
+        <svg class="flourish" viewBox="0 0 14 8" style="transform:scaleX(-1)"><use href="#flourishMark"/></svg>
+      </span>
+      <h2>Επικοινωνήστε μαζί μας</h2>
+      <p class="section-sub">Είμαστε εδώ για να απαντήσουμε σε κάθε ερώτησή σας και να σας βοηθήσουμε με τις λογιστικές σας ανάγκες.</p>
+    </div>
+
+    <div class="contact-grid reveal">
+      <div class="contact-info-panel">
+        <div class="contact-info-inner">
+          <div class="contact-item">
+            <svg viewBox="0 0 24 24"><use href="#iconMail"/></svg>
+            <div>
+              <p class="label">Email</p>
+              <a class="value" href="mailto:Eleftheriades.kon@gmail.com">Eleftheriades.kon@gmail.com</a><br>
+              <a class="value" href="mailto:Skembi.efi@gmail.com">Skembi.efi@gmail.com</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <svg viewBox="0 0 24 24"><use href="#iconPhone"/></svg>
+            <div>
+              <p class="label">Τηλέφωνο</p>
+              <a class="value" href="tel:2310720756">2310 720756</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <svg viewBox="0 0 24 24"><use href="#iconClock"/></svg>
+            <div>
+              <p class="label">Ωράριο</p>
+              <p class="value">Δευτέρα – Παρασκευή, 08:30 – 17:30</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <svg viewBox="0 0 24 24"><use href="#iconPin"/></svg>
+            <div>
+              <p class="label">Διεύθυνση</p>
+              <p class="value">Άρη Βελουχιώτη 17, Τ.Κ 56121, Αμπελόκηποι, Θεσσαλονίκη</p>
+            </div>
+          </div>
+
+          <div class="map-placeholder">
+            <svg viewBox="0 0 64 64"><use href="#pinMark"/></svg>
+            <span class="pin-label">Αμπελόκηποι, Θεσσαλονίκη</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-panel">
+        <div class="contact-form-inner">
+          <form class="contact-form" id="contactForm">
+            <div class="form-group">
+              <label for="cf-name">Όνομα</label>
+              <input type="text" id="cf-name" name="name" required placeholder="Το ονοματεπώνυμό σας">
+            </div>
+            <div class="form-group">
+              <label for="cf-email">Email</label>
+              <input type="email" id="cf-email" name="email" required placeholder="you@example.com">
+            </div>
+            <div class="form-group">
+              <label for="cf-message">Μήνυμα</label>
+              <textarea id="cf-message" name="message" required placeholder="Πείτε μας πώς μπορούμε να βοηθήσουμε..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-gold form-submit-btn">Αποστολή Μηνύματος</button>
+          </form>
+          <div class="form-success" id="formSuccess">
+            <svg viewBox="0 0 80 64"><use href="#iconCheck"/></svg>
+            <h4>Το μήνυμά σας εστάλη!</h4>
+            <p>Ευχαριστούμε για την επικοινωνία. Η ομάδα μας θα σας απαντήσει σύντομα.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="marble-bg-alt">
+  <div class="divider-strip meander-reveal reveal" aria-hidden="true" style="margin-bottom: var(--space-5);">
+    <svg viewBox="0 0 1000 22" preserveAspectRatio="none" class="meander"><rect width="1000" height="22" fill="url(#meanderPattern)"/></svg>
+  </div>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="brand">
+          <img src="assets/logo.png" alt="ES Λογιστική λογότυπο">
+          <span class="brand-name">ES ΛΟΓΙΣΤΙΚΗ</span>
+        </a>
+        <p>Αξιόπιστες λογιστικές &amp; φοροτεχνικές υπηρεσίες στη Θεσσαλονίκη, χτισμένες πάνω σε εμπειρία, ακρίβεια και εμπιστοσύνη.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>Πλοήγηση</h5>
+          <ul>
+            <li><a href="#about">Σχετικά</a></li>
+            <li><a href="#services">Υπηρεσίες</a></li>
+            <li><a href="#team">Ομάδα</a></li>
+            <li><a href="#contact">Επικοινωνία</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Επικοινωνία</h5>
+          <ul>
+            <li><a href="tel:2310720756">2310 720756</a></li>
+            <li><a href="mailto:Eleftheriades.kon@gmail.com">Eleftheriades.kon@gmail.com</a></li>
+            <li><a href="mailto:Skembi.efi@gmail.com">Skembi.efi@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 ES Λογιστική. Με επιφύλαξη παντός δικαιώματος.</p>
+      <p>Άρη Βελουχιώτη 17, Αμπελόκηποι, Θεσσαλονίκη</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- Mobile menu ---------- */
+  var hamburger = document.getElementById('hamburgerBtn');
+  var panel = document.getElementById('mobilePanel');
+  var scrim = document.getElementById('scrim');
+
+  function openMenu(){
+    hamburger.classList.add('active');
+    hamburger.setAttribute('aria-expanded', 'true');
+    panel.classList.add('open');
+    scrim.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu(){
+    hamburger.classList.remove('active');
+    hamburger.setAttribute('aria-expanded', 'false');
+    panel.classList.remove('open');
+    scrim.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  hamburger.addEventListener('click', function(){
+    if(panel.classList.contains('open')){ closeMenu(); } else { openMenu(); }
+  });
+  scrim.addEventListener('click', closeMenu);
+  panel.querySelectorAll('.mobile-link').forEach(function(link){
+    link.addEventListener('click', closeMenu);
+  });
+
+  /* ---------- Scroll reveal ---------- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry, idx){
+        if(entry.isIntersecting){
+          var el = entry.target;
+          var siblingsDelay = Array.prototype.indexOf.call(el.parentElement ? el.parentElement.children : [], el);
+          setTimeout(function(){ el.classList.add('in-view'); }, Math.min(siblingsDelay,6) * 70);
+          io.unobserve(el);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  /* ---------- Header background on scroll ---------- */
+  var header = document.querySelector('.site-header');
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > 20){
+      header.style.background = 'rgba(13,13,15,0.94)';
+    } else {
+      header.style.background = 'rgba(13,13,15,0.82)';
+    }
+  }, { passive: true });
+
+  /* ---------- Fake contact form submit ---------- */
+  var form = document.getElementById('contactForm');
+  var success = document.getElementById('formSuccess');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    form.classList.add('hide');
+    success.classList.add('show');
+  });
+
+})();
+</script>
+
+</body>
+</html>

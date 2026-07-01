@@ -164,30 +164,42 @@
   .hero-stats div p:first-child{font-family:'Fraunces',serif;font-size:1.9rem;color:var(--cypress);font-weight:600;}
   .hero-stats div p:last-child{font-size:.82rem;color:#7a6a60;}
 
-  .hero-photo-wrap{
+  .hero-visual-wrap{
     position:relative;
     justify-self:end;
     width:100%;
     max-width:460px;
   }
-  .hero-photo-frame{
+  .hero-visual-frame{
     position:relative;
     margin-right:-24px;
     border-radius:26px 26px 26px 90px;
     overflow:hidden;
     box-shadow:var(--shadow);
     aspect-ratio:3/4;
+    background:linear-gradient(155deg, var(--cypress) 0%, #2c4230 62%, #24361f 100%);
   }
-  .hero-photo-frame img{width:100%;height:100%;object-fit:cover;}
-  .hero-photo-frame::after{
-    content:"";position:absolute;inset:0;
-    background:linear-gradient(180deg, rgba(63,90,68,0) 55%, rgba(46,36,32,.55));
+  .hero-visual-frame .hvf-grain{
+    position:absolute;inset:0;opacity:.35;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   }
-  .hero-photo-caption{
-    position:absolute;left:24px;bottom:22px;z-index:3;color:#fff;
+  .hero-visual-frame .hvf-blob{
+    position:absolute;border-radius:50%;filter:blur(1px);
   }
-  .hero-photo-caption p:first-child{font-family:'Fraunces',serif;font-style:italic;font-size:1.2rem;}
-  .hero-photo-caption p:last-child{font-size:.78rem;opacity:.85;letter-spacing:.04em;}
+  .hero-visual-frame .hvf-blob-a{width:260px;height:260px;top:-70px;right:-80px;background:rgba(217,164,65,.28);}
+  .hero-visual-frame .hvf-blob-b{width:220px;height:220px;bottom:-60px;left:-70px;background:rgba(224,138,107,.22);}
+  .hero-visual-frame .hvf-leaves{position:absolute;inset:0;opacity:.9;}
+  .hero-visual-frame .hvf-num{
+    position:absolute;left:26px;bottom:18px;z-index:2;
+    font-family:'Fraunces',serif;font-weight:600;font-style:italic;
+    font-size:5.6rem;line-height:.85;color:rgba(251,240,230,.16);
+    pointer-events:none;
+  }
+  .hero-visual-caption{
+    position:absolute;left:26px;bottom:20px;z-index:3;color:#fff;
+  }
+  .hero-visual-caption p:first-child{font-family:'Fraunces',serif;font-style:italic;font-size:1.2rem;}
+  .hero-visual-caption p:last-child{font-size:.78rem;opacity:.85;letter-spacing:.04em;}
   .hero-badge-float{
     position:absolute;top:-22px;left:-30px;z-index:3;
     background:#fff;border-radius:18px;box-shadow:var(--shadow);
@@ -196,6 +208,7 @@
   }
   .hero-badge-float i{font-size:1.6rem;color:var(--gold);}
   .hero-badge-float p{font-size:.78rem;font-weight:600;color:var(--ink);line-height:1.3;}
+  .hero-badge-float p span{display:block;font-family:'Fraunces',serif;font-style:italic;font-size:1.1rem;color:var(--cypress);font-weight:600;}
 
   /* ---------- wavy divider ---------- */
   .wave{display:block;width:100%;height:70px;position:relative;z-index:1;}
@@ -374,8 +387,8 @@
     nav.desktop-nav{display:none;}
     .hamburger{display:flex;}
     .hero .container{grid-template-columns:1fr;}
-    .hero-photo-wrap{justify-self:center;margin-top:2.4rem;max-width:340px;}
-    .hero-photo-frame{margin-right:0;}
+    .hero-visual-wrap{justify-self:center;margin-top:2.4rem;max-width:340px;}
+    .hero-visual-frame{margin-right:0;}
     .diff-grid{grid-template-columns:1fr;}
     .services-grid, .blog-grid{grid-template-columns:1fr;}
     .contact-grid{grid-template-columns:1fr;}
@@ -447,16 +460,29 @@
       </div>
     </div>
 
-    <div class="hero-photo-wrap">
+    <div class="hero-visual-wrap">
       <div class="hero-badge-float reveal is-visible" data-delay="2">
         <i class="ti ti-certificate"></i>
-        <p>Πιστοποιημένοι λογιστές &amp; φοροτεχνικοί Ά τάξης</p>
+        <p><span>15+</span>χρόνια πιστοποιημένης εμπειρίας Ά τάξης</p>
       </div>
-      <div class="hero-photo-frame reveal is-visible" data-delay="1">
-        <img src="assets/team-3.jpg" alt="Παρχαρίδου Παναγιώτα — ES Λογιστική">
-        <div class="hero-photo-caption">
+      <div class="hero-visual-frame reveal is-visible" data-delay="1">
+        <div class="hvf-grain"></div>
+        <div class="hvf-blob hvf-blob-a"></div>
+        <div class="hvf-blob hvf-blob-b"></div>
+        <div class="hvf-leaves">
+          <svg viewBox="0 0 460 610" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
+            <path d="M340 60 C420 140 430 260 350 340 C270 420 230 380 250 300 C270 220 260 130 340 60Z" fill="#D9A441" opacity="0.16"/>
+            <path d="M110 480 C60 400 70 300 150 260 C230 220 250 280 210 340 C170 400 180 460 110 480Z" fill="#E08A6B" opacity="0.2"/>
+            <path d="M230 130 C260 220 260 400 230 520" stroke="#FBF0E6" stroke-width="2" opacity="0.18" fill="none"/>
+            <path d="M230 220 C200 240 170 240 150 220" stroke="#FBF0E6" stroke-width="2" opacity="0.18" fill="none"/>
+            <path d="M230 300 C265 320 295 315 315 292" stroke="#FBF0E6" stroke-width="2" opacity="0.18" fill="none"/>
+            <path d="M230 390 C195 405 165 400 145 378" stroke="#FBF0E6" stroke-width="2" opacity="0.18" fill="none"/>
+          </svg>
+        </div>
+        <span class="hvf-num">ES</span>
+        <div class="hero-visual-caption">
           <p>«Δίπλα σας σε κάθε βήμα»</p>
-          <p>Παρχαρίδου Παναγιώτα</p>
+          <p>ES Λογιστική — Θεσσαλονίκη</p>
         </div>
       </div>
     </div>

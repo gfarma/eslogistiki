@@ -343,7 +343,8 @@
     width: 100%;
     height: 560px;
   }
-  .hero-photo-main{
+  /* Abstract decorative panel replacing the old hero photo */
+  .hero-art{
     position:absolute;
     top: 0;
     right: -60px;
@@ -353,37 +354,107 @@
     overflow:hidden;
     box-shadow: 0 40px 70px -30px rgba(43,33,24,0.45);
     border: 6px solid var(--cream);
+    background:
+      radial-gradient(circle at 22% 20%, rgba(107,122,79,0.5), transparent 55%),
+      radial-gradient(circle at 78% 74%, rgba(217,164,65,0.45), transparent 55%),
+      linear-gradient(150deg, var(--terracotta) 0%, var(--terracotta-deep) 100%);
   }
-  .hero-photo-main img{
-    width:100%; height:100%;
-    object-fit: cover;
-    object-position: top center;
+  .hero-art::before{
+    /* warm grain texture, matches .hero::before */
+    content:"";
+    position:absolute;
+    inset:0;
+    opacity:0.6;
+    pointer-events:none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
   }
-  .hero-photo-card{
+  .hero-art .art-blob{
+    position:absolute;
+    border-radius: 42% 58% 65% 35% / 45% 40% 60% 55%;
+    filter: blur(1px);
+  }
+  .hero-art .art-blob-a{
+    width: 70%; height: 62%;
+    top: -12%; left: -14%;
+    background: rgba(251,245,234,0.14);
+    border-radius: 58% 42% 38% 62% / 55% 60% 40% 45%;
+  }
+  .hero-art .art-blob-b{
+    width: 48%; height: 46%;
+    bottom: -10%; right: -8%;
+    background: rgba(43,33,24,0.16);
+    border-radius: 40% 60% 55% 45% / 60% 35% 65% 40%;
+  }
+  .hero-art .art-numeral{
+    position:absolute;
+    right: 6%;
+    bottom: -4%;
+    font-family:'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 13rem;
+    line-height:1;
+    color: rgba(251,245,234,0.16);
+    user-select:none;
+  }
+  .hero-art .art-branch{
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    width: 78%;
+    transform: translate(-50%,-50%) rotate(-8deg);
+    opacity: 0.9;
+  }
+  .hero-art .art-branch path{
+    stroke: rgba(251,245,234,0.85);
+    stroke-width: 3;
+    fill:none;
+    stroke-linecap: round;
+  }
+  .hero-art .art-branch circle{
+    fill: var(--sand);
+  }
+  .hero-art .art-rays{
+    position:absolute;
+    inset:0;
+  }
+  .hero-art .art-rays path{
+    stroke: rgba(251,245,234,0.22);
+    stroke-width: 2;
+    fill:none;
+  }
+
+  .hero-credential-card{
     position:absolute;
     left: -10px;
     bottom: -20px;
     width: 220px;
     background: var(--cream);
-    padding: var(--sp-3);
+    padding: var(--sp-4) var(--sp-3);
     border-radius: var(--radius-md);
     box-shadow: 0 24px 50px -18px rgba(43,33,24,0.35);
     border: 1px solid var(--hairline);
     z-index: 3;
   }
-  .hero-photo-card .badge-photo{
-    width:100%;
-    aspect-ratio: 4/3;
-    border-radius: 14px;
-    overflow:hidden;
+  .hero-credential-card .credential-icon{
+    width: 44px; height:44px;
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--terracotta);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size: 1.25rem;
     margin-bottom: var(--sp-2);
   }
-  .hero-photo-card .badge-photo img{ width:100%; height:100%; object-fit:cover; }
-  .hero-photo-card .badge-text{
-    font-size:0.85rem;
+  .hero-credential-card .badge-text{
+    font-size:0.95rem;
     font-weight:600;
+    font-family:'Instrument Serif', serif;
+    font-style: italic;
+    color: var(--terracotta-deep);
   }
-  .hero-photo-card .badge-sub{
+  .hero-credential-card .badge-sub{
     font-size:0.78rem;
     color: var(--olive-deep);
   }
@@ -445,9 +516,6 @@
     text-align:center;
     padding: var(--sp-4);
   }
-  .team-card:nth-child(1){ transform: translateY(10px); }
-  .team-card:nth-child(2){ transform: translateY(-28px); }
-  .team-card:nth-child(3){ transform: translateY(18px); }
 
   .team-photo-frame{
     position:relative;
@@ -860,7 +928,7 @@
     .diff-item{ grid-template-columns: 1fr; gap: var(--sp-2); }
     .diff-num{ font-size: 5rem; }
 
-    .hero-photo-card{ display:none; }
+    .hero-credential-card{ display:none; }
     .hero-stat-pill{ right: 4%; top: 14px; padding: 10px 16px; font-size:0.78rem; }
   }
 
@@ -869,7 +937,7 @@
     .section-pad{ padding: var(--sp-7) 0; }
     .hero{ padding: var(--sp-6) 0; }
     .hero-visual{ height: 340px; }
-    .hero-photo-main{ right:0; width:100%; height:340px; }
+    .hero-art{ right:0; width:100%; height:340px; }
     .hero-ctas{ flex-direction:column; align-items:stretch; }
     .hero-ctas .btn{ width:100%; }
     .footer-grid{ grid-template-columns: 1fr; gap: var(--sp-5); }
@@ -935,13 +1003,28 @@
       </div>
       <div class="hero-visual reveal is-visible stagger-2">
         <div class="hero-stat-pill"><i class="ti ti-award"></i> 15+ χρόνια εμπειρίας</div>
-        <div class="hero-photo-main">
-          <img src="assets/team-2.jpg" alt="Σκέμπη Ευθυμία, ιδρύτρια της ES Λογιστική">
+        <div class="hero-art" role="img" aria-label="Διακοσμητική σύνθεση με μοτίβο κλαδιού ελιάς σε παλέτα terracotta και ελιάς">
+          <div class="art-blob art-blob-a"></div>
+          <div class="art-blob art-blob-b"></div>
+          <span class="art-numeral">01</span>
+          <svg class="art-rays" viewBox="0 0 400 460" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 40 C 120 90, 280 10, 380 70"/>
+            <path d="M10 420 C 140 360, 260 440, 390 380"/>
+          </svg>
+          <svg class="art-branch" viewBox="0 0 260 120" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 100 C 60 90, 90 60, 130 60 C 170 60, 200 30, 256 20"/>
+            <circle cx="40" cy="94" r="6"></circle>
+            <circle cx="76" cy="76" r="7"></circle>
+            <circle cx="112" cy="62" r="6"></circle>
+            <circle cx="150" cy="48" r="7"></circle>
+            <circle cx="188" cy="36" r="6"></circle>
+            <circle cx="224" cy="26" r="7"></circle>
+          </svg>
         </div>
-        <div class="hero-photo-card">
-          <div class="badge-photo"><img src="assets/team-1.jpg" alt="Ελευθεριάδης Κωνσταντίνος"></div>
-          <div class="badge-text">Κωνσταντίνος Ελευθεριάδης</div>
-          <div class="badge-sub">Λογιστής φοροτεχνικός Ά τάξης</div>
+        <div class="hero-credential-card">
+          <div class="credential-icon"><i class="ti ti-shield-check"></i></div>
+          <div class="badge-text">Ά τάξης πιστοποίηση</div>
+          <div class="badge-sub">Όλη η ομάδα μας</div>
         </div>
       </div>
     </div>
