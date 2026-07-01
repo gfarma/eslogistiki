@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ES Λογιστική — Αξιόπιστες Λογιστικές Υπηρεσίες</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAF8;
+    --ink:#14171C;
+    --blue:#2451B8;
+    --blue-ink:#173a8f;
+    --amber:#E8A33D;
+    --line:#E4E4E0;
+    --muted:#6B7280;
+    --white:#FFFFFF;
+    --gap:24px;
+    --maxw:1360px;
+  }
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Archivo", sans-serif;
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:var(--blue); color:#fff; }
+
+  .mono{
+    font-family:"IBM Plex Mono", monospace;
+  }
+
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 40px;
+  }
+
+  /* ---------- grid backdrop ---------- */
+  .grid-section{
+    position:relative;
+    border-top:1px solid var(--line);
+  }
+  .grid-section.no-border{ border-top:none; }
+  .cols{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    max-width:var(--maxw);
+    margin:0 auto;
+  }
+  .cols > .vline{
+    border-left:1px solid var(--line);
+    height:100%;
+  }
+
+  /* ---------- reveal ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity 220ms ease-out, transform 220ms ease-out;
+  }
+  .reveal.in{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* ================= HEADER ================= */
+  header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(250,250,248,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 40px;
+    height:76px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .brand img{
+    height:26px;
+    width:auto;
+  }
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap:40px;
+    list-style:none;
+    margin:0;
+    padding:0;
+  }
+  .nav-links a{
+    position:relative;
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:0.01em;
+    padding:6px 0;
+  }
+  .nav-links a::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:100%;
+    bottom:0;
+    height:2px;
+    background:var(--blue);
+    transition:right 180ms ease-out;
+  }
+  .nav-links a:hover::after{ right:0; }
+  .nav-cta{
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    font-family:"Archivo", sans-serif;
+    font-weight:700;
+    font-size:14px;
+    letter-spacing:0.01em;
+    padding:12px 22px;
+    border:1px solid var(--ink);
+    border-radius:2px;
+    cursor:pointer;
+    background:none;
+    transition:background 150ms ease-out, color 150ms ease-out, border-color 150ms ease-out, transform 150ms ease-out;
+    white-space:nowrap;
+  }
+  .btn-primary{
+    background:var(--blue);
+    border-color:var(--blue);
+    color:#fff;
+  }
+  .btn-primary:hover{
+    background:var(--blue-ink);
+    border-color:var(--blue-ink);
+  }
+  .btn-ghost{
+    background:transparent;
+    border-color:var(--ink);
+    color:var(--ink);
+  }
+  .btn-ghost:hover{
+    background:var(--ink);
+    color:var(--bg);
+  }
+  .btn-sm{
+    padding:9px 16px;
+    font-size:13px;
+  }
+  .burger{
+    display:none;
+    width:40px;
+    height:40px;
+    border:1px solid var(--ink);
+    border-radius:2px;
+    background:none;
+    cursor:pointer;
+    position:relative;
+  }
+  .burger span, .burger span::before, .burger span::after{
+    content:"";
+    position:absolute;
+    left:9px;
+    right:9px;
+    height:2px;
+    background:var(--ink);
+    transition:transform 200ms ease-out, opacity 150ms ease-out;
+  }
+  .burger span{ top:19px; }
+  .burger span::before{ top:-6px; }
+  .burger span::after{ top:6px; }
+  .burger.open span{ background:transparent; }
+  .burger.open span::before{ transform:translateY(6px) rotate(45deg); }
+  .burger.open span::after{ transform:translateY(-6px) rotate(-45deg); }
+
+  .mobile-menu{
+    display:none;
+    position:fixed;
+    inset:76px 0 0 0;
+    background:var(--bg);
+    z-index:99;
+    border-top:1px solid var(--line);
+    padding:32px 40px;
+    overflow-y:auto;
+  }
+  .mobile-menu.open{ display:block; }
+  .mobile-menu a{
+    display:block;
+    font-size:28px;
+    font-weight:900;
+    padding:16px 0;
+    border-bottom:1px solid var(--line);
+    letter-spacing:-0.01em;
+  }
+  .mobile-menu .btn{
+    margin-top:28px;
+    width:100%;
+  }
+
+  /* ================= SECTION LABEL ================= */
+  .sec-label{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:20px;
+  }
+  .sec-num{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:14px;
+    font-weight:600;
+    color:var(--blue);
+    letter-spacing:0.02em;
+  }
+  .sec-eyebrow{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .sec-heading{
+    font-family:"Archivo", sans-serif;
+    font-weight:900;
+    letter-spacing:-0.02em;
+    font-size:clamp(28px, 4vw, 44px);
+    line-height:1.05;
+    margin:0 0 14px 0;
+  }
+  .sec-heading .accent{ color:var(--blue); }
+  .sec-sub{
+    font-size:16px;
+    color:var(--muted);
+    max-width:560px;
+    margin:0;
+  }
+  .sec-head-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:24px;
+    padding:64px 0 40px 0;
+  }
+
+  /* ================= HERO ================= */
+  .hero{
+    padding-top:56px;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+    align-items:center;
+    padding:56px 0 72px 0;
+  }
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink);
+    border:1px solid var(--line);
+    padding:7px 12px;
+    border-radius:2px;
+    margin-bottom:28px;
+  }
+  .badge::before{
+    content:"";
+    width:6px;
+    height:6px;
+    background:var(--amber);
+    border-radius:50%;
+    flex:none;
+  }
+  .hero h1{
+    font-family:"Archivo", sans-serif;
+    font-weight:900;
+    letter-spacing:-0.03em;
+    font-size:clamp(38px, 5.6vw, 68px);
+    line-height:1.02;
+    margin:0 0 24px 0;
+  }
+  .hero h1 .accent{ color:var(--blue); }
+  .hero p.lead{
+    font-size:18px;
+    color:var(--muted);
+    max-width:480px;
+    margin:0 0 36px 0;
+  }
+  .hero-actions{
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .hero-visual{
+    position:relative;
+    border:1px solid var(--line);
+    background:var(--white);
+    aspect-ratio:1/1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .hero-visual svg{ width:100%; height:100%; }
+
+  .stat-strip{
+    border-top:1px solid var(--line);
+  }
+  .stat-strip .cols{
+    grid-template-columns:repeat(4,1fr);
+  }
+  .stat-cell{
+    padding:28px 32px;
+    border-left:1px solid var(--line);
+  }
+  .stat-cell:first-child{ border-left:none; padding-left:0; }
+  .stat-num{
+    font-family:"IBM Plex Mono", monospace;
+    font-weight:600;
+    font-size:clamp(22px, 3vw, 32px);
+    color:var(--blue);
+    display:block;
+    margin-bottom:4px;
+  }
+  .stat-cap{
+    font-size:13px;
+    color:var(--muted);
+  }
+
+  /* ================= DIFFERENCE (2x2) ================= */
+  .diff-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    border-top:1px solid var(--line);
+    border-left:1px solid var(--line);
+  }
+  .diff-item{
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:44px 40px;
+    min-height:220px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    transition:background 180ms ease-out;
+  }
+  .diff-item:hover{ background:var(--white); }
+  .diff-num{
+    font-family:"IBM Plex Mono", monospace;
+    font-weight:600;
+    font-size:15px;
+    color:var(--amber);
+    letter-spacing:0.05em;
+  }
+  .diff-body h3{
+    font-family:"Archivo", sans-serif;
+    font-weight:700;
+    font-size:20px;
+    letter-spacing:-0.01em;
+    margin:18px 0 10px 0;
+  }
+  .diff-body p{
+    font-size:15px;
+    color:var(--muted);
+    margin:0;
+    max-width:440px;
+  }
+
+  /* ================= TEAM ================= */
+  .team-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0;
+    border-top:1px solid var(--line);
+    border-left:1px solid var(--line);
+  }
+  .team-card{
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:32px;
+  }
+  .team-photo-wrap{
+    width:96px;
+    height:96px;
+    border:1px solid var(--line);
+    overflow:hidden;
+    margin-bottom:20px;
+    transition:border-color 180ms ease-out;
+  }
+  .team-photo-wrap:hover{
+    border-color:var(--blue);
+    border-width:2px;
+  }
+  .team-photo-wrap img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    filter:grayscale(100%) contrast(1.02);
+    transition:filter 200ms ease-out;
+  }
+  .team-photo-wrap:hover img{
+    filter:grayscale(0%) contrast(1.02);
+  }
+  .team-name{
+    font-family:"Archivo", sans-serif;
+    font-weight:700;
+    font-size:18px;
+    letter-spacing:-0.01em;
+    margin:0 0 6px 0;
+  }
+  .team-role{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12.5px;
+    color:var(--blue);
+    line-height:1.5;
+    margin:0;
+  }
+  .team-role .tag{
+    display:inline-block;
+    background:rgba(232,163,61,0.16);
+    color:#8a5c14;
+    font-size:11px;
+    padding:2px 6px;
+    border-radius:2px;
+    margin-bottom:6px;
+    letter-spacing:0.03em;
+  }
+
+  /* ================= SERVICES (ledger table) ================= */
+  .services-cols{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    border-top:1px solid var(--line);
+    border-left:1px solid var(--line);
+  }
+  .service-col{
+    border-right:1px solid var(--line);
+  }
+  .service-col-head{
+    padding:24px 28px 18px 28px;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .service-col-head h3{
+    font-family:"Archivo", sans-serif;
+    font-weight:700;
+    font-size:19px;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  .service-col-head .count{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    color:var(--muted);
+  }
+  .service-row{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    padding:16px 28px;
+    border-bottom:1px solid var(--line);
+    font-size:14.5px;
+    transition:background 150ms ease-out, padding-left 150ms ease-out;
+  }
+  .service-row:last-child{ border-bottom:none; }
+  .service-row:hover{
+    background:var(--white);
+    padding-left:34px;
+  }
+  .service-row .idx{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    color:var(--muted);
+    flex:none;
+    padding-top:1px;
+  }
+
+  /* ================= BLOG TEASER ================= */
+  .blog-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:var(--gap);
+    padding-bottom:8px;
+  }
+  .blog-card{
+    border:1px solid var(--line);
+    background:var(--white);
+    padding:28px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    transition:border-color 180ms ease-out;
+  }
+  .blog-card:hover{ border-color:var(--blue); }
+  .blog-date{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    color:var(--muted);
+    letter-spacing:0.04em;
+  }
+  .blog-card h3{
+    font-family:"Archivo", sans-serif;
+    font-weight:700;
+    font-size:18px;
+    line-height:1.3;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  .blog-card p{
+    font-size:14.5px;
+    color:var(--muted);
+    margin:0;
+    flex:1;
+  }
+  .blog-link{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12.5px;
+    font-weight:500;
+    color:var(--blue);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .blog-link .arrow{ transition:transform 150ms ease-out; }
+  .blog-card:hover .blog-link .arrow{ transform:translateX(3px); }
+
+  .blog-all{
+    display:flex;
+    justify-content:flex-end;
+    padding:24px 0 64px 0;
+  }
+  .blog-all a{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:13px;
+    font-weight:600;
+    color:var(--blue);
+    border-bottom:1px solid var(--blue);
+    padding-bottom:2px;
+  }
+
+  /* ================= CONTACT ================= */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:0;
+    border-top:1px solid var(--line);
+    border-left:1px solid var(--line);
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    margin-bottom:72px;
+  }
+  .contact-info{
+    padding:44px 40px;
+    border-right:1px solid var(--line);
+  }
+  .info-row{
+    display:flex;
+    gap:16px;
+    padding:18px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .info-row:first-child{ padding-top:0; }
+  .info-row:last-child{ border-bottom:none; }
+  .info-k{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    width:110px;
+    flex:none;
+    padding-top:2px;
+  }
+  .info-v{
+    font-size:15px;
+    line-height:1.5;
+  }
+  .info-v a:hover{ color:var(--blue); }
+  .map-block{
+    margin-top:28px;
+    border:1px solid var(--line);
+    height:160px;
+    position:relative;
+    overflow:hidden;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 19px, var(--line) 19px, var(--line) 20px),
+      repeating-linear-gradient(90deg, transparent, transparent 19px, var(--line) 19px, var(--line) 20px);
+  }
+  .map-block .pin{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+  }
+  .map-block .pin-dot{
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:var(--blue);
+    border:3px solid var(--white);
+    box-shadow:0 0 0 1px var(--blue);
+  }
+  .map-block .pin-label{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11px;
+    color:var(--muted);
+    background:var(--bg);
+    padding:2px 8px;
+    border:1px solid var(--line);
+  }
+
+  .contact-form{
+    padding:44px 40px;
+  }
+  .field{
+    margin-bottom:22px;
+  }
+  .field label{
+    display:block;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:8px;
+  }
+  .field input, .field textarea{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:2px;
+    background:var(--white);
+    padding:13px 14px;
+    font-family:"Archivo", sans-serif;
+    font-size:15px;
+    color:var(--ink);
+    outline:none;
+    transition:border-color 150ms ease-out;
+  }
+  .field input:focus, .field textarea:focus{
+    border-color:var(--blue);
+  }
+  .field textarea{
+    resize:vertical;
+    min-height:120px;
+  }
+  .form-msg{
+    display:none;
+    align-items:center;
+    gap:10px;
+    background:rgba(36,81,184,0.07);
+    border:1px solid var(--blue);
+    color:var(--blue-ink);
+    padding:14px 16px;
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:20px;
+    border-radius:2px;
+  }
+  .form-msg.show{ display:flex; }
+
+  /* ================= FOOTER ================= */
+  footer{
+    border-top:1px solid var(--line);
+    padding:56px 0 28px 0;
+  }
+  .footer-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr 1fr;
+    gap:40px;
+    padding-bottom:40px;
+  }
+  .footer-brand img{ height:24px; margin-bottom:16px; }
+  .footer-brand p{
+    font-size:14px;
+    color:var(--muted);
+    max-width:280px;
+    margin:0;
+  }
+  .footer-col h4{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:0 0 18px 0;
+  }
+  .footer-col a{
+    display:block;
+    font-size:14.5px;
+    padding:6px 0;
+  }
+  .footer-col a:hover{ color:var(--blue); }
+  .footer-bottom{
+    border-top:1px solid var(--line);
+    padding-top:24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .footer-bottom p{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    color:var(--muted);
+    margin:0;
+  }
+
+  /* ================= RESPONSIVE ================= */
+  @media (max-width: 980px){
+    .wrap{ padding:0 24px; }
+    .nav{ padding:0 24px; }
+    .nav-links{ display:none; }
+    .nav-cta .btn-sm{ display:none; }
+    .burger{ display:block; }
+    .hero-grid{ grid-template-columns:1fr; gap:40px; padding:32px 0 48px 0; }
+    .hero-visual{ aspect-ratio:16/9; order:-1; }
+    .stat-strip .cols{ grid-template-columns:repeat(2,1fr); }
+    .stat-cell:nth-child(3){ border-left:none; padding-left:0; }
+    .stat-cell:nth-child(1), .stat-cell:nth-child(2){ border-bottom:1px solid var(--line); padding-bottom:24px; margin-bottom:4px; }
+    .diff-grid{ grid-template-columns:1fr; }
+    .team-grid{ grid-template-columns:1fr; }
+    .services-cols{ grid-template-columns:1fr; }
+    .service-col{ border-right:none; border-bottom:1px solid var(--line); }
+    .blog-grid{ grid-template-columns:1fr; }
+    .contact-grid{ grid-template-columns:1fr; }
+    .contact-info{ border-right:none; border-bottom:1px solid var(--line); }
+    .footer-grid{ grid-template-columns:1fr; gap:32px; }
+  }
+  @media (max-width: 600px){
+    .wrap{ padding:0 18px; }
+    .nav{ padding:0 18px; }
+    .sec-head-row{ padding:44px 0 28px 0; }
+    .diff-item{ padding:32px 24px; min-height:auto; }
+    .team-card{ padding:24px; }
+    .service-col-head{ padding:20px 20px 14px 20px; }
+    .service-row{ padding:14px 20px; }
+    .service-row:hover{ padding-left:24px; }
+    .contact-info, .contact-form{ padding:32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="#top" class="brand"><img src="assets/logo.png" alt="ES Λογιστική"></a>
+    <ul class="nav-links">
+      <li><a href="#about">Σχετικά</a></li>
+      <li><a href="#services">Υπηρεσίες</a></li>
+      <li><a href="#team">Ομάδα</a></li>
+      <li><a href="#contact">Επικοινωνία</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-primary btn-sm">Ραντεβού</a>
+      <button class="burger" id="burgerBtn" aria-label="Μενού"><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about">Σχετικά</a>
+    <a href="#services">Υπηρεσίες</a>
+    <a href="#team">Ομάδα</a>
+    <a href="#contact">Επικοινωνία</a>
+    <a href="#contact" class="btn btn-primary">Ραντεβού</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <section class="grid-section no-border hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="reveal">
+          <span class="badge">Θεσσαλονίκη, Ελλάδα</span>
+          <h1>Αξιόπιστες <span class="accent">Λογιστικές</span> Υπηρεσίες</h1>
+          <p class="lead">Επιχειρηματικές Συμβουλές &amp; Φοροτεχνική Υποστήριξη. Εμπιστευτείτε την επιχείρησή σας σε έμπειρους επαγγελματίες.</p>
+          <div class="hero-actions">
+            <a href="#contact" class="btn btn-primary">Κλείστε μια δωρεάν συνεδρία</a>
+            <a href="#services" class="btn btn-ghost">Δείτε τις Υπηρεσίες</a>
+          </div>
+        </div>
+        <div class="hero-visual reveal">
+          <svg viewBox="0 0 480 480" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="ledgerGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M40 0 L0 0 0 40" fill="none" stroke="#E4E4E0" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="480" height="480" fill="url(#ledgerGrid)"/>
+            <line x1="0" y1="120" x2="480" y2="120" stroke="#E4E4E0" stroke-width="1"/>
+            <line x1="0" y1="360" x2="480" y2="360" stroke="#E4E4E0" stroke-width="1"/>
+            <line x1="160" y1="0" x2="160" y2="480" stroke="#E4E4E0" stroke-width="1"/>
+            <line x1="320" y1="0" x2="320" y2="480" stroke="#E4E4E0" stroke-width="1"/>
+
+            <polyline points="20,300 120,260 160,300 240,180 320,220 400,100 460,140" fill="none" stroke="#2451B8" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+            <circle cx="20" cy="300" r="4" fill="#2451B8"/>
+            <circle cx="120" cy="260" r="4" fill="#2451B8"/>
+            <circle cx="160" cy="300" r="4" fill="#2451B8"/>
+            <circle cx="240" cy="180" r="4" fill="#2451B8"/>
+            <circle cx="320" cy="220" r="4" fill="#2451B8"/>
+            <circle cx="400" cy="100" r="4" fill="#2451B8"/>
+            <circle cx="460" cy="140" r="5" fill="#E8A33D"/>
+
+            <text x="40" y="80" font-family="IBM Plex Mono, monospace" font-size="13" fill="#6B7280">§01</text>
+            <text x="200" y="80" font-family="IBM Plex Mono, monospace" font-size="13" fill="#6B7280">myDATA</text>
+            <text x="40" y="200" font-family="IBM Plex Mono, monospace" font-size="13" fill="#6B7280">ΦΠΑ 24%</text>
+            <text x="340" y="200" font-family="IBM Plex Mono, monospace" font-size="13" fill="#6B7280">§04</text>
+            <text x="40" y="420" font-family="IBM Plex Mono, monospace" font-size="13" fill="#6B7280">ΕΝΦΙΑ</text>
+            <text x="360" y="440" font-family="IBM Plex Mono, monospace" font-size="34" font-weight="600" fill="#14171C">2026</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-strip">
+      <div class="wrap">
+        <div class="cols">
+          <div class="stat-cell reveal">
+            <span class="stat-num mono">3</span>
+            <span class="stat-cap">Έμπειροι επαγγελματίες</span>
+          </div>
+          <div class="stat-cell reveal">
+            <span class="stat-num mono">A′</span>
+            <span class="stat-cap">Τάξη αδείας λογιστή</span>
+          </div>
+          <div class="stat-cell reveal">
+            <span class="stat-num mono">13+</span>
+            <span class="stat-cap">Κατηγορίες υπηρεσιών</span>
+          </div>
+          <div class="stat-cell reveal">
+            <span class="stat-num mono">100%</span>
+            <span class="stat-cap">Ψηφιακή παρακολούθηση</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= Η ΔΙΑΦΟΡΑ ΜΑΣ ================= -->
+  <section class="grid-section" id="about">
+    <div class="wrap">
+      <div class="sec-head-row">
+        <div class="reveal">
+          <div class="sec-label"><span class="sec-num mono">§02</span><span class="sec-eyebrow">Γιατί εμάς</span></div>
+          <h2 class="sec-heading">Η Διαφορά <span class="accent">μας</span></h2>
+          <p class="sec-sub">Συνδυάζουμε εμπειρία, τεχνογνωσία και σύγχρονη τεχνολογία για να προσφέρουμε κορυφαίες λογιστικές υπηρεσίες.</p>
+        </div>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="diff-grid reveal">
+        <div class="diff-item">
+          <span class="diff-num mono">01</span>
+          <div class="diff-body">
+            <h3>Εμπειρία &amp; Τεχνογνωσία</h3>
+            <p>Έμπειροι λογιστές και φοροτεχνικοί, ενήμεροι για τις τελευταίες νομοθετικές εξελίξεις.</p>
+          </div>
+        </div>
+        <div class="diff-item">
+          <span class="diff-num mono">02</span>
+          <div class="diff-body">
+            <h3>Εξατομικευμένη Εξυπηρέτηση</h3>
+            <p>Προσωποποιημένες λύσεις που ανταποκρίνονται στις μοναδικές ανάγκες σας.</p>
+          </div>
+        </div>
+        <div class="diff-item">
+          <span class="diff-num mono">03</span>
+          <div class="diff-body">
+            <h3>Ολοκληρωμένες Υπηρεσίες</h3>
+            <p>Από τήρηση βιβλίων έως φορολογικό σχεδιασμό και επιχειρηματικές συμβουλές.</p>
+          </div>
+        </div>
+        <div class="diff-item">
+          <span class="diff-num mono">04</span>
+          <div class="diff-body">
+            <h3>Σύγχρονη Τεχνολογία</h3>
+            <p>Ακρίβεια και ασφάλεια με τα πιο σύγχρονα λογιστικά εργαλεία.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ΟΜΑΔΑ ================= -->
+  <section class="grid-section" id="team">
+    <div class="wrap">
+      <div class="sec-head-row">
+        <div class="reveal">
+          <div class="sec-label"><span class="sec-num mono">§03</span><span class="sec-eyebrow">Γνωρίστε μας</span></div>
+          <h2 class="sec-heading">Η Ομάδα <span class="accent">Μας</span></h2>
+        </div>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="team-grid reveal">
+        <div class="team-card">
+          <div class="team-photo-wrap"><img src="assets/team-1.jpg" alt="Ελευθεριάδης Κωνσταντίνος"></div>
+          <h3 class="team-name">Ελευθεριάδης Κωνσταντίνος</h3>
+          <p class="team-role">Λογιστής φοροτεχνικός Ά τάξης</p>
+        </div>
+        <div class="team-card">
+          <div class="team-photo-wrap"><img src="assets/team-2.jpg" alt="Σκέμπη Ευθυμία"></div>
+          <h3 class="team-name">Σκέμπη Ευθυμία</h3>
+          <p class="team-role"><span class="tag mono">FOUNDER</span><br>Λογίστρια φοροτεχνικός Ά τάξης</p>
+        </div>
+        <div class="team-card">
+          <div class="team-photo-wrap"><img src="assets/team-3.jpg" alt="Παρχαρίδου Παναγιώτα"></div>
+          <h3 class="team-name">Παρχαρίδου Παναγιώτα</h3>
+          <p class="team-role">Expert Εργατικής Νομοθεσίας &amp; Μισθοδοσίας</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ΥΠΗΡΕΣΙΕΣ ================= -->
+  <section class="grid-section" id="services">
+    <div class="wrap">
+      <div class="sec-head-row">
+        <div class="reveal">
+          <div class="sec-label"><span class="sec-num mono">§04</span><span class="sec-eyebrow">Υπηρεσίες</span></div>
+          <h2 class="sec-heading">Τι <span class="accent">Προσφέρουμε</span></h2>
+          <p class="sec-sub">Ολοκληρωμένες λογιστικές και φοροτεχνικές υπηρεσίες για κάθε ανάγκη.</p>
+        </div>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="services-cols reveal">
+        <div class="service-col">
+          <div class="service-col-head">
+            <h3>Εταιρείες</h3>
+            <span class="count mono">07</span>
+          </div>
+          <div class="service-row"><span class="idx mono">01</span><span>Τήρηση βιβλίων (απλογραφικά, διπλογραφικά)</span></div>
+          <div class="service-row"><span class="idx mono">02</span><span>Μισθοδοσία και εργατικά θέματα</span></div>
+          <div class="service-row"><span class="idx mono">03</span><span>Συμβουλευτικές υπηρεσίες</span></div>
+          <div class="service-row"><span class="idx mono">04</span><span>Σύνταξη χρηματοοικονομικών καταστάσεων</span></div>
+          <div class="service-row"><span class="idx mono">05</span><span>Υποστήριξη σε φορολογικούς ελέγχους</span></div>
+          <div class="service-row"><span class="idx mono">06</span><span>Διαχείριση επιδοτήσεων</span></div>
+          <div class="service-row"><span class="idx mono">07</span><span>Εσωτερικός έλεγχος</span></div>
+        </div>
+        <div class="service-col">
+          <div class="service-col-head">
+            <h3>Ατομικές Επιχειρήσεις</h3>
+            <span class="count mono">07</span>
+          </div>
+          <div class="service-row"><span class="idx mono">01</span><span>Τήρηση βιβλίων</span></div>
+          <div class="service-row"><span class="idx mono">02</span><span>Σύνταξη και υποβολή φορολογικών δηλώσεων</span></div>
+          <div class="service-row"><span class="idx mono">03</span><span>Φορολογικός σχεδιασμός και βελτιστοποίηση</span></div>
+          <div class="service-row"><span class="idx mono">04</span><span>Συμβουλευτικές υπηρεσίες</span></div>
+          <div class="service-row"><span class="idx mono">05</span><span>Υποστήριξη σε φορολογικούς ελέγχους</span></div>
+          <div class="service-row"><span class="idx mono">06</span><span>Έναρξη, μεταβολή, διακοπή δραστηριότητας</span></div>
+          <div class="service-row"><span class="idx mono">07</span><span>Διαχείριση ηλεκτρονικών βιβλίων myDATA</span></div>
+        </div>
+        <div class="service-col">
+          <div class="service-col-head">
+            <h3>Ιδιώτες</h3>
+            <span class="count mono">07</span>
+          </div>
+          <div class="service-row"><span class="idx mono">01</span><span>Σύνταξη και υποβολή φορολογικών δηλώσεων</span></div>
+          <div class="service-row"><span class="idx mono">02</span><span>Υπολογισμός φόρου εισοδήματος</span></div>
+          <div class="service-row"><span class="idx mono">03</span><span>Φορολογικές συμβουλές και ενημέρωση</span></div>
+          <div class="service-row"><span class="idx mono">04</span><span>Ρυθμίσεις οφειλών προς το δημόσιο</span></div>
+          <div class="service-row"><span class="idx mono">05</span><span>Διαχείριση ακίνητης περιουσίας</span></div>
+          <div class="service-row"><span class="idx mono">06</span><span>Υποβολή αιτήσεων για επιδόματα</span></div>
+          <div class="service-row"><span class="idx mono">07</span><span>Δηλώσεις τεκμηρίων και ανάλωση κεφαλαίου</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ΑΝΑΚΟΙΝΩΣΕΙΣ / BLOG ================= -->
+  <section class="grid-section">
+    <div class="wrap">
+      <div class="sec-head-row">
+        <div class="reveal">
+          <div class="sec-label"><span class="sec-num mono">§05</span><span class="sec-eyebrow">Blog</span></div>
+          <h2 class="sec-heading">Ανακοινώσεις</h2>
+        </div>
+      </div>
+      <div class="blog-grid reveal">
+        <article class="blog-card">
+          <span class="blog-date mono">24.06.2026</span>
+          <h3>ΕΝΦΙΑ 2026: Πότε αναμένονται τα εκκαθαριστικά</h3>
+          <p>Τι αλλάζει φέτος στον υπολογισμό και ποιες εκπτώσεις ισχύουν για ιδιοκτήτες ακινήτων.</p>
+          <span class="blog-link mono">Διαβάστε περισσότερα <span class="arrow">→</span></span>
+        </article>
+        <article class="blog-card">
+          <span class="blog-date mono">11.06.2026</span>
+          <h3>myDATA: Νέες υποχρεώσεις διαβίβασης για επιχειρήσεις</h3>
+          <p>Οδηγός για τις πρόσφατες αλλαγές στην ηλεκτρονική τιμολόγηση και τη διασύνδεση ταμειακών.</p>
+          <span class="blog-link mono">Διαβάστε περισσότερα <span class="arrow">→</span></span>
+        </article>
+        <article class="blog-card">
+          <span class="blog-date mono">02.06.2026</span>
+          <h3>Φορολογικές δηλώσεις 2026: Βασικές προθεσμίες</h3>
+          <p>Ημερομηνίες υποβολής, τεκμήρια διαβίωσης και πρακτικές συμβουλές πριν την εκκαθάριση.</p>
+          <span class="blog-link mono">Διαβάστε περισσότερα <span class="arrow">→</span></span>
+        </article>
+      </div>
+      <div class="blog-all">
+        <a href="#">Δες όλα τα άρθρα →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ΕΠΙΚΟΙΝΩΝΙΑ ================= -->
+  <section class="grid-section" id="contact">
+    <div class="wrap">
+      <div class="sec-head-row">
+        <div class="reveal">
+          <div class="sec-label"><span class="sec-num mono">§06</span><span class="sec-eyebrow">Επικοινωνία</span></div>
+          <h2 class="sec-heading">Επικοινωνήστε <span class="accent">μαζί μας</span></h2>
+          <p class="sec-sub">Είμαστε εδώ για να απαντήσουμε σε κάθε ερώτησή σας και να σας βοηθήσουμε με τις λογιστικές σας ανάγκες.</p>
+        </div>
+      </div>
+
+      <div class="contact-grid reveal">
+        <div class="contact-info">
+          <div class="info-row">
+            <span class="info-k mono">EMAIL</span>
+            <span class="info-v"><a href="mailto:Eleftheriades.kon@gmail.com">Eleftheriades.kon@gmail.com</a><br><a href="mailto:Skembi.efi@gmail.com">Skembi.efi@gmail.com</a></span>
+          </div>
+          <div class="info-row">
+            <span class="info-k mono">ΤΗΛΕΦΩΝΟ</span>
+            <span class="info-v"><a href="tel:2310720756">2310 720756</a></span>
+          </div>
+          <div class="info-row">
+            <span class="info-k mono">ΩΡΑΡΙΟ</span>
+            <span class="info-v">Δευτέρα – Παρασκευή<br>08:30 – 17:30</span>
+          </div>
+          <div class="info-row">
+            <span class="info-k mono">ΔΙΕΥΘΥΝΣΗ</span>
+            <span class="info-v">Άρη Βελουχιώτη 17, Τ.Κ 56121<br>Αμπελόκηποι, Θεσσαλονίκη</span>
+          </div>
+
+          <div class="map-block">
+            <div class="pin">
+              <span class="pin-dot"></span>
+              <span class="pin-label mono">ΑΜΠΕΛΟΚΗΠΟΙ, ΘΕΣ/ΝΙΚΗ</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <div class="form-msg" id="formMsg">✓ Ευχαριστούμε! Το μήνυμά σας εστάλη — θα επικοινωνήσουμε σύντομα.</div>
+          <form id="contactForm">
+            <div class="field">
+              <label for="fname">Όνομα</label>
+              <input type="text" id="fname" name="fname" placeholder="Το ονοματεπώνυμό σας" required>
+            </div>
+            <div class="field">
+              <label for="femail">Email</label>
+              <input type="email" id="femail" name="femail" placeholder="you@example.com" required>
+            </div>
+            <div class="field">
+              <label for="fmsg">Μήνυμα</label>
+              <textarea id="fmsg" name="fmsg" placeholder="Πείτε μας πώς μπορούμε να βοηθήσουμε…" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;">Αποστολή Μηνύματος</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/logo.png" alt="ES Λογιστική">
+        <p>Αξιόπιστες λογιστικές υπηρεσίες και φοροτεχνική υποστήριξη στη Θεσσαλονίκη — με ακρίβεια, τεχνογνωσία και σύγχρονα εργαλεία.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Πλοήγηση</h4>
+        <a href="#about">Σχετικά</a>
+        <a href="#services">Υπηρεσίες</a>
+        <a href="#team">Ομάδα</a>
+        <a href="#contact">Επικοινωνία</a>
+      </div>
+      <div class="footer-col">
+        <h4>Επικοινωνία</h4>
+        <a href="mailto:Eleftheriades.kon@gmail.com">Eleftheriades.kon@gmail.com</a>
+        <a href="tel:2310720756">2310 720756</a>
+        <a href="#contact">Άρη Βελουχιώτη 17, Θεσσαλονίκη</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 ES Λογιστική. Με επιφύλαξη παντός δικαιώματος.</p>
+      <p>ΘΕΣΣΑΛΟΝΙΚΗ · ΕΛΛΑΔΑ</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu toggle
+  var burgerBtn = document.getElementById('burgerBtn');
+  var mobileMenu = document.getElementById('mobileMenu');
+  burgerBtn.addEventListener('click', function(){
+    burgerBtn.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  Array.prototype.forEach.call(mobileMenu.querySelectorAll('a'), function(a){
+    a.addEventListener('click', function(){
+      burgerBtn.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+
+  // Scroll reveal
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  // Fake contact form submit
+  var form = document.getElementById('contactForm');
+  var msg = document.getElementById('formMsg');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    msg.classList.add('show');
+    form.reset();
+    msg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ES Λογιστική — Αξιόπιστες Λογιστικές Υπηρεσίες, Θεσσαλονίκη</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.7.0/dist/tabler-icons.min.css">
+<style>
+  :root{
+    --bg:#15130F;
+    --bg-alt:#1C1914;
+    --ink:#F3EEE4;
+    --ink-dim:#B9B2A2;
+    --copper:#C9793B;
+    --bronze:#8C6A3D;
+    --rule:#2B2820;
+    --rule-soft:rgba(201,121,59,0.35);
+    --max:1360px;
+    --gutter:clamp(24px,5vw,72px);
+    --space-1:8px;
+    --space-2:16px;
+    --space-3:24px;
+    --space-4:40px;
+    --space-5:64px;
+    --space-6:96px;
+    --space-7:140px;
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Public Sans',sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  img{max-width:100%;display:block;}
+
+  h1,h2,h3,h4{
+    font-family:'Libre Caslon Display',serif;
+    font-weight:400;
+    margin:0;
+    color:var(--ink);
+  }
+
+  a{color:inherit;text-decoration:none;}
+
+  ::selection{background:var(--copper);color:#15130F;}
+
+  /* ---------- grain texture overlay ---------- */
+  .grain{
+    pointer-events:none;
+    position:fixed;
+    inset:0;
+    z-index:2;
+    opacity:0.05;
+    mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .container{
+    max-width:var(--max);
+    margin:0 auto;
+    padding-left:var(--gutter);
+    padding-right:var(--gutter);
+  }
+
+  /* ---------- reveal animation ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity 0.9s cubic-bezier(.16,.8,.24,1), transform 0.9s cubic-bezier(.16,.8,.24,1);
+  }
+  .reveal.is-visible{opacity:1;transform:translateY(0);}
+
+  .rule-draw{
+    position:relative;
+    display:block;
+    height:1px;
+    background:var(--rule);
+    overflow:hidden;
+  }
+  .rule-draw::after{
+    content:"";
+    position:absolute;
+    top:0;left:0;bottom:0;
+    width:0%;
+    background:var(--copper);
+    transition:width 1.1s cubic-bezier(.16,.8,.24,1);
+  }
+  .rule-draw.is-visible::after{width:100%;}
+
+  /* ---------- section label (magazine TOC style) ---------- */
+  .kicker{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-family:'Public Sans',sans-serif;
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--copper);
+    margin-bottom:var(--space-3);
+  }
+  .kicker .bracket{color:var(--bronze);font-weight:400;letter-spacing:0;}
+
+  .section-head{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:var(--space-3);
+    margin-bottom:var(--space-5);
+  }
+  .section-head h2{
+    font-size:clamp(34px,4.4vw,56px);
+    line-height:1.05;
+    letter-spacing:-0.01em;
+    max-width:640px;
+  }
+  .section-head .sub{
+    max-width:380px;
+    color:var(--ink-dim);
+    font-size:16px;
+    padding-bottom:6px;
+  }
+
+  section{position:relative;z-index:1;}
+
+  /* ================= NAV ================= */
+  header.nav{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:100;
+    background:rgba(21,19,15,0.82);
+    backdrop-filter:blur(10px) saturate(140%);
+    -webkit-backdrop-filter:blur(10px) saturate(140%);
+    border-bottom:1px solid var(--rule);
+  }
+  .nav-inner{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:18px var(--gutter);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .nav-logo img{
+    height:26px;
+    width:auto;
+    filter:invert(1);
+    transition:opacity .3s ease;
+  }
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap:var(--space-5);
+    list-style:none;
+    margin:0;padding:0;
+  }
+  .nav-links a{
+    font-size:14px;
+    letter-spacing:0.02em;
+    color:var(--ink-dim);
+    position:relative;
+    padding:4px 0;
+    transition:color .25s ease;
+  }
+  .nav-links a::after{
+    content:"";
+    position:absolute;
+    left:0;bottom:0;
+    width:0%;
+    height:1px;
+    background:var(--copper);
+    transition:width .3s ease;
+  }
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a:hover::after{width:100%;}
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:13px 28px;
+    font-family:'Public Sans',sans-serif;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    border:1px solid var(--copper);
+    color:var(--ink);
+    background:transparent;
+    cursor:pointer;
+    transition:transform .35s cubic-bezier(.16,.8,.24,1), background .35s ease, color .35s ease, box-shadow .35s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{
+    background:var(--copper);
+    color:#15130F;
+    transform:translateY(-3px);
+    box-shadow:0 12px 24px -8px rgba(201,121,59,0.45);
+  }
+  .btn-ghost{border-color:var(--rule);}
+  .btn-ghost:hover{background:var(--ink);border-color:var(--ink);color:#15130F;}
+  .btn-small{padding:11px 22px;font-size:12px;}
+
+  .nav-cta{display:flex;align-items:center;gap:24px;}
+
+  .hamburger{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    gap:6px;
+    width:32px;height:32px;
+    background:none;border:none;
+    cursor:pointer;
+    z-index:110;
+  }
+  .hamburger span{
+    display:block;
+    height:1px;
+    background:var(--ink);
+    width:100%;
+    transition:transform .3s ease, opacity .3s ease;
+  }
+  .hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger.active span:nth-child(2){opacity:0;}
+  .hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .mobile-menu{
+    position:fixed;
+    inset:0;
+    background:var(--bg);
+    z-index:99;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    gap:var(--space-3);
+    padding:0 var(--gutter);
+    transform:translateY(-100%);
+    transition:transform .5s cubic-bezier(.16,.8,.24,1);
+  }
+  .mobile-menu.open{transform:translateY(0);}
+  .mobile-menu a{
+    font-family:'Libre Caslon Display',serif;
+    font-size:38px;
+    color:var(--ink);
+    border-bottom:1px solid var(--rule);
+    padding-bottom:14px;
+    width:100%;
+  }
+  .mobile-menu .btn{margin-top:20px;}
+
+  /* ================= HERO ================= */
+  .hero{
+    position:relative;
+    padding:calc(140px + var(--space-5)) 0 var(--space-6);
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    align-items:center;
+    gap:var(--space-5);
+  }
+  .hero-eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--copper);
+    margin-bottom:var(--space-3);
+  }
+  .hero-eyebrow::before{
+    content:"";
+    width:34px;height:1px;
+    background:var(--copper);
+  }
+  .hero h1{
+    font-size:clamp(46px,6.6vw,92px);
+    line-height:0.98;
+    letter-spacing:-0.02em;
+    max-width:14ch;
+  }
+  .hero h1 .accent{color:var(--copper);font-style:italic;}
+  .hero .lede{
+    margin-top:var(--space-4);
+    font-size:18px;
+    line-height:1.7;
+    color:var(--ink-dim);
+    max-width:46ch;
+  }
+  .hero-actions{
+    margin-top:var(--space-5);
+    display:flex;
+    flex-wrap:wrap;
+    gap:18px;
+  }
+  .hero-stats{
+    display:flex;
+    gap:var(--space-5);
+    margin-top:var(--space-6);
+    padding-top:var(--space-4);
+    border-top:1px solid var(--rule);
+  }
+  .hero-stats div strong{
+    display:block;
+    font-family:'Libre Caslon Display',serif;
+    font-size:34px;
+    color:var(--ink);
+  }
+  .hero-stats div span{
+    font-size:12.5px;
+    letter-spacing:0.06em;
+    color:var(--ink-dim);
+    text-transform:uppercase;
+  }
+
+  .hero-visual{
+    position:relative;
+    height:640px;
+  }
+  .hero-visual svg{
+    position:absolute;
+    top:50%;left:0;
+    transform:translateY(-50%);
+    width:calc(100% + 12vw);
+    max-width:none;
+    height:auto;
+  }
+  .hero-visual .frame-label{
+    position:absolute;
+    right:0;
+    bottom:-8px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+  }
+  .hero-visual .frame-label::before{
+    content:"";
+    width:22px;height:1px;
+    background:var(--rule);
+  }
+
+  /* ================= DIFFERENCE / WHY US ================= */
+  .why{
+    background:var(--bg-alt);
+    padding:var(--space-7) 0;
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+  }
+  .why-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:0;
+  }
+  .why-item{
+    padding:var(--space-4) var(--space-4) var(--space-4) 0;
+    border-bottom:1px solid var(--rule);
+    position:relative;
+  }
+  .why-grid .why-item:nth-child(odd){padding-left:0;border-right:1px solid var(--rule);padding-right:var(--space-5);}
+  .why-grid .why-item:nth-child(even){padding-left:var(--space-5);}
+  .why-num{
+    font-family:'Libre Caslon Display',serif;
+    font-size:52px;
+    color:var(--bronze);
+    line-height:1;
+    margin-bottom:var(--space-3);
+    opacity:0.85;
+  }
+  .why-item h3{
+    font-size:23px;
+    margin-bottom:12px;
+    letter-spacing:-0.01em;
+  }
+  .why-item p{
+    color:var(--ink-dim);
+    font-size:15.5px;
+    max-width:44ch;
+    margin:0;
+  }
+
+  /* ================= SERVICES (dossier) ================= */
+  .services{padding:var(--space-7) 0;}
+  .dossier{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0;
+    border-top:1px solid var(--rule);
+  }
+  .dossier-col{
+    padding:var(--space-4) var(--space-4) var(--space-5);
+    border-right:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+  }
+  .dossier-col:last-child{border-right:none;}
+  .dossier-num{
+    font-family:'Libre Caslon Display',serif;
+    color:var(--copper);
+    font-size:15px;
+    letter-spacing:0.1em;
+    margin-bottom:var(--space-3);
+    display:block;
+  }
+  .dossier-col h3{
+    font-size:27px;
+    margin-bottom:var(--space-3);
+    letter-spacing:-0.01em;
+  }
+  .dossier-col ul{
+    list-style:none;
+    margin:0;padding:0;
+    display:flex;
+    flex-direction:column;
+  }
+  .dossier-col li{
+    padding:14px 0;
+    border-top:1px solid var(--rule);
+    font-size:15px;
+    color:var(--ink-dim);
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+  }
+  .dossier-col li:first-child{border-top:none;}
+  .dossier-col li::before{
+    content:"—";
+    color:var(--bronze);
+    flex-shrink:0;
+  }
+
+  /* ================= TEAM (editorial strip) ================= */
+  .team{
+    background:var(--bg-alt);
+    padding:var(--space-7) 0;
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+  }
+  .team-strip{border-top:1px solid var(--rule);}
+  .team-row{
+    display:grid;
+    grid-template-columns:140px 1fr auto;
+    align-items:center;
+    gap:var(--space-4);
+    padding:var(--space-4) 0;
+    border-bottom:1px solid var(--rule);
+    transition:padding-left .4s cubic-bezier(.16,.8,.24,1);
+  }
+  .team-row:hover{padding-left:14px;}
+  .team-photo{
+    width:140px;
+    height:170px;
+    overflow:hidden;
+    position:relative;
+    background:var(--rule);
+  }
+  .team-photo img{
+    width:100%;height:100%;
+    object-fit:cover;
+    object-position:top center;
+    filter:grayscale(1) sepia(0.35) saturate(1.3) brightness(0.85) contrast(1.05);
+    transform:scale(1.02);
+    transition:filter .6s ease, transform .6s cubic-bezier(.16,.8,.24,1);
+  }
+  .team-row:hover .team-photo img{
+    filter:grayscale(0) sepia(0) saturate(1) brightness(1) contrast(1);
+    transform:scale(1.08);
+  }
+  .team-info .team-name{
+    font-family:'Libre Caslon Display',serif;
+    font-size:clamp(24px,3vw,34px);
+    letter-spacing:-0.01em;
+    margin-bottom:8px;
+  }
+  .team-info .team-role{
+    font-size:14px;
+    color:var(--copper);
+    letter-spacing:0.03em;
+  }
+  .team-index{
+    font-family:'Libre Caslon Display',serif;
+    font-size:15px;
+    color:var(--rule);
+    justify-self:end;
+  }
+
+  /* ================= BLOG ================= */
+  .blog{padding:var(--space-7) 0;}
+  .blog-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:var(--space-4);
+    border-top:1px solid var(--rule);
+    padding-top:var(--space-5);
+  }
+  .blog-card{
+    display:flex;
+    flex-direction:column;
+    gap:var(--space-2);
+  }
+  .blog-card .blog-meta{
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--bronze);
+  }
+  .blog-card h3{
+    font-size:23px;
+    line-height:1.2;
+    letter-spacing:-0.01em;
+    transition:color .3s ease;
+  }
+  .blog-card p{
+    color:var(--ink-dim);
+    font-size:15px;
+    margin:0;
+  }
+  .blog-card .blog-link{
+    margin-top:auto;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink);
+    padding-top:var(--space-2);
+    border-top:1px solid var(--rule);
+  }
+  .blog-card:hover h3{color:var(--copper);}
+  .blog-card .blog-link i{transition:transform .3s ease;}
+  .blog-card:hover .blog-link i{transform:translateX(6px);}
+
+  .blog-head-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:var(--space-3);
+  }
+  .blog-head-row .see-all{
+    font-size:13px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--copper);
+    border-bottom:1px solid var(--rule-soft);
+    padding-bottom:4px;
+    white-space:nowrap;
+  }
+
+  /* ================= CONTACT ================= */
+  .contact{
+    background:var(--bg-alt);
+    padding:var(--space-7) 0;
+    border-top:1px solid var(--rule);
+  }
+  .contact-grid{
+    display:grid;
+    grid-template-columns:0.85fr 1.15fr;
+    gap:var(--space-6);
+    align-items:start;
+  }
+  .contact-info-list{
+    list-style:none;
+    margin:var(--space-5) 0 0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+  }
+  .contact-info-list li{
+    display:flex;
+    gap:18px;
+    align-items:flex-start;
+    padding:20px 0;
+    border-top:1px solid var(--rule);
+  }
+  .contact-info-list li:last-child{border-bottom:1px solid var(--rule);}
+  .contact-info-list i{
+    color:var(--copper);
+    font-size:19px;
+    margin-top:2px;
+  }
+  .contact-info-list .label{
+    display:block;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    margin-bottom:4px;
+  }
+  .contact-info-list .value{
+    font-size:16px;
+    color:var(--ink);
+  }
+  .contact-info-list a.value:hover{color:var(--copper);}
+
+  .map-block{
+    margin-top:var(--space-4);
+    height:180px;
+    border:1px solid var(--rule);
+    position:relative;
+    overflow:hidden;
+    background:
+      linear-gradient(135deg, rgba(201,121,59,0.06) 0%, transparent 60%),
+      repeating-linear-gradient(45deg, transparent, transparent 18px, rgba(201,121,59,0.04) 18px, rgba(201,121,59,0.04) 19px);
+  }
+  .map-block::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      linear-gradient(var(--rule) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+    background-size:32px 32px;
+    opacity:0.5;
+  }
+  .map-pin{
+    position:absolute;
+    top:50%;left:38%;
+    transform:translate(-50%,-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    z-index:1;
+  }
+  .map-pin i{font-size:26px;color:var(--copper);}
+  .map-pin span{
+    font-size:11.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    white-space:nowrap;
+  }
+
+  form.contact-form{
+    background:var(--bg);
+    border:1px solid var(--rule);
+    padding:var(--space-5);
+  }
+  .form-row{margin-bottom:var(--space-3);}
+  .form-row label{
+    display:block;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    margin-bottom:10px;
+  }
+  .form-row input,
+  .form-row textarea{
+    width:100%;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid var(--rule);
+    color:var(--ink);
+    font-family:'Public Sans',sans-serif;
+    font-size:16px;
+    padding:10px 2px;
+    transition:border-color .3s ease;
+  }
+  .form-row textarea{resize:vertical;min-height:110px;font-family:'Public Sans',sans-serif;}
+  .form-row input:focus,
+  .form-row textarea:focus{
+    outline:none;
+    border-color:var(--copper);
+  }
+  .form-row input::placeholder,
+  .form-row textarea::placeholder{color:#5c5648;}
+  form.contact-form .btn{
+    width:100%;
+    justify-content:center;
+    margin-top:var(--space-2);
+  }
+  .form-success{
+    display:none;
+    align-items:center;
+    gap:14px;
+    padding:20px;
+    border:1px solid var(--copper);
+    color:var(--ink);
+    font-size:15px;
+  }
+  .form-success i{color:var(--copper);font-size:22px;}
+  .form-success.show{display:flex;}
+
+  /* ================= FOOTER ================= */
+  footer{
+    padding:var(--space-6) 0 var(--space-4);
+    border-top:1px solid var(--rule);
+  }
+  .footer-top{
+    display:grid;
+    grid-template-columns:1.3fr 1fr 1fr;
+    gap:var(--space-5);
+    padding-bottom:var(--space-5);
+  }
+  .footer-logo img{
+    height:24px;
+    filter:invert(1);
+    margin-bottom:var(--space-3);
+  }
+  .footer-tagline{
+    color:var(--ink-dim);
+    font-size:15px;
+    max-width:34ch;
+  }
+  .footer-col h4{
+    font-family:'Public Sans',sans-serif;
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    margin-bottom:var(--space-3);
+    font-weight:600;
+  }
+  .footer-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;}
+  .footer-col a{color:var(--ink);font-size:15px;transition:color .25s ease;}
+  .footer-col a:hover{color:var(--copper);}
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-top:var(--space-3);
+    border-top:1px solid var(--rule);
+    font-size:13px;
+    color:var(--ink-dim);
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .footer-bottom .social{display:flex;gap:18px;}
+  .footer-bottom .social a{font-size:17px;color:var(--ink-dim);}
+  .footer-bottom .social a:hover{color:var(--copper);}
+
+  /* ================= RESPONSIVE ================= */
+  @media (max-width:1080px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-visual{height:400px;order:-1;margin-bottom:var(--space-3);}
+    .hero-visual svg{width:100%;left:0;}
+    .why-grid{grid-template-columns:1fr;}
+    .why-grid .why-item:nth-child(odd){border-right:none;padding-right:0;}
+    .why-grid .why-item:nth-child(even){padding-left:0;}
+    .dossier{grid-template-columns:1fr;}
+    .dossier-col{border-right:none;}
+    .blog-grid{grid-template-columns:1fr;}
+    .contact-grid{grid-template-columns:1fr;}
+    .footer-top{grid-template-columns:1fr 1fr;}
+  }
+
+  @media (max-width:760px){
+    .nav-links{display:none;}
+    .nav-cta .btn:not(.hamburger-wrap){display:none;}
+    .hamburger{display:flex;}
+    .team-row{grid-template-columns:90px 1fr;}
+    .team-index{display:none;}
+    .team-photo{width:90px;height:112px;}
+    .footer-top{grid-template-columns:1fr;}
+    .hero-stats{gap:var(--space-4);flex-wrap:wrap;}
+    section .container{padding-left:20px;padding-right:20px;}
+    :root{--gutter:20px;}
+    .section-head{flex-direction:column;align-items:flex-start;}
+  }
+
+  @media (max-width:480px){
+    .hero h1{font-size:40px;}
+    .why-num{font-size:40px;}
+    form.contact-form{padding:var(--space-4) var(--space-3);}
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- ================= NAV ================= -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo"><img src="assets/logo.png" alt="ES Λογιστική"></a>
+    <ul class="nav-links">
+      <li><a href="#why">Σχετικά</a></li>
+      <li><a href="#services">Υπηρεσίες</a></li>
+      <li><a href="#team">Ομάδα</a></li>
+      <li><a href="#contact">Επικοινωνία</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-small">Ραντεβού</a>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Μενού">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-menu" id="mobileMenu">
+  <a href="#why">Σχετικά</a>
+  <a href="#services">Υπηρεσίες</a>
+  <a href="#team">Ομάδα</a>
+  <a href="#contact">Επικοινωνία</a>
+  <a href="#contact" class="btn">Ραντεβού</a>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="hero-eyebrow">Θεσσαλονίκη, Ελλάδα</div>
+      <h1 class="reveal">Αξιόπιστες<br><span class="accent">Λογιστικές</span> Υπηρεσίες</h1>
+      <p class="lede reveal" style="transition-delay:.12s;">Επιχειρηματικές Συμβουλές &amp; Φοροτεχνική Υποστήριξη. Εμπιστευτείτε την επιχείρησή σας σε έμπειρους επαγγελματίες.</p>
+      <div class="hero-actions reveal" style="transition-delay:.22s;">
+        <a href="#contact" class="btn">Κλείστε μια δωρεάν συνεδρία</a>
+        <a href="#services" class="btn btn-ghost">Δείτε τις Υπηρεσίες</a>
+      </div>
+      <div class="hero-stats reveal" style="transition-delay:.32s;">
+        <div><strong>20+</strong><span>Χρόνια εμπειρίας</span></div>
+        <div><strong>3</strong><span>Ειδικοί επαγγελματίες</span></div>
+        <div><strong>100%</strong><span>myDATA συμμόρφωση</span></div>
+      </div>
+    </div>
+    <div class="hero-visual reveal" style="transition-delay:.2s;">
+      <svg viewBox="0 0 620 640" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="lineFade" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#C9793B" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#8C6A3D" stop-opacity="0.15"/>
+          </linearGradient>
+        </defs>
+        <g fill="none" stroke="url(#lineFade)" stroke-width="1">
+          <circle cx="360" cy="300" r="260"/>
+          <circle cx="360" cy="300" r="190"/>
+          <circle cx="360" cy="300" r="120"/>
+          <line x1="360" y1="20" x2="360" y2="580"/>
+          <line x1="90" y1="300" x2="630" y2="300"/>
+          <line x1="150" y1="90" x2="580" y2="510"/>
+          <line x1="580" y1="90" x2="150" y2="510"/>
+        </g>
+        <g fill="#C9793B">
+          <circle cx="360" cy="40" r="4"/>
+          <circle cx="600" cy="300" r="3"/>
+          <circle cx="360" cy="560" r="3"/>
+          <circle cx="170" cy="480" r="4"/>
+        </g>
+        <text x="360" y="308" text-anchor="middle" font-family="Libre Caslon Display, serif" font-size="120" fill="#F3EEE4" opacity="0.9">ES</text>
+      </svg>
+      <div class="frame-label">Est. Θεσσαλονίκη</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHY US ================= -->
+<section class="why" id="why">
+  <div class="container">
+    <div class="kicker reveal"><span class="bracket">[</span>Γιατί εμάς<span class="bracket">]</span></div>
+    <div class="section-head reveal">
+      <h2>Η Διαφορά μας</h2>
+      <p class="sub">Συνδυάζουμε εμπειρία, τεχνογνωσία και σύγχρονη τεχνολογία για να προσφέρουμε κορυφαίες λογιστικές υπηρεσίες.</p>
+    </div>
+    <span class="rule-draw reveal"></span>
+    <div class="why-grid">
+      <div class="why-item reveal">
+        <div class="why-num">01</div>
+        <h3>Εμπειρία &amp; Τεχνογνωσία</h3>
+        <p>Έμπειροι λογιστές και φοροτεχνικοί, ενήμεροι για τις τελευταίες νομοθετικές εξελίξεις.</p>
+      </div>
+      <div class="why-item reveal" style="transition-delay:.08s;">
+        <div class="why-num">02</div>
+        <h3>Εξατομικευμένη Εξυπηρέτηση</h3>
+        <p>Προσωποποιημένες λύσεις που ανταποκρίνονται στις μοναδικές ανάγκες σας.</p>
+      </div>
+      <div class="why-item reveal" style="transition-delay:.16s;">
+        <div class="why-num">03</div>
+        <h3>Ολοκληρωμένες Υπηρεσίες</h3>
+        <p>Από τήρηση βιβλίων έως φορολογικό σχεδιασμό και επιχειρηματικές συμβουλές.</p>
+      </div>
+      <div class="why-item reveal" style="transition-delay:.24s;">
+        <div class="why-num">04</div>
+        <h3>Σύγχρονη Τεχνολογία</h3>
+        <p>Ακρίβεια και ασφάλεια με τα πιο σύγχρονα λογιστικά εργαλεία.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="kicker reveal"><span class="bracket">[</span>Υπηρεσίες<span class="bracket">]</span></div>
+    <div class="section-head reveal">
+      <h2>Τι Προσφέρουμε</h2>
+      <p class="sub">Ολοκληρωμένες λογιστικές και φοροτεχνικές υπηρεσίες για κάθε ανάγκη.</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="dossier">
+      <div class="dossier-col reveal">
+        <span class="dossier-num">§ 01</span>
+        <h3>Εταιρείες</h3>
+        <ul>
+          <li>Τήρηση βιβλίων (απλογραφικά, διπλογραφικά)</li>
+          <li>Μισθοδοσία και εργατικά θέματα</li>
+          <li>Συμβουλευτικές υπηρεσίες</li>
+          <li>Σύνταξη χρηματοοικονομικών καταστάσεων</li>
+          <li>Υποστήριξη σε φορολογικούς ελέγχους</li>
+          <li>Διαχείριση επιδοτήσεων</li>
+          <li>Εσωτερικός έλεγχος</li>
+        </ul>
+      </div>
+      <div class="dossier-col reveal" style="transition-delay:.1s;">
+        <span class="dossier-num">§ 02</span>
+        <h3>Ατομικές Επιχειρήσεις</h3>
+        <ul>
+          <li>Τήρηση βιβλίων</li>
+          <li>Σύνταξη και υποβολή φορολογικών δηλώσεων</li>
+          <li>Φορολογικός σχεδιασμός και βελτιστοποίηση</li>
+          <li>Συμβουλευτικές υπηρεσίες</li>
+          <li>Υποστήριξη σε φορολογικούς ελέγχους</li>
+          <li>Έναρξη, μεταβολή, διακοπή δραστηριότητας</li>
+          <li>Διαχείριση ηλεκτρονικών βιβλίων myDATA</li>
+        </ul>
+      </div>
+      <div class="dossier-col reveal" style="transition-delay:.2s;">
+        <span class="dossier-num">§ 03</span>
+        <h3>Ιδιώτες</h3>
+        <ul>
+          <li>Σύνταξη και υποβολή φορολογικών δηλώσεων</li>
+          <li>Υπολογισμός φόρου εισοδήματος</li>
+          <li>Φορολογικές συμβουλές και ενημέρωση</li>
+          <li>Ρυθμίσεις οφειλών προς το δημόσιο</li>
+          <li>Διαχείριση ακίνητης περιουσίας</li>
+          <li>Υποβολή αιτήσεων για επιδόματα</li>
+          <li>Δηλώσεις τεκμηρίων και ανάλωση κεφαλαίου</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TEAM ================= -->
+<section class="team" id="team">
+  <div class="container">
+    <div class="kicker reveal"><span class="bracket">[</span>Γνωρίστε μας<span class="bracket">]</span></div>
+    <div class="section-head reveal">
+      <h2>Η Ομάδα Μας</h2>
+    </div>
+    <div class="team-strip">
+      <div class="team-row reveal">
+        <div class="team-photo"><img src="assets/team-1.jpg" alt="Ελευθεριάδης Κωνσταντίνος"></div>
+        <div class="team-info">
+          <div class="team-name">Ελευθεριάδης Κωνσταντίνος</div>
+          <div class="team-role">Λογιστής φοροτεχνικός Ά τάξης</div>
+        </div>
+        <div class="team-index">— 01</div>
+      </div>
+      <div class="team-row reveal" style="transition-delay:.08s;">
+        <div class="team-photo"><img src="assets/team-2.jpg" alt="Σκέμπη Ευθυμία"></div>
+        <div class="team-info">
+          <div class="team-name">Σκέμπη Ευθυμία</div>
+          <div class="team-role">Founder / Λογίστρια φοροτεχνικός Ά τάξης</div>
+        </div>
+        <div class="team-index">— 02</div>
+      </div>
+      <div class="team-row reveal" style="transition-delay:.16s;">
+        <div class="team-photo"><img src="assets/team-3.jpg" alt="Παρχαρίδου Παναγιώτα"></div>
+        <div class="team-info">
+          <div class="team-name">Παρχαρίδου Παναγιώτα</div>
+          <div class="team-role">Expert Εργατικής Νομοθεσίας &amp; Μισθοδοσίας</div>
+        </div>
+        <div class="team-index">— 03</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BLOG ================= -->
+<section class="blog" id="blog">
+  <div class="container">
+    <div class="kicker reveal"><span class="bracket">[</span>Blog<span class="bracket">]</span></div>
+    <div class="blog-head-row reveal">
+      <h2 style="font-size:clamp(34px,4.4vw,56px);letter-spacing:-0.01em;">Ανακοινώσεις</h2>
+      <a href="#" class="see-all">Δες όλα τα άρθρα</a>
+    </div>
+  </div>
+  <div class="container">
+    <div class="blog-grid">
+      <article class="blog-card reveal">
+        <span class="blog-meta">18 Ιουνίου 2026</span>
+        <h3>ΕΝΦΙΑ 2026: Τι αλλάζει στον υπολογισμό &amp; πότε βγαίνουν τα εκκαθαριστικά</h3>
+        <p>Οι βασικές αλλαγές στους συντελεστές και οι νέες προθεσμίες πληρωμής που πρέπει να γνωρίζετε.</p>
+        <a href="#" class="blog-link">Διαβάστε περισσότερα <i class="ti ti-arrow-right"></i></a>
+      </article>
+      <article class="blog-card reveal" style="transition-delay:.08s;">
+        <span class="blog-meta">5 Ιουνίου 2026</span>
+        <h3>myDATA: Νέες υποχρεώσεις διαβίβασης για ελεύθερους επαγγελματίες</h3>
+        <p>Τι σημαίνει η επέκταση της ηλεκτρονικής τιμολόγησης για τα ατομικά βιβλία εσόδων-εξόδων.</p>
+        <a href="#" class="blog-link">Διαβάστε περισσότερα <i class="ti ti-arrow-right"></i></a>
+      </article>
+      <article class="blog-card reveal" style="transition-delay:.16s;">
+        <span class="blog-meta">22 Μαΐου 2026</span>
+        <h3>Φορολογικές Δηλώσεις 2026: Οδηγός προθεσμιών &amp; συχνών λαθών</h3>
+        <p>Πρακτικές συμβουλές για μισθωτούς, συνταξιούχους και επιχειρήσεις πριν τη λήξη υποβολής.</p>
+        <a href="#" class="blog-link">Διαβάστε περισσότερα <i class="ti ti-arrow-right"></i></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="kicker reveal"><span class="bracket">[</span>Επικοινωνία<span class="bracket">]</span></div>
+    <div class="section-head reveal">
+      <h2>Επικοινωνήστε μαζί μας</h2>
+      <p class="sub">Είμαστε εδώ για να απαντήσουμε σε κάθε ερώτησή σας και να σας βοηθήσουμε με τις λογιστικές σας ανάγκες.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="reveal">
+        <ul class="contact-info-list">
+          <li>
+            <i class="ti ti-mail"></i>
+            <div>
+              <span class="label">Email</span>
+              <a class="value" href="mailto:Eleftheriades.kon@gmail.com">Eleftheriades.kon@gmail.com</a><br>
+              <a class="value" href="mailto:Skembi.efi@gmail.com">Skembi.efi@gmail.com</a>
+            </div>
+          </li>
+          <li>
+            <i class="ti ti-phone"></i>
+            <div>
+              <span class="label">Τηλέφωνο</span>
+              <a class="value" href="tel:2310720756">2310 720756</a>
+            </div>
+          </li>
+          <li>
+            <i class="ti ti-clock"></i>
+            <div>
+              <span class="label">Ωράριο</span>
+              <span class="value">Δευτέρα – Παρασκευή, 08:30 – 17:30</span>
+            </div>
+          </li>
+          <li>
+            <i class="ti ti-map-pin"></i>
+            <div>
+              <span class="label">Διεύθυνση</span>
+              <span class="value">Άρη Βελουχιώτη 17, Τ.Κ 56121, Αμπελόκηποι, Θεσσαλονίκη</span>
+            </div>
+          </li>
+        </ul>
+        <div class="map-block">
+          <div class="map-pin">
+            <i class="ti ti-map-pin-filled"></i>
+            <span>Αμπελόκηποι, Θεσσαλονίκη</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal" style="transition-delay:.1s;">
+        <form class="contact-form" id="contactForm">
+          <div class="form-row">
+            <label for="fname">Όνομα</label>
+            <input type="text" id="fname" name="name" placeholder="Το ονοματεπώνυμό σας" required>
+          </div>
+          <div class="form-row">
+            <label for="femail">Email</label>
+            <input type="email" id="femail" name="email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-row">
+            <label for="fmsg">Μήνυμα</label>
+            <textarea id="fmsg" name="message" placeholder="Πείτε μας πώς μπορούμε να βοηθήσουμε…" required></textarea>
+          </div>
+          <button type="submit" class="btn">Αποστολή Μηνύματος</button>
+        </form>
+        <div class="form-success" id="formSuccess">
+          <i class="ti ti-circle-check"></i>
+          <span>Ευχαριστούμε! Το μήνυμά σας εστάλη — θα επικοινωνήσουμε σύντομα μαζί σας.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <a href="#" class="footer-logo"><img src="assets/logo.png" alt="ES Λογιστική"></a>
+        <p class="footer-tagline">Αξιόπιστες λογιστικές &amp; φοροτεχνικές υπηρεσίες στη Θεσσαλονίκη, με εμπειρία και συνέπεια.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Πλοήγηση</h4>
+        <ul>
+          <li><a href="#why">Σχετικά</a></li>
+          <li><a href="#services">Υπηρεσίες</a></li>
+          <li><a href="#team">Ομάδα</a></li>
+          <li><a href="#contact">Επικοινωνία</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Στοιχεία Επικοινωνίας</h4>
+        <ul>
+          <li><a href="tel:2310720756">2310 720756</a></li>
+          <li><a href="mailto:Eleftheriades.kon@gmail.com">Eleftheriades.kon@gmail.com</a></li>
+          <li><span style="color:var(--ink-dim);">Άρη Βελουχιώτη 17, Αμπελόκηποι, Θεσσαλονίκη</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 ES Λογιστική. Με επιφύλαξη παντός δικαιώματος.</span>
+      <div class="social">
+        <a href="#" aria-label="Facebook"><i class="ti ti-brand-facebook"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="ti ti-brand-linkedin"></i></a>
+        <a href="#" aria-label="Instagram"><i class="ti ti-brand-instagram"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu toggle
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburgerBtn.addEventListener('click', () => {
+    hamburgerBtn.classList.toggle('active');
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      hamburgerBtn.classList.remove('active');
+      mobileMenu.classList.remove('open');
+    });
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal, .rule-draw');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => io.observe(el));
+
+  // Fake contact form submit
+  const form = document.getElementById('contactForm');
+  const success = document.getElementById('formSuccess');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    form.style.display = 'none';
+    success.classList.add('show');
+  });
+</script>
+
+</body>
+</html>
