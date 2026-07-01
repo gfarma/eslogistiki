@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ES Λογιστική — Αξιόπιστες Λογιστικές Υπηρεσίες, Θεσσαλονίκη</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --color-gold:#d4a853;
+    --color-gold-dark:#b8923f;
+    --color-bg:#F7F7F5;
+    --color-surface:#FFFFFF;
+    --color-ink:#0a1628;
+    --color-body:#525a66;
+    --color-muted:#8c96a3;
+    --border-hairline: rgba(10,22,40,0.07);
+    --border-hairline-2: rgba(10,22,40,0.12);
+    --container-max: 1152px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--color-bg);
+    color:var(--color-body);
+    font-family:'DM Sans', sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Playfair Display', serif;
+    color:var(--color-ink);
+    margin:0;
+    line-height:1.15;
+  }
+  p{margin:0;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  ul{margin:0; padding:0; list-style:none;}
+
+  .container{
+    max-width:var(--container-max);
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  section{
+    padding:80px 0;
+  }
+  @media (min-width:768px){
+    section{padding:112px 0;}
+  }
+
+  .section-label{
+    display:block;
+    text-align:center;
+    font-size:13px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--color-gold);
+    font-weight:700;
+    margin-bottom:16px;
+  }
+  .section-heading{
+    text-align:center;
+    font-size:34px;
+    margin-bottom:16px;
+  }
+  @media (min-width:768px){
+    .section-heading{font-size:44px;}
+  }
+  .section-subtitle{
+    text-align:center;
+    max-width:640px;
+    margin:0 auto;
+    color:var(--color-body);
+    font-size:17px;
+  }
+
+  /* Buttons */
+  .btn-gold, .btn-outline{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:16px 36px;
+    border-radius:12px;
+    font-weight:600;
+    font-size:15px;
+    cursor:pointer;
+    border:none;
+    transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
+    white-space:nowrap;
+  }
+  .btn-gold{
+    background:linear-gradient(135deg, var(--color-gold), var(--color-gold-dark));
+    color:var(--color-ink);
+    box-shadow:0 8px 24px rgba(212,168,83,0.28);
+  }
+  .btn-gold:hover{
+    transform:translateY(-3px);
+    box-shadow:0 14px 32px rgba(212,168,83,0.4);
+  }
+  .btn-outline{
+    background:transparent;
+    border:1px solid var(--color-ink);
+    color:var(--color-ink);
+  }
+  .btn-outline:hover{
+    background:rgba(10,22,40,0.05);
+    transform:translateY(-3px);
+  }
+
+  /* Card */
+  .card{
+    position:relative;
+    border-radius:20px;
+    border:1px solid var(--border-hairline);
+    background:linear-gradient(145deg, #FFFFFF, #F2F2EF);
+    box-shadow:0 4px 16px rgba(10,22,40,0.05);
+    transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    overflow:hidden;
+  }
+  .card:hover{
+    transform:translateY(-8px);
+    border-color:rgba(212,168,83,0.45);
+    box-shadow:0 25px 50px rgba(10,22,40,0.12);
+  }
+
+  /* Header */
+  header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(247,247,245,0.9);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border-hairline);
+  }
+  .header-inner{
+    max-width:var(--container-max);
+    margin:0 auto;
+    padding:16px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo img{
+    height:40px;
+    width:auto;
+    filter:none;
+  }
+  nav.desktop-nav{
+    display:none;
+    align-items:center;
+    gap:36px;
+  }
+  nav.desktop-nav a{
+    font-size:15px;
+    font-weight:500;
+    color:var(--color-ink);
+    transition:color .2s ease;
+  }
+  nav.desktop-nav a:hover{
+    color:var(--color-gold-dark);
+  }
+  .header-actions{
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  .pill-btn{
+    display:inline-flex;
+    align-items:center;
+    padding:10px 22px;
+    border-radius:999px;
+    background:linear-gradient(135deg, var(--color-gold), var(--color-gold-dark));
+    color:var(--color-ink);
+    font-weight:600;
+    font-size:14px;
+    box-shadow:0 6px 16px rgba(212,168,83,0.28);
+    transition:transform .25s ease;
+  }
+  .pill-btn:hover{transform:translateY(-2px);}
+  .hamburger{
+    display:inline-flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:5px;
+    width:28px;
+    height:24px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:0;
+  }
+  .hamburger span{
+    display:block;
+    height:2px;
+    width:100%;
+    background:var(--color-ink);
+    border-radius:2px;
+    transition:transform .25s ease, opacity .25s ease;
+  }
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .mobile-nav{
+    display:none;
+    flex-direction:column;
+    padding:8px 24px 24px;
+    border-top:1px solid var(--border-hairline);
+    background:rgba(247,247,245,0.98);
+  }
+  .mobile-nav.open{display:flex;}
+  .mobile-nav a{
+    padding:14px 0;
+    font-size:16px;
+    font-weight:500;
+    color:var(--color-ink);
+    border-bottom:1px solid var(--border-hairline);
+  }
+  .mobile-nav a:last-child{border-bottom:none;}
+
+  @media (min-width:1024px){
+    nav.desktop-nav{display:flex;}
+    .hamburger{display:none;}
+  }
+  @media (max-width:1023px){
+    .header-actions .pill-btn.desktop-only{display:none;}
+  }
+
+  /* Hero */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding:96px 0 96px;
+  }
+  @media (min-width:768px){
+    .hero{padding:140px 0 140px;}
+  }
+  .hero-rings{
+    position:absolute;
+    pointer-events:none;
+    right:-160px;
+    top:50%;
+    transform:translateY(-50%);
+    width:420px;
+    height:420px;
+  }
+  .hero-rings span{
+    position:absolute;
+    border-radius:50%;
+    border:1px solid var(--color-gold);
+  }
+  .hero-rings span.ring-1{
+    inset:0;
+    border-color:rgba(212,168,83,0.25);
+  }
+  .hero-rings span.ring-2{
+    inset:60px;
+    border-color:rgba(212,168,83,0.15);
+  }
+  .hero-rings span.ring-3{
+    inset:120px;
+    border-color:rgba(212,168,83,0.10);
+  }
+  .hero-content{
+    position:relative;
+    z-index:1;
+    max-width:640px;
+  }
+  .hero-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 18px;
+    border-radius:999px;
+    border:1px solid rgba(212,168,83,0.35);
+    background:rgba(212,168,83,0.08);
+    color:var(--color-gold-dark);
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:28px;
+  }
+  .hero-badge .dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--color-gold);
+    display:inline-block;
+  }
+  .hero h1{
+    font-size:40px;
+    font-weight:700;
+    margin-bottom:24px;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--color-gold-dark);
+  }
+  @media (min-width:768px){
+    .hero h1{font-size:58px;}
+  }
+  .hero-subtitle{
+    font-size:18px;
+    color:var(--color-body);
+    margin-bottom:40px;
+    max-width:560px;
+  }
+  .hero-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+
+  /* Differentiator cards */
+  .diff-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:24px;
+    margin-top:56px;
+  }
+  @media (min-width:640px){
+    .diff-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (min-width:1024px){
+    .diff-grid{grid-template-columns:repeat(4,1fr);}
+  }
+  .diff-card{
+    padding:36px 28px;
+  }
+  .diff-num{
+    position:absolute;
+    top:-6px;
+    right:12px;
+    font-family:'Playfair Display', serif;
+    font-size:96px;
+    font-weight:700;
+    color:var(--color-ink);
+    opacity:0.045;
+    line-height:1;
+    pointer-events:none;
+  }
+  .diff-card h3{
+    position:relative;
+    font-size:20px;
+    margin-bottom:12px;
+    z-index:1;
+  }
+  .diff-card p{
+    position:relative;
+    font-size:15px;
+    color:var(--color-body);
+    z-index:1;
+  }
+
+  /* Team */
+  .team-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:56px;
+  }
+  @media (min-width:768px){
+    .team-grid{gap:24px;}
+  }
+  .team-member{
+    text-align:center;
+  }
+  .team-photo{
+    width:100%;
+    aspect-ratio:2/3;
+    border-radius:16px;
+    overflow:hidden;
+    background:var(--color-surface);
+    border:1px solid var(--border-hairline);
+    margin-bottom:16px;
+  }
+  .team-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  .team-name{
+    font-weight:600;
+    color:var(--color-ink);
+    font-size:16px;
+    margin-bottom:4px;
+  }
+  @media (min-width:768px){
+    .team-name{font-size:18px;}
+  }
+  .team-role{
+    font-size:13px;
+    color:var(--color-muted);
+  }
+  @media (min-width:768px){
+    .team-role{font-size:14px;}
+  }
+
+  /* Services */
+  .services-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:24px;
+    margin-top:56px;
+  }
+  @media (min-width:900px){
+    .services-grid{grid-template-columns:repeat(3,1fr);}
+  }
+  .service-card{
+    padding:36px 32px;
+    text-align:left;
+  }
+  .service-card h3{
+    font-size:22px;
+    color:var(--color-gold-dark);
+    margin-bottom:20px;
+  }
+  .service-card ul li{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    font-size:14.5px;
+    color:var(--color-body);
+    padding:8px 0;
+    border-bottom:1px solid var(--border-hairline);
+  }
+  .service-card ul li:last-child{border-bottom:none;}
+  .service-card ul li .arrow{
+    color:var(--color-gold);
+    font-weight:700;
+    flex-shrink:0;
+  }
+
+  /* Blog */
+  .blog-header{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-bottom:56px;
+  }
+  .blog-header .section-label{text-align:left; margin-bottom:12px;}
+  .blog-header h2{text-align:left; font-size:34px;}
+  .blog-link{
+    color:var(--color-gold-dark);
+    font-weight:600;
+    font-size:15px;
+    white-space:nowrap;
+  }
+  .blog-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:24px;
+  }
+  @media (min-width:640px){
+    .blog-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (min-width:1024px){
+    .blog-grid{grid-template-columns:repeat(4,1fr);}
+  }
+  .blog-card{
+    display:block;
+    cursor:pointer;
+  }
+  .blog-cover{
+    height:176px;
+    width:100%;
+    background:linear-gradient(135deg, #efe3c6, #d4a853 120%);
+  }
+  .blog-cover.c2{background:linear-gradient(135deg, #e7eaee, #b9c3cf 120%);}
+  .blog-cover.c3{background:linear-gradient(135deg, #f0e9da, #c9a86a 120%);}
+  .blog-cover.c4{background:linear-gradient(135deg, #e3e7ea, #9fb0c0 120%);}
+  .blog-body{
+    padding:20px 22px 26px;
+  }
+  .blog-date{
+    font-size:12.5px;
+    color:var(--color-muted);
+    margin-bottom:10px;
+    letter-spacing:0.03em;
+  }
+  .blog-title{
+    font-family:'Playfair Display', serif;
+    font-size:18px;
+    color:var(--color-ink);
+    line-height:1.35;
+  }
+
+  /* Contact */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:56px;
+    margin-top:56px;
+  }
+  @media (min-width:900px){
+    .contact-grid{grid-template-columns:1fr 1fr;}
+  }
+  .contact-heading{
+    font-size:30px;
+    margin-bottom:16px;
+    text-align:left;
+  }
+  @media (min-width:768px){
+    .contact-heading{font-size:36px;}
+  }
+  .contact-subtitle{
+    font-size:16px;
+    color:var(--color-body);
+    margin-bottom:40px;
+    max-width:460px;
+  }
+  .contact-info{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px 24px;
+    margin-bottom:40px;
+  }
+  .contact-info dt{
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--color-muted);
+    margin-bottom:8px;
+    font-weight:600;
+  }
+  .contact-info dd{
+    margin:0;
+    font-size:15px;
+    color:var(--color-ink);
+    font-weight:500;
+    line-height:1.55;
+  }
+  .map-placeholder{
+    height:256px;
+    border-radius:16px;
+    border:1px solid var(--border-hairline);
+    background:
+      repeating-linear-gradient(45deg, rgba(10,22,40,0.03) 0, rgba(10,22,40,0.03) 2px, transparent 2px, transparent 14px),
+      linear-gradient(145deg, #FFFFFF, #EFEFEA);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--color-muted);
+    font-size:13px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+  }
+  .contact-form-card{
+    padding:36px 32px;
+  }
+  .contact-form-card h3{
+    font-size:24px;
+    margin-bottom:24px;
+  }
+  .form-group{
+    margin-bottom:20px;
+  }
+  .form-group label{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    color:var(--color-ink);
+    margin-bottom:8px;
+  }
+  .form-group input,
+  .form-group textarea{
+    width:100%;
+    padding:13px 16px;
+    border-radius:10px;
+    border:1px solid var(--border-hairline-2);
+    background:#FFFFFF;
+    font-family:'DM Sans', sans-serif;
+    font-size:14.5px;
+    color:var(--color-ink);
+    resize:vertical;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus{
+    outline:none;
+    border-color:var(--color-gold);
+    box-shadow:0 0 0 3px rgba(212,168,83,0.15);
+  }
+  .form-success{
+    display:none;
+    margin-top:20px;
+    padding:16px 18px;
+    border-radius:10px;
+    background:rgba(212,168,83,0.1);
+    border:1px solid rgba(212,168,83,0.3);
+    color:var(--color-gold-dark);
+    font-size:14px;
+    font-weight:600;
+  }
+  .form-success.show{display:block;}
+
+  /* Footer */
+  footer{
+    border-top:1px solid var(--border-hairline);
+    padding:32px 0;
+  }
+  .footer-inner{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    align-items:flex-start;
+    justify-content:space-between;
+  }
+  @media (min-width:640px){
+    .footer-inner{flex-direction:row; align-items:center;}
+  }
+  .footer-copy{
+    font-size:14px;
+    color:var(--color-muted);
+  }
+  .footer-links{
+    display:flex;
+    gap:28px;
+  }
+  .footer-links a{
+    font-size:14px;
+    color:var(--color-body);
+    font-weight:500;
+  }
+  .footer-links a:hover{color:var(--color-gold-dark);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#top">
+      <img src="assets/logo.png" alt="ES Λογιστική">
+    </a>
+    <nav class="desktop-nav">
+      <a href="#about">Σχετικά</a>
+      <a href="#services">Υπηρεσίες</a>
+      <a href="#news">Νέα</a>
+      <a href="#contact">Επικοινωνία</a>
+      <a href="#login">Σύνδεση</a>
+    </nav>
+    <div class="header-actions">
+      <a href="#contact" class="pill-btn desktop-only">Ραντεβού</a>
+      <a href="#contact" class="pill-btn" style="display:none;" id="mobilePillBtn">Ραντεβού</a>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Μενού" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="#about">Σχετικά</a>
+    <a href="#services">Υπηρεσίες</a>
+    <a href="#news">Νέα</a>
+    <a href="#contact">Επικοινωνία</a>
+    <a href="#login">Σύνδεση</a>
+    <a href="#contact">Ραντεβού</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-rings" aria-hidden="true">
+      <span class="ring-1"></span>
+      <span class="ring-2"></span>
+      <span class="ring-3"></span>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-badge"><span class="dot"></span>Θεσσαλονίκη, Ελλάδα</span>
+        <h1>Αξιόπιστες <em>Λογιστικές</em> Υπηρεσίες</h1>
+        <p class="hero-subtitle">Επιχειρηματικές Συμβουλές &amp; Φοροτεχνική Υποστήριξη. Εμπιστευτείτε την επιχείρησή σας σε έμπειρους επαγγελματίες.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn-gold">Κλείστε μια δωρεάν συνεδρία →</a>
+          <a href="#services" class="btn-outline">Δείτε τις Υπηρεσίες</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFFERENTIATOR -->
+  <section id="about">
+    <div class="container">
+      <span class="section-label">ΓΙΑΤΙ ΕΜΑΣ</span>
+      <h2 class="section-heading">Η Διαφορά μας</h2>
+      <p class="section-subtitle">Συνδυάζουμε εμπειρία, τεχνογνωσία και σύγχρονη τεχνολογία για να προσφέρουμε κορυφαίες λογιστικές υπηρεσίες.</p>
+
+      <div class="diff-grid">
+        <div class="card diff-card">
+          <span class="diff-num">01</span>
+          <h3>Εμπειρία &amp; Τεχνογνωσία</h3>
+          <p>Έμπειροι λογιστές και φοροτεχνικοί, ενήμεροι για τις τελευταίες νομοθετικές εξελίξεις.</p>
+        </div>
+        <div class="card diff-card">
+          <span class="diff-num">02</span>
+          <h3>Εξατομικευμένη Εξυπηρέτηση</h3>
+          <p>Προσωποποιημένες λύσεις που ανταποκρίνονται στις μοναδικές ανάγκες σας.</p>
+        </div>
+        <div class="card diff-card">
+          <span class="diff-num">03</span>
+          <h3>Ολοκληρωμένες Υπηρεσίες</h3>
+          <p>Από τήρηση βιβλίων έως φορολογικό σχεδιασμό και επιχειρηματικές συμβουλές.</p>
+        </div>
+        <div class="card diff-card">
+          <span class="diff-num">04</span>
+          <h3>Σύγχρονη Τεχνολογία</h3>
+          <p>Ακρίβεια και ασφάλεια με τα πιο σύγχρονα λογιστικά εργαλεία.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team">
+    <div class="container">
+      <span class="section-label">ΓΝΩΡΙΣΤΕ ΜΑΣ</span>
+      <h2 class="section-heading">Η Ομάδα Μας</h2>
+
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="team-photo">
+            <img src="assets/team-1.jpg" alt="Ελευθεριάδης Κωνσταντίνος">
+          </div>
+          <div class="team-name">Ελευθεριάδης Κωνσταντίνος</div>
+          <div class="team-role">Λογιστής φοροτεχνικός Ά τάξης</div>
+        </div>
+        <div class="team-member">
+          <div class="team-photo">
+            <img src="assets/team-2.jpg" alt="Σκέμπη Ευθυμία">
+          </div>
+          <div class="team-name">Σκέμπη Ευθυμία</div>
+          <div class="team-role">Founder / Λογίστρια φοροτεχνικός Ά τάξης</div>
+        </div>
+        <div class="team-member">
+          <div class="team-photo">
+            <img src="assets/team-3.jpg" alt="Παρχαρίδου Παναγιώτα">
+          </div>
+          <div class="team-name">Παρχαρίδου Παναγιώτα</div>
+          <div class="team-role">Expert Εργατικής Νομοθεσίας &amp; Μισθοδοσίας</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <span class="section-label">ΥΠΗΡΕΣΙΕΣ</span>
+      <h2 class="section-heading">Τι Προσφέρουμε</h2>
+      <p class="section-subtitle">Ολοκληρωμένες λογιστικές και φοροτεχνικές υπηρεσίες για κάθε ανάγκη.</p>
+
+      <div class="services-grid">
+        <div class="card service-card">
+          <h3>Εταιρείες</h3>
+          <ul>
+            <li><span class="arrow">→</span>Τήρηση βιβλίων (απλογραφικά, διπλογραφικά)</li>
+            <li><span class="arrow">→</span>Μισθοδοσία και εργατικά θέματα</li>
+            <li><span class="arrow">→</span>Συμβουλευτικές υπηρεσίες</li>
+            <li><span class="arrow">→</span>Σύνταξη χρηματοοικονομικών καταστάσεων</li>
+            <li><span class="arrow">→</span>Υποστήριξη σε φορολογικούς ελέγχους</li>
+            <li><span class="arrow">→</span>Διαχείριση επιδοτήσεων</li>
+            <li><span class="arrow">→</span>Εσωτερικός έλεγχος</li>
+          </ul>
+        </div>
+        <div class="card service-card">
+          <h3>Ατομικές Επιχειρήσεις</h3>
+          <ul>
+            <li><span class="arrow">→</span>Τήρηση βιβλίων</li>
+            <li><span class="arrow">→</span>Σύνταξη και υποβολή φορολογικών δηλώσεων</li>
+            <li><span class="arrow">→</span>Φορολογικός σχεδιασμός και βελτιστοποίηση</li>
+            <li><span class="arrow">→</span>Συμβουλευτικές υπηρεσίες</li>
+            <li><span class="arrow">→</span>Υποστήριξη σε φορολογικούς ελέγχους</li>
+            <li><span class="arrow">→</span>Έναρξη, μεταβολή, διακοπή δραστηριότητας</li>
+            <li><span class="arrow">→</span>Διαχείριση ηλεκτρονικών βιβλίων myDATA</li>
+          </ul>
+        </div>
+        <div class="card service-card">
+          <h3>Ιδιώτες</h3>
+          <ul>
+            <li><span class="arrow">→</span>Σύνταξη και υποβολή φορολογικών δηλώσεων</li>
+            <li><span class="arrow">→</span>Υπολογισμός φόρου εισοδήματος</li>
+            <li><span class="arrow">→</span>Φορολογικές συμβουλές και ενημέρωση</li>
+            <li><span class="arrow">→</span>Ρυθμίσεις οφειλών προς το δημόσιο</li>
+            <li><span class="arrow">→</span>Διαχείριση ακίνητης περιουσίας</li>
+            <li><span class="arrow">→</span>Υποβολή αιτήσεων για επιδόματα</li>
+            <li><span class="arrow">→</span>Δηλώσεις τεκμηρίων και ανάλωση κεφαλαίου</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section id="news">
+    <div class="container">
+      <div class="blog-header">
+        <div>
+          <span class="section-label">BLOG</span>
+          <h2>Ανακοινώσεις</h2>
+        </div>
+        <a href="#news" class="blog-link">Δες όλα τα άρθρα →</a>
+      </div>
+
+      <div class="blog-grid">
+        <a class="card blog-card" href="#news">
+          <div class="blog-cover c1"></div>
+          <div class="blog-body">
+            <div class="blog-date">28 Ιουνίου 2026</div>
+            <div class="blog-title">ΕΝΦΙΑ 2026: Ημερομηνίες πληρωμής και νέες μειώσεις</div>
+          </div>
+        </a>
+        <a class="card blog-card" href="#news">
+          <div class="blog-cover c2"></div>
+          <div class="blog-body">
+            <div class="blog-date">19 Ιουνίου 2026</div>
+            <div class="blog-title">myDATA: Τι αλλάζει στη διαβίβαση παραστατικών</div>
+          </div>
+        </a>
+        <a class="card blog-card" href="#news">
+          <div class="blog-cover c3"></div>
+          <div class="blog-body">
+            <div class="blog-date">10 Ιουνίου 2026</div>
+            <div class="blog-title">Φορολογικές δηλώσεις: Οδηγός για ελεύθερους επαγγελματίες</div>
+          </div>
+        </a>
+        <a class="card blog-card" href="#news">
+          <div class="blog-cover c4"></div>
+          <div class="blog-body">
+            <div class="blog-date">2 Ιουνίου 2026</div>
+            <div class="blog-title">Ρυθμίσεις οφειλών: Οι νέες ευνοϊκές δόσεις προς τη ΔΟΥ</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <h2 class="contact-heading">Επικοινωνήστε μαζί μας</h2>
+          <p class="contact-subtitle">Είμαστε εδώ για να απαντήσουμε σε κάθε ερώτησή σας και να σας βοηθήσουμε με τις λογιστικές σας ανάγκες.</p>
+
+          <dl class="contact-info">
+            <div>
+              <dt>Email</dt>
+              <dd>Eleftheriades.kon@gmail.com<br>Skembi.efi@gmail.com</dd>
+            </div>
+            <div>
+              <dt>Τηλέφωνο</dt>
+              <dd>2310 720756</dd>
+            </div>
+            <div>
+              <dt>Ωράριο</dt>
+              <dd>Δευτέρα – Παρασκευή<br>08:30 – 17:30</dd>
+            </div>
+            <div>
+              <dt>Διεύθυνση</dt>
+              <dd>Άρη Βελουχιώτη 17<br>Τ.Κ 56121, Αμπελόκηποι<br>Θεσσαλονίκη</dd>
+            </div>
+          </dl>
+
+          <div class="map-placeholder">Χάρτης Τοποθεσίας</div>
+        </div>
+
+        <div class="card contact-form-card">
+          <h3>Στείλτε μας μήνυμα</h3>
+          <form id="contactForm">
+            <div class="form-group">
+              <label for="name">Όνομα</label>
+              <input type="text" id="name" name="name" placeholder="Το ονοματεπώνυμό σας" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Τηλέφωνο</label>
+              <input type="tel" id="phone" name="phone" placeholder="69XXXXXXXX">
+            </div>
+            <div class="form-group">
+              <label for="message">Μήνυμα</label>
+              <textarea id="message" name="message" rows="5" placeholder="Πώς μπορούμε να σας βοηθήσουμε;" required></textarea>
+            </div>
+            <button type="submit" class="btn-gold" style="width:100%;">Αποστολή Μηνύματος</button>
+          </form>
+          <div class="form-success" id="formSuccess">Ευχαριστούμε! Το μήνυμά σας εστάλη με επιτυχία — θα επικοινωνήσουμε σύντομα μαζί σας.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <p class="footer-copy">© 2026 ES Λογιστική — Λογιστικές &amp; Φοροτεχνικές Υπηρεσίες</p>
+    <div class="footer-links">
+      <a href="#services">Υπηρεσίες</a>
+      <a href="#news">Νέα</a>
+      <a href="#contact">Επικοινωνία</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile hamburger menu toggle
+  var hamburgerBtn = document.getElementById('hamburgerBtn');
+  var mobileNav = document.getElementById('mobileNav');
+  hamburgerBtn.addEventListener('click', function(){
+    var isOpen = mobileNav.classList.toggle('open');
+    hamburgerBtn.classList.toggle('open', isOpen);
+    hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  mobileNav.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', function(){
+      mobileNav.classList.remove('open');
+      hamburgerBtn.classList.remove('open');
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Fake contact form submit
+  var contactForm = document.getElementById('contactForm');
+  var formSuccess = document.getElementById('formSuccess');
+  contactForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    formSuccess.classList.add('show');
+    contactForm.reset();
+    formSuccess.scrollIntoView({behavior:'smooth', block:'nearest'});
+  });
+</script>
+
+</body>
+</html>

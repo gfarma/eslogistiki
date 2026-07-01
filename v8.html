@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ES Λογιστική — Αξιόπιστες Λογιστικές Υπηρεσίες, Θεσσαλονίκη</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --color-gold:#d4a853;
+    --color-gold-dark:#b8923f;
+    --color-bg:#FBF7EE;
+    --color-surface:#FFFDF7;
+    --color-ink:#0a1628;
+    --color-body:#4b5563;
+    --color-muted:#8b8478;
+    --border-hairline:rgba(10,22,40,0.08);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--color-bg);
+    color:var(--color-body);
+    font-family:'DM Sans', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Playfair Display', serif;
+    color:var(--color-ink);
+    font-weight:600;
+    line-height:1.2;
+  }
+
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  img{display:block;max-width:100%;}
+
+  .container{
+    max-width:1152px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  section{
+    padding:96px 0;
+  }
+
+  @media (max-width:768px){
+    section{padding:64px 0;}
+  }
+
+  .section-label{
+    display:block;
+    text-align:center;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--color-gold);
+    margin-bottom:16px;
+  }
+
+  .section-heading{
+    text-align:center;
+    font-size:40px;
+    margin-bottom:16px;
+  }
+
+  .section-subtitle{
+    text-align:center;
+    max-width:640px;
+    margin:0 auto 56px;
+    color:var(--color-body);
+    font-size:16px;
+  }
+
+  /* Buttons */
+  .btn-gold{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    background:linear-gradient(135deg, var(--color-gold), var(--color-gold-dark));
+    color:var(--color-ink);
+    font-weight:700;
+    padding:16px 36px;
+    border-radius:12px;
+    border:none;
+    cursor:pointer;
+    font-family:'DM Sans', sans-serif;
+    font-size:15px;
+    transition:transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .btn-gold:hover{
+    transform:translateY(-3px);
+    box-shadow:0 15px 30px rgba(184,146,63,0.35);
+  }
+
+  .btn-outline{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    background:transparent;
+    color:var(--color-ink);
+    border:1px solid var(--color-ink);
+    font-weight:700;
+    padding:16px 36px;
+    border-radius:12px;
+    cursor:pointer;
+    font-family:'DM Sans', sans-serif;
+    font-size:15px;
+    transition:all 0.25s ease;
+  }
+  .btn-outline:hover{
+    background:rgba(10,22,40,0.05);
+    transform:translateY(-3px);
+    box-shadow:0 15px 30px rgba(10,22,40,0.12);
+  }
+
+  /* Card */
+  .card{
+    position:relative;
+    border-radius:20px;
+    border:1px solid var(--border-hairline);
+    background:linear-gradient(145deg, #FFFFFF, #FBF6EA);
+    box-shadow:0 4px 20px rgba(30,20,10,0.06);
+    transition:transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    overflow:hidden;
+  }
+  .card:hover{
+    transform:translateY(-8px);
+    border-color:rgba(212,168,83,0.5);
+    box-shadow:0 25px 50px rgba(180,150,80,0.18);
+  }
+
+  /* Header */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(251,247,238,0.9);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border-hairline);
+  }
+  .header-inner{
+    max-width:1152px;
+    margin:0 auto;
+    padding:16px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo img{
+    height:44px;
+    width:auto;
+    filter:none;
+  }
+  nav.desktop-nav{
+    display:flex;
+    align-items:center;
+    gap:36px;
+  }
+  nav.desktop-nav a{
+    font-size:15px;
+    font-weight:500;
+    color:var(--color-ink);
+    transition:color 0.2s ease;
+  }
+  nav.desktop-nav a:hover{
+    color:var(--color-gold-dark);
+  }
+  .header-actions{
+    display:flex;
+    align-items:center;
+    gap:20px;
+  }
+  .pill-gold{
+    display:inline-flex;
+    align-items:center;
+    background:linear-gradient(135deg, var(--color-gold), var(--color-gold-dark));
+    color:var(--color-ink);
+    font-weight:700;
+    font-size:14px;
+    padding:10px 24px;
+    border-radius:999px;
+    border:none;
+    cursor:pointer;
+  }
+  .hamburger{
+    display:none;
+    flex-direction:column;
+    gap:5px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:6px;
+  }
+  .hamburger span{
+    width:24px;
+    height:2px;
+    background:var(--color-ink);
+    display:block;
+  }
+  .mobile-nav{
+    display:none;
+    flex-direction:column;
+    padding:16px 24px 24px;
+    border-top:1px solid var(--border-hairline);
+    background:rgba(251,247,238,0.98);
+  }
+  .mobile-nav a{
+    padding:12px 0;
+    font-size:16px;
+    font-weight:500;
+    color:var(--color-ink);
+    border-bottom:1px solid var(--border-hairline);
+  }
+  .mobile-nav a:last-child{border-bottom:none;}
+  .mobile-nav.open{display:flex;}
+
+  @media (max-width:900px){
+    nav.desktop-nav{display:none;}
+    .hamburger{display:flex;}
+  }
+
+  /* Hero */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding:120px 0 100px;
+  }
+  .hero-rings{
+    position:absolute;
+    pointer-events:none;
+    right:-140px;
+    top:50%;
+    transform:translateY(-50%);
+    width:420px;
+    height:420px;
+  }
+  .hero-rings .ring{
+    position:absolute;
+    border-radius:50%;
+    border:1px solid var(--color-gold);
+  }
+  .ring-1{
+    inset:0;
+    border-color:rgba(212,168,83,0.25);
+  }
+  .ring-2{
+    inset:60px;
+    border-color:rgba(212,168,83,0.15);
+  }
+  .ring-3{
+    inset:120px;
+    border-color:rgba(212,168,83,0.10);
+  }
+  .hero-content{
+    position:relative;
+    z-index:1;
+    max-width:640px;
+  }
+  .hero-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 18px;
+    border-radius:999px;
+    border:1px solid rgba(212,168,83,0.4);
+    background:rgba(212,168,83,0.08);
+    font-size:13px;
+    font-weight:600;
+    color:var(--color-gold-dark);
+    margin-bottom:28px;
+  }
+  .hero-badge .dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--color-gold);
+  }
+  .hero h1{
+    font-size:56px;
+    margin-bottom:24px;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--color-gold-dark);
+  }
+  .hero-subtitle{
+    font-size:17px;
+    color:var(--color-body);
+    margin-bottom:40px;
+    max-width:520px;
+  }
+  .hero-actions{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+
+  @media (max-width:600px){
+    .hero h1{font-size:38px;}
+    .hero{padding:80px 0 64px;}
+  }
+
+  /* Differentiator grid */
+  .diff-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:24px;
+  }
+  @media (min-width:1024px){
+    .diff-grid{grid-template-columns:repeat(4, 1fr);}
+  }
+  .diff-card{
+    padding:36px 28px;
+  }
+  .diff-num{
+    position:absolute;
+    top:-6px;
+    right:12px;
+    font-family:'Playfair Display', serif;
+    font-size:96px;
+    font-weight:700;
+    color:var(--color-ink);
+    opacity:0.05;
+    line-height:1;
+    pointer-events:none;
+  }
+  .diff-card h3{
+    font-size:20px;
+    margin-bottom:12px;
+    position:relative;
+  }
+  .diff-card p{
+    font-size:14.5px;
+    color:var(--color-body);
+    position:relative;
+  }
+
+  /* Team */
+  .team-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:24px;
+  }
+  @media (max-width:768px){
+    .team-grid{gap:12px;}
+  }
+  .team-card{
+    text-align:center;
+  }
+  .team-photo{
+    width:100%;
+    aspect-ratio:2/3;
+    border-radius:16px;
+    overflow:hidden;
+    background:var(--color-surface);
+    border:1px solid var(--border-hairline);
+    margin-bottom:20px;
+  }
+  .team-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  .team-card .name{
+    font-weight:700;
+    color:var(--color-ink);
+    font-size:17px;
+    margin-bottom:6px;
+  }
+  .team-card .role{
+    font-size:13.5px;
+    color:var(--color-muted);
+  }
+
+  /* Services */
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(1, 1fr);
+    gap:24px;
+  }
+  @media (min-width:900px){
+    .services-grid{grid-template-columns:repeat(3, 1fr);}
+  }
+  .service-card{
+    padding:40px 32px;
+    text-align:left;
+  }
+  .service-card h3{
+    color:var(--color-gold-dark);
+    font-size:21px;
+    margin-bottom:20px;
+  }
+  .service-card ul{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .service-card li{
+    display:flex;
+    gap:10px;
+    font-size:14.5px;
+    color:var(--color-body);
+  }
+  .service-card li .arrow{
+    color:var(--color-gold);
+    font-weight:700;
+    flex-shrink:0;
+  }
+
+  /* Blog */
+  .blog-header{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    margin-bottom:48px;
+    flex-wrap:wrap;
+    gap:20px;
+  }
+  .blog-header-left .section-label{
+    text-align:left;
+    margin-bottom:8px;
+  }
+  .blog-header-left h2{
+    font-size:36px;
+    text-align:left;
+  }
+  .blog-link{
+    color:var(--color-gold-dark);
+    font-weight:700;
+    font-size:15px;
+    white-space:nowrap;
+  }
+  .blog-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:24px;
+  }
+  @media (min-width:1024px){
+    .blog-grid{grid-template-columns:repeat(4, 1fr);}
+  }
+  .blog-card{
+    display:block;
+    cursor:pointer;
+  }
+  .blog-cover{
+    height:176px;
+    width:100%;
+  }
+  .blog-cover-1{background:linear-gradient(135deg, #e8cf9f, #d4a853);}
+  .blog-cover-2{background:linear-gradient(135deg, #f0e4c8, #b8923f);}
+  .blog-cover-3{background:linear-gradient(135deg, #ddc79a, #c9a05f);}
+  .blog-cover-4{background:linear-gradient(135deg, #f3ead4, #d4a853);}
+  .blog-body{
+    padding:20px 24px 28px;
+  }
+  .blog-date{
+    font-size:12.5px;
+    color:var(--color-muted);
+    margin-bottom:10px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+  }
+  .blog-title{
+    font-size:16.5px;
+    font-weight:700;
+    color:var(--color-ink);
+    line-height:1.4;
+  }
+
+  /* Contact */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:56px;
+  }
+  @media (min-width:900px){
+    .contact-grid{grid-template-columns:1fr 1fr;}
+  }
+  .contact-info h2{
+    font-size:36px;
+    text-align:left;
+    margin-bottom:16px;
+  }
+  .contact-info > p{
+    font-size:15.5px;
+    color:var(--color-body);
+    margin-bottom:40px;
+    max-width:460px;
+  }
+  .contact-rows{
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+    margin-bottom:36px;
+  }
+  .contact-row .label{
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--color-muted);
+    margin-bottom:6px;
+  }
+  .contact-row .value{
+    font-size:16px;
+    color:var(--color-ink);
+    font-weight:500;
+  }
+  .contact-row .value div{
+    margin-bottom:2px;
+  }
+  .map-placeholder{
+    height:256px;
+    border-radius:16px;
+    background:
+      repeating-linear-gradient(45deg, rgba(212,168,83,0.08) 0px, rgba(212,168,83,0.08) 2px, transparent 2px, transparent 14px),
+      linear-gradient(145deg, #FFFDF7, #F2EAD8);
+    border:1px solid var(--border-hairline);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--color-muted);
+    font-size:14px;
+    font-weight:500;
+  }
+
+  .contact-form-card{
+    padding:40px;
+  }
+  .contact-form-card h3{
+    font-size:24px;
+    margin-bottom:28px;
+    text-align:left;
+  }
+  .form-group{
+    margin-bottom:20px;
+  }
+  .form-group label{
+    display:block;
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--color-ink);
+    margin-bottom:8px;
+  }
+  .form-group input,
+  .form-group textarea{
+    width:100%;
+    padding:13px 16px;
+    border-radius:10px;
+    border:1px solid var(--border-hairline);
+    background:#fff;
+    font-family:'DM Sans', sans-serif;
+    font-size:14.5px;
+    color:var(--color-ink);
+    resize:vertical;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus{
+    outline:none;
+    border-color:var(--color-gold);
+  }
+  .form-success{
+    display:none;
+    background:rgba(212,168,83,0.1);
+    border:1px solid rgba(212,168,83,0.4);
+    color:var(--color-gold-dark);
+    padding:16px 20px;
+    border-radius:10px;
+    font-size:14.5px;
+    font-weight:600;
+    margin-bottom:20px;
+  }
+  .form-success.show{display:block;}
+  #contactForm.hidden{display:none;}
+
+  /* Footer */
+  footer{
+    border-top:1px solid var(--border-hairline);
+    padding:32px 0;
+  }
+  .footer-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  .footer-copy{
+    font-size:14px;
+    color:var(--color-muted);
+  }
+  .footer-nav{
+    display:flex;
+    gap:28px;
+  }
+  .footer-nav a{
+    font-size:14px;
+    color:var(--color-body);
+  }
+  .footer-nav a:hover{
+    color:var(--color-gold-dark);
+  }
+  @media (max-width:600px){
+    .footer-inner{flex-direction:column;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo"><img src="assets/logo.png" alt="ES Λογιστική"></a>
+    <nav class="desktop-nav">
+      <a href="#about">Σχετικά</a>
+      <a href="#services">Υπηρεσίες</a>
+      <a href="#blog">Νέα</a>
+      <a href="#contact">Επικοινωνία</a>
+      <a href="#login">Σύνδεση</a>
+    </nav>
+    <div class="header-actions">
+      <a href="#contact" class="pill-gold">Ραντεβού</a>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Μενού">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="#about">Σχετικά</a>
+    <a href="#services">Υπηρεσίες</a>
+    <a href="#blog">Νέα</a>
+    <a href="#contact">Επικοινωνία</a>
+    <a href="#login">Σύνδεση</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-rings">
+    <div class="ring ring-1"></div>
+    <div class="ring ring-2"></div>
+    <div class="ring ring-3"></div>
+  </div>
+  <div class="container">
+    <div class="hero-content">
+      <span class="hero-badge"><span class="dot"></span> Θεσσαλονίκη, Ελλάδα</span>
+      <h1>Αξιόπιστες <em>Λογιστικές</em> Υπηρεσίες</h1>
+      <p class="hero-subtitle">Επιχειρηματικές Συμβουλές &amp; Φοροτεχνική Υποστήριξη. Εμπιστευτείτε την επιχείρησή σας σε έμπειρους επαγγελματίες.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-gold">Κλείστε μια δωρεάν συνεδρία →</a>
+        <a href="#services" class="btn-outline">Δείτε τις Υπηρεσίες</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <span class="section-label">ΓΙΑΤΙ ΕΜΑΣ</span>
+    <h2 class="section-heading">Η Διαφορά μας</h2>
+    <p class="section-subtitle">Συνδυάζουμε εμπειρία, τεχνογνωσία και σύγχρονη τεχνολογία για να προσφέρουμε κορυφαίες λογιστικές υπηρεσίες.</p>
+    <div class="diff-grid">
+      <div class="card diff-card">
+        <span class="diff-num">01</span>
+        <h3>Εμπειρία &amp; Τεχνογνωσία</h3>
+        <p>Έμπειροι λογιστές και φοροτεχνικοί, ενήμεροι για τις τελευταίες νομοθετικές εξελίξεις.</p>
+      </div>
+      <div class="card diff-card">
+        <span class="diff-num">02</span>
+        <h3>Εξατομικευμένη Εξυπηρέτηση</h3>
+        <p>Προσωποποιημένες λύσεις που ανταποκρίνονται στις μοναδικές ανάγκες σας.</p>
+      </div>
+      <div class="card diff-card">
+        <span class="diff-num">03</span>
+        <h3>Ολοκληρωμένες Υπηρεσίες</h3>
+        <p>Από τήρηση βιβλίων έως φορολογικό σχεδιασμό και επιχειρηματικές συμβουλές.</p>
+      </div>
+      <div class="card diff-card">
+        <span class="diff-num">04</span>
+        <h3>Σύγχρονη Τεχνολογία</h3>
+        <p>Ακρίβεια και ασφάλεια με τα πιο σύγχρονα λογιστικά εργαλεία.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="team">
+  <div class="container">
+    <span class="section-label">ΓΝΩΡΙΣΤΕ ΜΑΣ</span>
+    <h2 class="section-heading">Η Ομάδα Μας</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-photo"><img src="assets/team-1.jpg" alt="Ελευθεριάδης Κωνσταντίνος"></div>
+        <div class="name">Ελευθεριάδης Κωνσταντίνος</div>
+        <div class="role">Λογιστής φοροτεχνικός Ά τάξης</div>
+      </div>
+      <div class="team-card">
+        <div class="team-photo"><img src="assets/team-2.jpg" alt="Σκέμπη Ευθυμία"></div>
+        <div class="name">Σκέμπη Ευθυμία</div>
+        <div class="role">Founder / Λογίστρια φοροτεχνικός Ά τάξης</div>
+      </div>
+      <div class="team-card">
+        <div class="team-photo"><img src="assets/team-3.jpg" alt="Παρχαρίδου Παναγιώτα"></div>
+        <div class="name">Παρχαρίδου Παναγιώτα</div>
+        <div class="role">Expert Εργατικής Νομοθεσίας &amp; Μισθοδοσίας</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="container">
+    <span class="section-label">ΥΠΗΡΕΣΙΕΣ</span>
+    <h2 class="section-heading">Τι Προσφέρουμε</h2>
+    <p class="section-subtitle">Ολοκληρωμένες λογιστικές και φοροτεχνικές υπηρεσίες για κάθε ανάγκη.</p>
+    <div class="services-grid">
+      <div class="card service-card">
+        <h3>Εταιρείες</h3>
+        <ul>
+          <li><span class="arrow">→</span> Τήρηση βιβλίων (απλογραφικά, διπλογραφικά)</li>
+          <li><span class="arrow">→</span> Μισθοδοσία και εργατικά θέματα</li>
+          <li><span class="arrow">→</span> Συμβουλευτικές υπηρεσίες</li>
+          <li><span class="arrow">→</span> Σύνταξη χρηματοοικονομικών καταστάσεων</li>
+          <li><span class="arrow">→</span> Υποστήριξη σε φορολογικούς ελέγχους</li>
+          <li><span class="arrow">→</span> Διαχείριση επιδοτήσεων</li>
+          <li><span class="arrow">→</span> Εσωτερικός έλεγχος</li>
+        </ul>
+      </div>
+      <div class="card service-card">
+        <h3>Ατομικές Επιχειρήσεις</h3>
+        <ul>
+          <li><span class="arrow">→</span> Τήρηση βιβλίων</li>
+          <li><span class="arrow">→</span> Σύνταξη και υποβολή φορολογικών δηλώσεων</li>
+          <li><span class="arrow">→</span> Φορολογικός σχεδιασμός και βελτιστοποίηση</li>
+          <li><span class="arrow">→</span> Συμβουλευτικές υπηρεσίες</li>
+          <li><span class="arrow">→</span> Υποστήριξη σε φορολογικούς ελέγχους</li>
+          <li><span class="arrow">→</span> Έναρξη, μεταβολή, διακοπή δραστηριότητας</li>
+          <li><span class="arrow">→</span> Διαχείριση ηλεκτρονικών βιβλίων myDATA</li>
+        </ul>
+      </div>
+      <div class="card service-card">
+        <h3>Ιδιώτες</h3>
+        <ul>
+          <li><span class="arrow">→</span> Σύνταξη και υποβολή φορολογικών δηλώσεων</li>
+          <li><span class="arrow">→</span> Υπολογισμός φόρου εισοδήματος</li>
+          <li><span class="arrow">→</span> Φορολογικές συμβουλές και ενημέρωση</li>
+          <li><span class="arrow">→</span> Ρυθμίσεις οφειλών προς το δημόσιο</li>
+          <li><span class="arrow">→</span> Διαχείριση ακίνητης περιουσίας</li>
+          <li><span class="arrow">→</span> Υποβολή αιτήσεων για επιδόματα</li>
+          <li><span class="arrow">→</span> Δηλώσεις τεκμηρίων και ανάλωση κεφαλαίου</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="blog">
+  <div class="container">
+    <div class="blog-header">
+      <div class="blog-header-left">
+        <span class="section-label" style="text-align:left;">BLOG</span>
+        <h2>Ανακοινώσεις</h2>
+      </div>
+      <a href="#" class="blog-link">Δες όλα τα άρθρα →</a>
+    </div>
+    <div class="blog-grid">
+      <a href="#" class="card blog-card">
+        <div class="blog-cover blog-cover-1"></div>
+        <div class="blog-body">
+          <div class="blog-date">18 Ιουνίου 2026</div>
+          <div class="blog-title">ΕΝΦΙΑ 2026: Ημερομηνίες πληρωμής και νέες μειώσεις για ιδιοκτήτες</div>
+        </div>
+      </a>
+      <a href="#" class="card blog-card">
+        <div class="blog-cover blog-cover-2"></div>
+        <div class="blog-body">
+          <div class="blog-date">10 Ιουνίου 2026</div>
+          <div class="blog-title">myDATA: Τι αλλάζει στη διαβίβαση παραστατικών από τον Ιούλιο</div>
+        </div>
+      </a>
+      <a href="#" class="card blog-card">
+        <div class="blog-cover blog-cover-3"></div>
+        <div class="blog-body">
+          <div class="blog-date">2 Ιουνίου 2026</div>
+          <div class="blog-title">Φορολογικές δηλώσεις 2026: Οδηγός για ελεύθερους επαγγελματίες</div>
+        </div>
+      </a>
+      <a href="#" class="card blog-card">
+        <div class="blog-cover blog-cover-4"></div>
+        <div class="blog-body">
+          <div class="blog-date">25 Μαΐου 2026</div>
+          <div class="blog-title">Ρυθμίσεις οφειλών προς το Δημόσιο: Νέες ευνοϊκές διατάξεις</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h2>Επικοινωνήστε μαζί μας</h2>
+        <p>Είμαστε εδώ για να απαντήσουμε σε κάθε ερώτησή σας και να σας βοηθήσουμε με τις λογιστικές σας ανάγκες.</p>
+        <div class="contact-rows">
+          <div class="contact-row">
+            <div class="label">Email</div>
+            <div class="value">
+              <div>Eleftheriades.kon@gmail.com</div>
+              <div>Skembi.efi@gmail.com</div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="label">Τηλέφωνο</div>
+            <div class="value">2310 720756</div>
+          </div>
+          <div class="contact-row">
+            <div class="label">Ωράριο</div>
+            <div class="value">
+              <div>Δευτέρα – Παρασκευή</div>
+              <div>08:30 – 17:30</div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="label">Διεύθυνση</div>
+            <div class="value">
+              <div>Άρη Βελουχιώτη 17</div>
+              <div>Τ.Κ 56121, Αμπελόκηποι</div>
+              <div>Θεσσαλονίκη</div>
+            </div>
+          </div>
+        </div>
+        <div class="map-placeholder">Χάρτης τοποθεσίας</div>
+      </div>
+      <div class="card contact-form-card">
+        <h3>Στείλτε μας μήνυμα</h3>
+        <div class="form-success" id="formSuccess">Ευχαριστούμε! Το μήνυμά σας εστάλη με επιτυχία. Θα επικοινωνήσουμε μαζί σας σύντομα.</div>
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="name">Όνομα</label>
+            <input type="text" id="name" name="name" placeholder="Το ονοματεπώνυμό σας" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="email@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Τηλέφωνο</label>
+            <input type="tel" id="phone" name="phone" placeholder="69XXXXXXXX">
+          </div>
+          <div class="form-group">
+            <label for="message">Μήνυμα</label>
+            <textarea id="message" name="message" rows="5" placeholder="Πώς μπορούμε να σας βοηθήσουμε;" required></textarea>
+          </div>
+          <button type="submit" class="btn-gold" style="width:100%;">Αποστολή Μηνύματος</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-copy">© 2026 ES Λογιστική — Λογιστικές &amp; Φοροτεχνικές Υπηρεσίες</div>
+      <nav class="footer-nav">
+        <a href="#services">Υπηρεσίες</a>
+        <a href="#blog">Νέα</a>
+        <a href="#contact">Επικοινωνία</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile hamburger menu toggle
+  var hamburgerBtn = document.getElementById('hamburgerBtn');
+  var mobileNav = document.getElementById('mobileNav');
+  hamburgerBtn.addEventListener('click', function(){
+    mobileNav.classList.toggle('open');
+  });
+  // Close mobile nav when a link is clicked
+  mobileNav.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', function(){
+      mobileNav.classList.remove('open');
+    });
+  });
+
+  // Fake contact form submit
+  var contactForm = document.getElementById('contactForm');
+  var formSuccess = document.getElementById('formSuccess');
+  contactForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    contactForm.classList.add('hidden');
+    formSuccess.classList.add('show');
+  });
+</script>
+
+</body>
+</html>
